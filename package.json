@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "iohook": "^0.6.5",
+    "jquery": "^3.4.1",
     "robotjs": "^0.6.0",
     "source-map-support": "^0.5.16"
   },
