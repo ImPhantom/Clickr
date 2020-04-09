@@ -2,13 +2,67 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap">
         <script>require('module').globalPaths.push("C:/development/clickr/node_modules")</script>
         <script>require("source-map-support/source-map-support.js").install()</script>
     </head>
 
     <body>
+        <div id="title-bar">
+            <div id="title">Clickr <span id="version"></span></div>
+            <div id="buttons">
+                <a id="minimize-button">&#xE921;</a>
+                <a id="close-button">&#xE8BB;</a>
+            </div>
+        </div>
+
         <div id="app">
-            <h2>Working Boilerplate</h1>
+            <div id="armed-cover"></div>
+            <div class="row" id="mouse-button">
+                <a class="button" id="left">Left</a>
+                <a class="button" id="middle">Middle</a>
+                <a class="button" id="right">Right</a>
+            </div>
+
+            <div class="row" id="click-speed">
+                <input type="number" min="1" id="click-times" name="click-times">
+                <select id="unit-select">
+                    <option value="1000">clicks/sec</option>
+                    <option value="60000">clicks/min</option>
+                    <option value="3600000">clicks/hour</option>
+                </select>
+            </div>
+            <div class="row">
+                <div id="hold-input" class="align-items-center">
+                    <label for="trigger-key">Hotkey:</label>
+                    <input type="text" id="trigger-key" name="trigger-key" readonly>
+                </div>
+
+                <div id="toggle-input">
+                    <div class="row align-items-center">
+                        <label for="start-key">Start:</label>
+                        <input type="text" id="start-key" name="start-key" readonly>
+                    </div>
+                    <div class="row align-items-center">
+                        <label for="stop-key">Stop:</label>
+                        <input type="text" id="stop-key" name="stop-key" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="trigger-type">
+                <a class="button" id="hold">Hold</a>
+                <a class="button" id="toggle">Toggle</a>
+            </div>
+
+            <div class="row" id="arm-button">
+                <a class="button">Arm</a>
+            </div>
+
+            <div id="info">
+                <div id="status">Not clicking yet.</div>
+                <div id="clicks"></div>
+            </div>
         </div>
     </body>
 </html>

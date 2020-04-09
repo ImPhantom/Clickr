@@ -1,1 +1,245 @@
-#app > h2 { color: blue };
+@font-face {
+    font-family: SegoeMDL2;
+    src: url("../static/fonts/segmdl2.ttf");
+}
+
+:root {
+    --text: #EAEBEF;
+    --dark-text: #ACADB1;
+    --darker-text: #838488;
+
+    --slate: #222327;
+    --dark-slate: #1D1E22;
+    --darker-slate: #18191D;
+    --darkest-slate: #101115;
+
+    --window-height: 460px;
+    --window-width: 220px;
+    --title-bar-height: 2rem;
+}
+
+html, body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    margin: 0;
+
+    color: var(--text);
+    background-color: var(--slate);
+}
+
+/*
+    General Style Utilities
+*/
+
+.row {
+    display: flex;
+    width: 100%;
+    flex-flow: row nowrap;
+}
+
+/* Buttons */
+.button {
+    padding: .4em 0;
+    font-size: 14px;
+    text-align: center;
+    background-color: var(--darker-slate);
+    transition: background-color .3s, background-image .3s, color .3s;
+}
+
+.button:not(.active):hover {
+    cursor: pointer;
+    background-color: var(--darkest-slate);
+}
+
+.button.active {
+    background-image: linear-gradient(45deg, rgb(21, 153, 87), rgb(21, 87, 153))
+}
+
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+
+/*
+    Fully custom titlebar
+*/
+
+#title-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    height: var(--title-bar-height);
+
+    color: var(--text);
+    background-color: var(--darker-slate);
+
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+}
+
+#title-bar > #title {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: calc(100% - 5rem);
+    height: var(--title-bar-height);
+    padding: 0 .3em;
+
+    align-items: center;
+    font-weight: 300;
+}
+
+#title-bar > #title > #version {
+    margin-left: .35em;
+    font-size: 0.8rem;
+    color: var(--darker-text);
+}
+
+#title-bar > #buttons {
+    display: grid;
+    position: absolute;
+    grid-template-columns: repeat(2, 2.5rem);
+
+    top: 0;
+    right: 0;
+    height: 100%;
+
+    font-family: SegoeMDL2;
+    font-size: 10px;
+}
+
+#title-bar > #buttons > a {
+    display: flex;
+    grid-row: 1 / span 1;
+
+    height: 100%;
+    width: 100%;
+
+    justify-content: center;
+    align-items: center;
+    
+    color: var(--text);
+    background-color: var(--darker-slate);
+    transition: background-color .3s;
+
+    -webkit-app-region: no-drag;
+}
+
+#title-bar > #buttons > a:hover {
+    cursor: pointer;
+    background-color: var(--darkest-slate);
+}
+
+/*
+    Application Styling
+*/
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: calc(calc(var(--window-height) - var(--title-bar-height)) - .8em); /* .8 em is the body's padding */
+
+    padding: .4em .5em;
+    margin-top: var(--title-bar-height);
+}
+
+#app-body > #armed-cover {
+    display: none;
+    visibility: hidden;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 24;
+    background-color: rgba(0,0,0, 0.6);
+}
+
+#mouse-button > a {
+    width: 33.3%;
+}
+
+#mouse-button > a.active {
+    background-image: linear-gradient(45deg, #c94b4b, #4b134f);
+}
+
+#click-speed {
+    margin: .3em 0;
+}
+
+#click-speed > #click-times {
+    width: 30%;
+    margin-right: 2%;
+}
+
+#click-speed > #unit-select {
+    width: 68%;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 300;
+    margin-right: .3em;
+}
+
+input[type="text"], input[type="number"], select {
+    border: none;
+    padding: .4em;
+    width: 100%;
+
+    color: var(--dark-text);
+    background-color: var(--dark-slate);
+}
+
+#hold-input, #toggle-input {
+    display: none;
+    visibility: hidden;
+}
+
+#hold-input { align-items: center; }
+#toggle-input {
+    flex-direction: column;
+}
+
+#toggle-input .row:nth-child(1) { margin-bottom: .3em; }
+
+#trigger-type { margin-top: .3em; }
+#trigger-type > a {
+    width: 50%;
+}
+
+#arm-button {
+    margin-top: .3em;
+    z-index: 36;
+}
+
+#arm-button > a {
+    width: 100%;
+
+    font-size: 20px;
+    font-weight: 300;
+}
+
+
+
+#info {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-bottom: .2em;
+
+    color: var(--dark-text);
+    z-index: 36;
+}
+
+#info > #status, #info > #clicks {
+    text-align: center;
+    font-weight: 300;
+    transition: color .3s;
+}
+
+#info #status.active { color: rgb(21, 153, 87); }
+#info #clicks.active { color: var(--text); }
