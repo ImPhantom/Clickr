@@ -9,6 +9,8 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "iohook": "^0.6.5",
+    "robotjs": "^0.6.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
@@ -17,15 +19,20 @@
     "electron-webpack": "^2.8.2",
     "webpack": "~4.42.1"
   },
+  "cmake-js": {
+    "runtime": "electron",
+    "runtimeVersion": "8.2.0"
+  },
   "electronWebpack": {
     "commonSourceDirectory": "src/common",
     "staticSourceDirectory": "src/static",
     "title": true,
-  
+    "whiteListedModules": [
+      "iohook"
+    ],
     "main": {
       "sourceDirectory": "src/main"
     },
-  
     "renderer": {
       "sourceDirectory": "src/renderer",
       "template": "src/renderer/index.html"
