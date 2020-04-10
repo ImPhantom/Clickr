@@ -1,0 +1,54 @@
+{
+    "triggerType": {
+        "type": "string",
+        "enum": ["hold", "toggle"]
+    },
+    "holdTrigger": {
+        "type": "object",
+        "properties": {
+            "hotkey": {
+                "type": "array",
+                "items": { "type": "string" }
+            },
+            "hotkeyRaw": {
+                "type": "array",
+                "items": { "type": "number" }
+            }
+        }
+    },
+    "toggleTrigger": {
+        "type": "object",
+        "properties": {
+            "startHotkey": {
+                "type": "array",
+                "items": { "type": "string" }
+            },
+            "startHotkeyRaw": {
+                "type": "array",
+                "items": { "type": "number" }
+            },
+            "stopHotkey": {
+                "type": "array",
+                "items": { "type": "string" }
+            },
+            "stopHotkeyRaw": {
+                "type": "array",
+                "items": { "type": "number" }
+            }
+        }
+    },
+    "clickingMouseButton": {
+        "type": "string",
+        "enum": ["left", "middle", "right"]
+    },
+    "clickSpeed": {
+        "type": "object",
+        "properties": {
+            "times": { "type": "number" },
+            "unit": { "type": "number" }
+        }
+    },
+    "stopAfter": {
+        "type": "number"
+    }
+}
