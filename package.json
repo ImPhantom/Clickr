@@ -9,14 +9,17 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "electron-store": "^5.1.1",
     "iohook": "^0.6.5",
     "jquery": "^3.4.1",
+    "keycode": "^2.2.0",
     "robotjs": "^0.6.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "electron": "8.2.0",
     "electron-builder": "^22.4.1",
+    "electron-rebuild": "^1.10.1",
     "electron-webpack": "^2.8.2",
     "webpack": "~4.42.1"
   },
