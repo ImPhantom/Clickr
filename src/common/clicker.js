@@ -1,8 +1,9 @@
+'use strict'
+
 import { remote } from 'electron';
 import * as robot from 'robotjs';
-import * as iohook from 'iohook';
 
-class Clicker {
+export class Clicker {
     constructor(dataStore) {
         this.armed = false;
         this.clicks = 0;
@@ -10,13 +11,16 @@ class Clicker {
         this.interval = null;
 
         this.triggerType = dataStore.get("triggerType") || "hold";
-        this.clickingButton = dataStore.get("clickingButton") || "left";
+        this.clickingButton = dataStore.get("clickingMouseButton") || "left";
         this.clicksPerUnit = dataStore.get("clickSpeed.times") || 8;
         this.clickingUnit = dataStore.get("clickSpeed.unit") || 1000;
 
-        this.holdShortcut = null;
-        this.startShortcut = null;
-        this.stopShortcut = null;
+        this.holdShortcut = dataStore.get("holdTrigger.triggerShortcut") || null;
+        this.holdHotkey = dataStore.get("holdTrigger.triggerHotkey") || null;
+        this.startShortcut = dataStore.get("toggleTrigger.startShortcut") || null;
+        this.startHotkey = dataStore.get("toggleTrigger.startHotkey") || null;
+        this.stopShortcut = dataStore.get("toggleTrigger.stopShortcut") || null;
+        this.stopHotkey = dataStore.get("toggleTrigger.stopHotkey") || null;
     }
 
     startClicking(startCallback = null, onClickCallback = null) {
@@ -39,18 +43,15 @@ class Clicker {
     }
 
     stopClicking(stoppedCallback = null) {
+        const wasClicking = this.clicking;
         clearInterval(this.interval);
         this.clicking = false;
 
-        if (stoppedCallback)
-            stoppedCallback(this.clicks);
+        if (wasClicking) {
+            if (stoppedCallback)
+                stoppedCallback(this.clicks);
 
-        console.log(`Stopped clicker after ${this.clicks} clicks!`);
-    }
-
-    hotkeyToShortcut(hotkey) {
-        return hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1));
+            console.log(`Stopped clicker after ${this.clicks} clicks!`);
+        }
     }
 }
-
-module.exports = { Clicker: Clicker };

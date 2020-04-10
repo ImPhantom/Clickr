@@ -13,7 +13,7 @@
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 460px;
+    --window-height: 420px;
     --window-width: 220px;
     --title-bar-height: 2rem;
 }
@@ -35,6 +35,11 @@ html, body {
     display: flex;
     width: 100%;
     flex-flow: row nowrap;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /* Buttons */
@@ -144,10 +149,8 @@ html, body {
     margin-top: var(--title-bar-height);
 }
 
-#app-body > #armed-cover {
-    display: none;
-    visibility: hidden;
-
+#app > #armed-cover {
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -194,10 +197,7 @@ input[type="text"], input[type="number"], select {
     background-color: var(--dark-slate);
 }
 
-#hold-input, #toggle-input {
-    display: none;
-    visibility: hidden;
-}
+#hold-input, #toggle-input { display: flex; }
 
 #hold-input { align-items: center; }
 #toggle-input {
@@ -213,7 +213,7 @@ input[type="text"], input[type="number"], select {
 
 #arm-button {
     margin-top: .3em;
-    z-index: 36;
+    z-index: 48;
 }
 
 #arm-button > a {
@@ -222,8 +222,6 @@ input[type="text"], input[type="number"], select {
     font-size: 20px;
     font-weight: 300;
 }
-
-
 
 #info {
     display: flex;

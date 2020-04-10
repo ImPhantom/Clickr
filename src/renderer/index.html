@@ -17,7 +17,7 @@
         </div>
 
         <div id="app">
-            <div id="armed-cover"></div>
+            <div id="armed-cover" class="hidden"></div>
             <div class="row" id="mouse-button">
                 <a class="button" id="left">Left</a>
                 <a class="button" id="middle">Middle</a>
@@ -33,12 +33,12 @@
                 </select>
             </div>
             <div class="row">
-                <div id="hold-input" class="align-items-center">
+                <div id="hold-input" class="align-items-center hidden">
                     <label for="trigger-key">Hotkey:</label>
                     <input type="text" id="trigger-key" name="trigger-key" readonly>
                 </div>
 
-                <div id="toggle-input">
+                <div id="toggle-input" class="hidden">
                     <div class="row align-items-center">
                         <label for="start-key">Start:</label>
                         <input type="text" id="start-key" name="start-key" readonly>

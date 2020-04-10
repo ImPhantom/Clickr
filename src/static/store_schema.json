@@ -6,13 +6,12 @@
     "holdTrigger": {
         "type": "object",
         "properties": {
-            "hotkey": {
+            "triggerHotkey": {
                 "type": "array",
                 "items": { "type": "string" }
             },
-            "hotkeyRaw": {
-                "type": "array",
-                "items": { "type": "number" }
+            "triggerShortcut": {
+                "type": "string"
             }
         }
     },
@@ -23,17 +22,15 @@
                 "type": "array",
                 "items": { "type": "string" }
             },
-            "startHotkeyRaw": {
-                "type": "array",
-                "items": { "type": "number" }
+            "startShortcut": {
+                "type": "string"
             },
             "stopHotkey": {
                 "type": "array",
                 "items": { "type": "string" }
             },
-            "stopHotkeyRaw": {
-                "type": "array",
-                "items": { "type": "number" }
+            "stopShortcut": {
+                "type": "string"
             }
         }
     },
@@ -47,8 +44,5 @@
             "times": { "type": "number" },
             "unit": { "type": "number" }
         }
-    },
-    "stopAfter": {
-        "type": "number"
     }
 }
