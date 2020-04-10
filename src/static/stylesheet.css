@@ -13,7 +13,7 @@
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 420px;
+    --window-height: 460px;
     --window-width: 220px;
     --title-bar-height: 2rem;
 }
@@ -40,6 +40,10 @@ html, body {
 .hidden {
     display: none !important;
     visibility: hidden !important;
+}
+
+.muted {
+    color: var(--darker-text);
 }
 
 /* Buttons */
@@ -225,9 +229,13 @@ input[type="text"], input[type="number"], select {
 
 #info {
     display: flex;
+    position: fixed;
     flex-direction: column;
-    margin-top: auto;
-    padding-bottom: .2em;
+    
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: .4em;
 
     color: var(--dark-text);
     z-index: 36;
@@ -240,4 +248,4 @@ input[type="text"], input[type="number"], select {
 }
 
 #info #status.active { color: rgb(21, 153, 87); }
-#info #clicks.active { color: var(--text); }
+#info #clicks { color: var(--text); }

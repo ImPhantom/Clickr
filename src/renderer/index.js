@@ -1,16 +1,17 @@
 'use strict'
 
 import "../static/stylesheet.css";
-import * as $ from 'jquery';
 
 import { remote } from 'electron';
+import keycode from 'keycode';
+import * as $ from 'jquery';
 
 import * as ElectronStore from 'electron-store';
 import * as StoreSchema from '../static/store_schema.json';
 
+import * as packageJson from '../../package.json';
 import { Clicker } from '../common/clicker';
 
-import keycode from 'keycode';
 
 window.clickr = {};
 window.clickr.store = new ElectronStore(StoreSchema);
@@ -20,6 +21,7 @@ $(document).ready(function () {
     const _window = remote.BrowserWindow.getFocusedWindow();
     $("#minimize-button").click(() => _window.minimize());
     $("#close-button").click(() => _window.close());
+    $("#title-bar #version").html(`v${packageJson.version}`);
 
     /*
         Click Speed
@@ -205,8 +207,10 @@ $(document).ready(function () {
         armButton.html("Arm");
 
         window.clickr.core.armed = false;
-        remote.globalShortcut.unregisterAll();
         window.clickr.core.stopClicking();
+
+        remote.globalShortcut.unregisterAll();
+        console.log("Unregistered all hotkeys!");
     }
     
     armButton.click(() => {
@@ -223,7 +227,8 @@ $(document).ready(function () {
                 clicksText.html(`${_clicksSoFar} clicks.`);
             },
             _finalClickTotal => { // Clicking ended
-                statusText.html("Not clicking yet.");
+                statusText.html("");
+                clicksText.html(`Last Run: <span class='muted'>${_finalClickTotal} clicks</span>`);
                 bothTexts.removeClass("active");
             });
         }
