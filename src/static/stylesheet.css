@@ -13,16 +13,18 @@
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 460px;
-    --window-width: 220px;
+    --window-height: 340px;
+    --window-width: 260px;
     --title-bar-height: 2rem;
 }
 
-html, body {
-    font-family: "Open Sans", sans-serif;
-    font-size: 18px;
-    margin: 0;
+html * {
+    font-size: 16px;
+    font-weight: 300;
+}
 
+body {
+    margin: 0;
     color: var(--text);
     background-color: var(--slate);
 }
@@ -96,6 +98,8 @@ html, body {
     padding: 0 .3em;
 
     align-items: center;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
     font-weight: 300;
 }
 
@@ -113,9 +117,6 @@ html, body {
     top: 0;
     right: 0;
     height: 100%;
-
-    font-family: SegoeMDL2;
-    font-size: 10px;
 }
 
 #title-bar > #buttons > a {
@@ -127,6 +128,9 @@ html, body {
 
     justify-content: center;
     align-items: center;
+
+    font-family: SegoeMDL2;
+    font-size: 10px;
     
     color: var(--text);
     background-color: var(--darker-slate);
@@ -151,6 +155,8 @@ html, body {
 
     padding: .4em .5em;
     margin-top: var(--title-bar-height);
+
+    font-family: "Open Sans", sans-serif;
 }
 
 #app > #armed-cover {
@@ -218,6 +224,7 @@ input[type="text"], input[type="number"], select {
 #arm-button {
     margin-top: .3em;
     z-index: 48;
+    height: 4rem;
 }
 
 #arm-button > a {
@@ -225,17 +232,18 @@ input[type="text"], input[type="number"], select {
 
     font-size: 20px;
     font-weight: 300;
+    line-height: 3rem;
 }
 
 #info {
     display: flex;
-    position: fixed;
     flex-direction: column;
+    flex-grow: 1;
     
-    bottom: 0;
-    left: 0;
     width: 100%;
-    padding-bottom: .4em;
+
+    align-items: center;
+    justify-content: center;
 
     color: var(--dark-text);
     z-index: 36;
@@ -244,6 +252,7 @@ input[type="text"], input[type="number"], select {
 #info > #status, #info > #clicks {
     text-align: center;
     font-weight: 300;
+    font-size: 16px;
     transition: color .3s;
 }
 

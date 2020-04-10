@@ -1,6 +1,5 @@
 'use strict'
 
-import { remote } from 'electron';
 import * as robot from 'robotjs';
 
 export class Clicker {

@@ -216,7 +216,6 @@ $(document).ready(function () {
     armButton.click(() => {
         if (window.clickr.core.armed) {
             disarm();
-            statusText.html("Not clicking yet.");
             bothTexts.removeClass("active");
         } else {
             arm(() => { // Clicking started

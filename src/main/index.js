@@ -10,8 +10,8 @@ let mainWindow;
 
 function createMainWindow() {
     const window = new BrowserWindow({
-        width: 220,
-        height: 460,
+        width: 260,
+        height: 340,
         frame: false,
         resizable: false,
         webPreferences: {
