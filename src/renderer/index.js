@@ -96,9 +96,8 @@ $(document).ready(function () {
         const hotkey = element.val().split(" + ");
         const shortcut = hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1));
         window.clickr.store.set(`${saveTag}Hotkey`, hotkey);
-        window.clickr.core[`${coreTag}Hotkey`] = hotkey;
         window.clickr.store.set(`${saveTag}Shortcut`, shortcut.join("+"));
-        window.clickr.core[`${coreTag}Shortcut`] = shortcut.join("+");
+        window.clickr.core.updateHotkey(coreTag, hotkey, shortcut.join("+"));
         console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut.join("+")}) to storage!`);
     }
     
@@ -107,17 +106,17 @@ $(document).ready(function () {
     updateInputValue(holdInput, window.clickr.core.holdHotkey); // update inital value
     holdInput.focus(() => readInputValue(holdInput)); // load current input hotkey into cache
     holdInput.keydown(_event => handleInputKeydown(event, holdInput)); // update current input hotkey on input
-    holdInput.focusout(() => saveInputValue(holdInput, "holdTrigger.trigger")); // save hotkey when user unfocuses the input
+    holdInput.focusout(() => saveInputValue(holdInput, "holdTrigger.trigger", "hold")); // save hotkey when user unfocuses the input
 
     updateInputValue(toggleStartInput, window.clickr.core.startHotkey);
     toggleStartInput.focus(() => readInputValue(toggleStartInput));
     toggleStartInput.keydown(_event => handleInputKeydown(event, toggleStartInput));
-    toggleStartInput.focusout(() => saveInputValue(toggleStartInput, "toggleTrigger.start"));
+    toggleStartInput.focusout(() => saveInputValue(toggleStartInput, "toggleTrigger.start", "start"));
 
     updateInputValue(toggleEndInput, window.clickr.core.stopHotkey);
     toggleEndInput.focus(() => readInputValue(toggleEndInput));
     toggleEndInput.keydown(_event => handleInputKeydown(event, toggleEndInput));
-    toggleEndInput.focusout(() => saveInputValue(toggleEndInput, "toggleTrigger.stop"));
+    toggleEndInput.focusout(() => saveInputValue(toggleEndInput, "toggleTrigger.stop", "stop"));
 
     // Ensure current input is visible
     $(`#${window.clickr.core.triggerType}-input`).removeClass("hidden");

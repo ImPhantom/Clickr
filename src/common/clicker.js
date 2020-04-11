@@ -53,4 +53,20 @@ export class Clicker {
             console.log(`Stopped clicker after ${this.clicks} clicks!`);
         }
     }
+
+    updateHotkey(tag, hotkey, shortcut) {
+        switch(tag) {
+            case "hold":
+                this.holdHotkey = hotkey;
+                this.holdShortcut = shortcut;
+                break;
+            case "start":
+                this.startHotkey = hotkey;
+                this.startShortcut = shortcut;
+            case "stop": {
+                this.stopHotkey = hotkey;
+                this.stopShortcut = shortcut;
+            }
+        }
+    }
 }
