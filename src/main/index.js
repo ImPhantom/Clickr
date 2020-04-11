@@ -15,6 +15,7 @@ function createMainWindow() {
         show: false,
         frame: false,
         resizable: false,
+        fullscreenable: false,
         icon: path.join(__dirname, '../../static/icon.png'),
         webPreferences: {
             nodeIntegration: true
