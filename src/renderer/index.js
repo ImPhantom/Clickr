@@ -12,6 +12,7 @@ import 'selectize/dist/js/selectize.min.js';
 
 import { remote } from 'electron';
 import keycode from 'keycode';
+import semverGt from 'semver/functions/gt';
 
 import * as ElectronStore from 'electron-store';
 import * as StoreSchema from '../static/store_schema.json';
@@ -30,7 +31,7 @@ console.log(`Configuration Path: '${window.clickr.store.path}'`);
 // Maybe move this to a separate 'migrations' file/class.
 
 // Force triggerType to toggle if its set to hold (pre 0.1.2)
-if (packageJson.version == "0.1.2") {
+if (semverGt(packageJson.version, "0.1.2")) {
     if (window.clickr.store.get("holdTrigger")) { window.clickr.store.delete("holdTrigger"); }
     if (window.clickr.store.get("triggerType") == "hold") { window.clickr.store.set("triggerType", "toggle"); }
 }

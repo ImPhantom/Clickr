@@ -20,6 +20,7 @@
     "keycode": "^2.2.0",
     "robotjs": "^0.6.0",
     "selectize": "^0.12.6",
+    "semver": "^7.2.2",
     "source-map-support": "^0.5.16",
     "weatherstar-switch": "^1.0.7"
   },

@@ -1,7 +1,7 @@
 {
     "triggerType": {
         "type": "string",
-        "enum": ["toggle"]
+        "enum": ["toggle", "hold"]
     },
     "clickingMouseButton": {
         "type": "string",
@@ -10,8 +10,8 @@
     "clickSpeed": {
         "type": "object",
         "properties": {
-            "times": { "type": "number" },
-            "unit": { "type": "number" }
+            "times": { "type": "string" },
+            "unit": { "type": "string" }
         }
     },
     "toggleTrigger": {
