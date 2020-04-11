@@ -1,6 +1,6 @@
 {
   "name": "clickr",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "repository": {
     "type" : "git",
@@ -19,7 +19,8 @@
     "jquery": "^3.4.1",
     "keycode": "^2.2.0",
     "robotjs": "^0.6.0",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "weatherstar-switch": "^1.0.7"
   },
   "devDependencies": {
     "electron": "8.2.1",
@@ -41,22 +42,22 @@
     }
   },
   "build": {
-      "appId": "gg.xeno.clickr",
-      "nsis": {
-          "artifactName": "${productName}_${version}_installer.${ext}"
-      },
-      "files": [
-        "build/*"
-      ],
-      "win": {
-        "target": "NSIS"
-      },
-      "linux": {
-        "target": [
-          "AppImage",
-          "deb",
-          "pacman"
-        ]
-      }
+    "appId": "gg.xeno.clickr",
+    "nsis": {
+      "artifactName": "${productName}_${version}_installer.${ext}"
+    },
+    "files": [
+      "build/*"
+    ],
+    "win": {
+      "target": "NSIS"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "pacman"
+      ]
+    }
   }
 }

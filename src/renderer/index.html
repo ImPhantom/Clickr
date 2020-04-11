@@ -18,11 +18,6 @@
 
         <div id="app">
             <div id="armed-cover" class="hidden"></div>
-            <div class="row" id="mouse-button">
-                <a class="button" id="left">Left</a>
-                <a class="button" id="middle">Middle</a>
-                <a class="button" id="right">Right</a>
-            </div>
 
             <div class="row" id="click-speed">
                 <input type="number" min="1" id="click-times" name="click-times">
@@ -32,13 +27,9 @@
                     <option value="3600000">clicks/hour</option>
                 </select>
             </div>
+            
             <div class="row">
-                <div id="hold-input" class="align-items-center hidden">
-                    <label for="trigger-key">Hotkey:</label>
-                    <input type="text" id="trigger-key" name="trigger-key" readonly>
-                </div>
-
-                <div id="toggle-input" class="hidden">
+                <div id="toggle-input">
                     <div class="row align-items-center">
                         <label for="start-key">Start:</label>
                         <input type="text" id="start-key" name="start-key" readonly>
@@ -47,12 +38,17 @@
                         <label for="stop-key">Stop:</label>
                         <input type="text" id="stop-key" name="stop-key" readonly>
                     </div>
+                    <div class="row" id="single-checkbox">
+                        <input type="checkbox" id="single-hotkey-toggle" />
+                        <label>Single hotkey toggle?</label>
+                    </div>
                 </div>
             </div>
 
-            <div class="row" id="trigger-type">
-                <a class="button" id="hold">Hold</a>
-                <a class="button" id="toggle">Toggle</a>
+            <div class="row" id="mouse-button">
+                <a class="button" id="left">Left</a>
+                <a class="button" id="middle">Middle</a>
+                <a class="button" id="right">Right</a>
             </div>
 
             <div class="row" id="arm-button">

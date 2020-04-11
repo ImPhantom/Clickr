@@ -13,10 +13,22 @@ import * as packageJson from '../../package.json';
 import { Clicker } from '../common/clicker';
 
 window.clickr = {};
-window.clickr.store = new ElectronStore(StoreSchema);
-window.clickr.core = new Clicker(window.clickr.store);
+window.clickr.store = new ElectronStore({
+    schema: StoreSchema
+});
 
-console.log(`Store Path: '${window.clickr.store.path}'`);
+console.log(`Configuration Path: '${window.clickr.store.path}'`);
+
+// Manually handle store migrations cause the builtin doesnt seem to work.
+// Maybe move this to a separate 'migrations' file/class.
+
+// Force triggerType to toggle if its set to hold (pre 0.1.2)
+if (packageJson.version == "0.1.2") {
+    if (window.clickr.store.get("holdTrigger")) { window.clickr.store.delete("holdTrigger"); }
+    if (window.clickr.store.get("triggerType") == "hold") { window.clickr.store.set("triggerType", "toggle"); }
+}
+
+window.clickr.core = new Clicker(window.clickr.store);
 
 $(document).ready(function () {
     const _window = remote.getCurrentWindow();
@@ -66,11 +78,9 @@ $(document).ready(function () {
 
     function handleInputKeydown(event, element) {
         if (event.keyCode !== 8 && localHotkeyCache.length < 3) {
-            console.log(`wasnt backspace, cache isnt holding more than 3 keys`);
             const _keychar = keychar(event);
             localHotkeyCache.push(_keychar);
         } else if (event.keyCode === 8) {
-            console.log(`was backspace`);
             localHotkeyCache.pop();
         }
 
@@ -101,17 +111,12 @@ $(document).ready(function () {
         console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut.join("+")}) to storage!`);
     }
     
-    const holdInput = $("#trigger-key"), toggleStartInput = $("#start-key"), toggleEndInput = $("#stop-key");
+    const toggleStartInput = $("#start-key"), toggleEndInput = $("#stop-key");
 
-    updateInputValue(holdInput, window.clickr.core.holdHotkey); // update inital value
-    holdInput.focus(() => readInputValue(holdInput)); // load current input hotkey into cache
-    holdInput.keydown(_event => handleInputKeydown(event, holdInput)); // update current input hotkey on input
-    holdInput.focusout(() => saveInputValue(holdInput, "holdTrigger.trigger", "hold")); // save hotkey when user unfocuses the input
-
-    updateInputValue(toggleStartInput, window.clickr.core.startHotkey);
-    toggleStartInput.focus(() => readInputValue(toggleStartInput));
-    toggleStartInput.keydown(_event => handleInputKeydown(event, toggleStartInput));
-    toggleStartInput.focusout(() => saveInputValue(toggleStartInput, "toggleTrigger.start", "start"));
+    updateInputValue(toggleStartInput, window.clickr.core.startHotkey); // updates stored value on application load
+    toggleStartInput.focus(() => readInputValue(toggleStartInput)); // read new input when focused
+    toggleStartInput.keydown(_event => handleInputKeydown(event, toggleStartInput)); // update hotkey on input keydown
+    toggleStartInput.focusout(() => saveInputValue(toggleStartInput, "toggleTrigger.start", "start")); // on input unfocus store value to app config & update
 
     updateInputValue(toggleEndInput, window.clickr.core.stopHotkey);
     toggleEndInput.focus(() => readInputValue(toggleEndInput));
@@ -122,28 +127,17 @@ $(document).ready(function () {
     $(`#${window.clickr.core.triggerType}-input`).removeClass("hidden");
 
     /*
-        Trigger Type Handling
+        Single hotkey toggle
     */
-    console.log(`setting current trigger type to: '${window.clickr.core.triggerType}'`);
-    $(`#trigger-type #${window.clickr.core.triggerType}`).addClass("active");
-
-    function handleTriggerTypeChange(_clicked) {
-        const typeClicked = _clicked.attr("id");
-        const currentType = (typeClicked == "hold") ? "toggle" : "hold";
-        if (window.clickr.core.triggerType !== typeClicked) {
-            $(`#trigger-type > #${currentType}`).removeClass("active");
-            $(`#trigger-type > #${typeClicked}`).addClass("active");
-            $(`#${currentType}-input`).addClass("hidden");
-            $(`#${typeClicked}-input`).removeClass("hidden");
-
-            window.clickr.store.set("triggerType", typeClicked);
-            window.clickr.core.triggerType = typeClicked;
-        }
-    }
-
-    const holdTypeButton = $("#trigger-type > #hold"), toggleTypeButton = $("#trigger-type > #toggle");
-    holdTypeButton.click(() => handleTriggerTypeChange(holdTypeButton));
-    toggleTypeButton.click(() => handleTriggerTypeChange(toggleTypeButton));
+    const singleHotkeySwitch = new switchLib($("#single-hotkey-toggle")[0], { size: "small", onChange: () => {
+        const checked = singleHotkeySwitch.getChecked();
+        const stopInputLabel = $("label[for='stop-key']");
+        
+        toggleEndInput.prop("disabled", checked);
+        window.clickr.store.set("toggleTrigger.singleHotkeyToggle", checked);
+        stopInputLabel.css("color", (checked) ? "var(--dark-text)" : "var(--text)");
+        console.log("Single hotkey toggle:", singleHotkeySwitch.getChecked());
+    }});
 
     /*
         Mouse Button Select Handling
@@ -180,27 +174,34 @@ $(document).ready(function () {
         armButton.html("Awaiting hotkey...");
 
         window.clickr.core.armed = true;
-        
-        if (window.clickr.core.triggerType === "hold") {
-            if (!window.clickr.core.holdShortcut) return;       
-
-            disarm();
-            remote.dialog.showMessageBox(null, { type: 'error', buttons: ['Okay'], defaultId: 0, title: 'Error', message: 'The "hold" trigger hasn\'t been implemented yet, sorry! Disarming...' });
-
-            // TODO: Finish
-
-        } else if (window.clickr.core.triggerType === "toggle") {
+        if (window.clickr.core.triggerType === "toggle") {
             if (!window.clickr.core.startShortcut || !window.clickr.core.stopShortcut) return;
 
-            // Register start hotkey
-            remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
-                window.clickr.core.startClicking(() => startCallback(), _clicksSoFar => clickCallback(_clicksSoFar));
-            });
-            console.log(`Registered start hotkey: '${window.clickr.core.startShortcut}'!`);
+            if (singleHotkeySwitch.getChecked() && window.clickr.core.startShortcut) {
+                // Register single toggle hotkey
+                remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
+                    if (!window.clickr.core.clicking) {
+                        window.clickr.core.startClicking(startCallback, clickCallback);
+                    } else {
+                        window.clickr.core.stopClicking(stopCallback);
+                    }
+                    
+                });
+                console.log(`Registered single hotkey toggle: '${window.clickr.core.startShortcut}'`);
 
-            // Register stop hotkey
-            remote.globalShortcut.register(window.clickr.core.stopShortcut, () => window.clickr.core.stopClicking(stopCallback));
-            console.log(`Registered stop hotkey: '${window.clickr.core.stopShortcut}'!`);
+            } else if (window.clickr.core.startShortcut && window.clickr.core.stopShortcut) {
+                // Register start hotkey
+                remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
+                    window.clickr.core.startClicking(() => startCallback(), _clicksSoFar => clickCallback(_clicksSoFar));
+                });
+                console.log(`Registered start hotkey: '${window.clickr.core.startShortcut}'`);
+
+                // Register stop hotkey
+                remote.globalShortcut.register(window.clickr.core.stopShortcut, () => window.clickr.core.stopClicking(stopCallback));
+                console.log(`Registered stop hotkey: '${window.clickr.core.stopShortcut}'`);
+            }
+        } else {
+            console.warn("TriggerType is invalid!");
         }
     }
 

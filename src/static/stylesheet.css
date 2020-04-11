@@ -8,12 +8,14 @@
     --dark-text: #ACADB1;
     --darker-text: #838488;
 
+    --lighter-slate: #323337;
+    --light-slate: #27282C;
     --slate: #222327;
     --dark-slate: #1D1E22;
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 340px;
+    --window-height: 370px;
     --window-width: 260px;
     --title-bar-height: 2rem;
 }
@@ -68,6 +70,27 @@ body {
 
 .align-items-center { align-items: center; }
 .justify-content-center { justify-content: center; }
+
+/*
+    Checkbox styling
+*/
+
+.switch {
+    border: none !important;
+    margin-right: .4em !important;
+    margin-top: 1px !important;
+}
+
+.switch:not([aria-checked="true"]) {
+    border-color: var(--light-slate) !important;
+    background-color: var(--darkest-slate) !important;
+}
+
+.switch[aria-checked="true"] {
+    box-shadow: #691FFF 0px 0px 0px 11.1111px inset !important;
+    background-color: #691FFF !important;
+}
+
 
 /*
     Fully custom titlebar
@@ -205,20 +228,27 @@ input[type="text"], input[type="number"], select {
 
     color: var(--dark-text);
     background-color: var(--dark-slate);
+    transition: background-color .3s, color .3s;
 }
 
-#hold-input, #toggle-input { display: flex; }
+input[type="text"]:disabled {
+    color: var(--darker-text);
+    background-color: var(--darker-slate);
+}
 
-#hold-input { align-items: center; }
 #toggle-input {
+    display: flex;
     flex-direction: column;
 }
 
 #toggle-input .row:nth-child(1) { margin-bottom: .3em; }
 
-#trigger-type { margin-top: .3em; }
-#trigger-type > a {
-    width: 50%;
+#toggle-input > #single-checkbox {
+    padding: .4em 0 .3em 0;
+}
+
+#toggle-input > #single-checkbox > label {
+    margin-right: 0;
 }
 
 #arm-button {

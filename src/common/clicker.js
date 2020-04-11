@@ -16,6 +16,8 @@ export class Clicker {
 
         this.holdShortcut = dataStore.get("holdTrigger.triggerShortcut") || null;
         this.holdHotkey = dataStore.get("holdTrigger.triggerHotkey") || null;
+
+        this.singleHotkeyToggle = dataStore.get("toggleTrigger.singleHotkey") || false;
         this.startShortcut = dataStore.get("toggleTrigger.startShortcut") || null;
         this.startHotkey = dataStore.get("toggleTrigger.startHotkey") || null;
         this.stopShortcut = dataStore.get("toggleTrigger.stopShortcut") || null;
