@@ -1,13 +1,17 @@
 'use strict'
 
+import * as $ from 'jquery';
+
 import "../static/stylesheet.css";
 
 import 'weatherstar-switch/dist/switch.css';
-import switchLib from 'weatherstar-switch';
+import Switch from 'weatherstar-switch';
+
+import 'selectize/dist/css/selectize.css';
+import 'selectize/dist/js/selectize.min.js';
 
 import { remote } from 'electron';
 import keycode from 'keycode';
-import * as $ from 'jquery';
 
 import * as ElectronStore from 'electron-store';
 import * as StoreSchema from '../static/store_schema.json';
@@ -47,15 +51,17 @@ $(document).ready(function () {
     clickTimesInput.focusout(() => {
         window.clickr.core.clicksPerUnit = clickTimesInput.val();
         window.clickr.store.set("clickSpeed.times", window.clickr.core.clicksPerUnit);
-        console.log("Updated clicks per unit");
+        console.log(`Updated click speed => '${window.clickr.core.clicksPerUnit}cpu'`);
     });
 
     const clickingUnitSelect = $("#click-speed > #unit-select");
+    clickingUnitSelect.selectize();
+
     clickingUnitSelect.val(window.clickr.core.clickingUnit);
     clickingUnitSelect.change(() => {
         window.clickr.core.clickingUnit = clickingUnitSelect.val();
         window.clickr.store.set("clickSpeed.unit", window.clickr.core.clickingUnit);
-        console.log("Updated clicking unit");
+        console.log(`Updated click speed unit => 'clicks/${{1000:"sec",60000:"min",3600000:"hour"}[window.clickr.core.clickingUnit]}'`);
     });
 
     /*

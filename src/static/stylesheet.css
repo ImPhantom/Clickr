@@ -37,8 +37,10 @@ body {
 
 .row {
     display: flex;
-    width: 100%;
     flex-flow: row nowrap;
+    width: 100%;
+    
+    margin-top: .2em;
 }
 
 .hidden {
@@ -50,29 +52,78 @@ body {
     color: var(--darker-text);
 }
 
+label {
+    font-size: 16px;
+    font-weight: 300;
+    margin-right: .3em;
+}
+
+input[type="text"], input[type="number"], select {
+    border: none;
+    padding: .4em;
+    width: 100%;
+
+    color: var(--dark-text);
+    background-color: var(--dark-slate);
+    transition: background-color .3s, color .3s;
+}
+
+input[type="text"]:disabled {
+    color: var(--darker-text);
+    background-color: var(--darkest-slate);
+}
+
+input:focus, select:focus {
+    border: none;
+    outline: none;
+    background-color: var(--darker-slate);
+}
+
+.mt-0 { margin-top: 0 !important; }
+
 /* Buttons */
 .button {
+    position: relative;
     padding: .4em 0;
     font-size: 14px;
     text-align: center;
     background-color: var(--darker-slate);
     transition: background-color .3s, background-image .3s, color .3s;
+    z-index: 1;
 }
 
+.button:hover { cursor: pointer; }
+
 .button:not(.active):hover {
-    cursor: pointer;
     background-color: var(--darkest-slate);
 }
 
+.button:not(.active):hover::before { opacity: 1; }
+
+.button::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+
+    background-image: linear-gradient(to right, #006624, #002466);
+    transition: opacity .3s;
+    z-index: -1;
+}
+
 .button.active {
-    background-image: linear-gradient(45deg, rgb(21, 153, 87), rgb(21, 87, 153))
+    background-image: linear-gradient(45deg, #159957, #155799);
+    /*background-image: linear-gradient(45deg, #007A38, #00387A);*/
 }
 
 .align-items-center { align-items: center; }
 .justify-content-center { justify-content: center; }
 
 /*
-    Checkbox styling
+    Checkbox/Switch styling
 */
 
 .switch {
@@ -91,6 +142,45 @@ body {
     background-color: #691FFF !important;
 }
 
+/*
+    Selectize Styling
+*/
+
+.selectize-control {
+    width: 100%;
+    
+}
+
+.selectize-input {
+    height: 100% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: .4em !important;
+    transition: background-color .3s, color .3s;
+}
+
+.selectize-input > * { vertical-align: middle !important; }
+
+.selectize-input.full {
+    color: var(--text);
+    background-color: var(--dark-slate) !important;
+}
+
+.selectize-input.focus { background-color: var(--darker-slate) !important; }
+
+.selectize-dropdown {
+    border: none !important;
+    color: var(--dark-text) !important;
+    background-color: var(--darker-slate) !important;
+}
+
+.selectize-dropdown .active {
+    color: var(--text) !important;
+    background-color: var(--darkest-slate) !important;
+}
+
+.selectize-dropdown-content > .option { transition: background-color .3s, color .3s; }
+.selectize-dropdown-content > .option:hover { cursor: pointer; }
 
 /*
     Fully custom titlebar
@@ -198,53 +288,21 @@ body {
     width: 33.3%;
 }
 
-#mouse-button > a.active {
-    background-image: linear-gradient(45deg, #c94b4b, #4b134f);
-}
-
-#click-speed {
-    margin: .3em 0;
-}
-
+#click-speed { margin-top: 0; }
 #click-speed > #click-times {
     width: 30%;
     margin-right: 2%;
 }
 
-#click-speed > #unit-select {
-    width: 68%;
-}
-
-label {
-    font-size: 16px;
-    font-weight: 300;
-    margin-right: .3em;
-}
-
-input[type="text"], input[type="number"], select {
-    border: none;
-    padding: .4em;
-    width: 100%;
-
-    color: var(--dark-text);
-    background-color: var(--dark-slate);
-    transition: background-color .3s, color .3s;
-}
-
-input[type="text"]:disabled {
-    color: var(--darker-text);
-    background-color: var(--darker-slate);
-}
+#click-speed > #unit-select { width: 68%; }
 
 #toggle-input {
     display: flex;
     flex-direction: column;
 }
 
-#toggle-input .row:nth-child(1) { margin-bottom: .3em; }
-
 #toggle-input > #single-checkbox {
-    padding: .4em 0 .3em 0;
+    padding: .52em 0;
 }
 
 #toggle-input > #single-checkbox > label {
@@ -263,6 +321,11 @@ input[type="text"]:disabled {
     font-size: 20px;
     font-weight: 300;
     line-height: 3rem;
+}
+
+#arm-button > a::before {
+    background-image: none !important;
+    background-color: var(--darkest-slate) !important;
 }
 
 #info {
