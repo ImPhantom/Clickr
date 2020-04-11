@@ -7190,6 +7190,11 @@ wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
+weatherstar-switch@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/weatherstar-switch/-/weatherstar-switch-1.0.7.tgz#a47e0aa668d465f9da816af30ca6b2d1cb6ad5be"
+  integrity sha1-pH4KpmjUZfnagWrzDKay0ctq1b4=
+
 webpack-cli@^3.3.11:
   version "3.3.11"
   resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-3.3.11.tgz#3bf21889bf597b5d82c38f215135a411edfdc631"

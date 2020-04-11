@@ -2,6 +2,9 @@
 
 import "../static/stylesheet.css";
 
+import 'weatherstar-switch/dist/switch.css';
+import switchLib from 'weatherstar-switch';
+
 import { remote } from 'electron';
 import keycode from 'keycode';
 import * as $ from 'jquery';
