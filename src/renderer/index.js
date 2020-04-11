@@ -85,6 +85,10 @@ $(document).ready(function () {
         }
     }
 
+    function hotkeyToShortcut(hotkey) {
+        return (hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1))).join("+");
+    }
+
     function handleInputKeydown(event, element) {
         if (event.keyCode !== 8 && localHotkeyCache.length < 3) {
             const _keychar = keychar(event);
@@ -108,16 +112,17 @@ $(document).ready(function () {
     function updateInputValue(element, hotkey) {
         if (hotkey) {
             element.attr("value", hotkey.join(" + "));
+            console.log(`Loaded saved shortcut: '${hotkeyToShortcut(hotkey)}'`);
         }
     }
 
     function saveInputValue(element, saveTag, coreTag) {
         const hotkey = element.val().split(" + ");
-        const shortcut = hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1));
+        const shortcut = hotkeyToShortcut(hotkey);
         window.clickr.store.set(`${saveTag}Hotkey`, hotkey);
-        window.clickr.store.set(`${saveTag}Shortcut`, shortcut.join("+"));
-        window.clickr.core.updateHotkey(coreTag, hotkey, shortcut.join("+"));
-        console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut.join("+")}) to storage!`);
+        window.clickr.store.set(`${saveTag}Shortcut`, shortcut);
+        window.clickr.core.updateHotkey(coreTag, hotkey, shortcut);
+        console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut}) to storage!`);
     }
     
     const toggleStartInput = $("#start-key"), toggleEndInput = $("#stop-key");
@@ -142,14 +147,19 @@ $(document).ready(function () {
         toggleEndInput.prop("disabled", checked);
         window.clickr.store.set("toggleTrigger.singleHotkeyToggle", checked);
         stopInputLabel.css("color", (checked) ? "var(--dark-text)" : "var(--text)");
-        console.log("Single hotkey toggle:", singleHotkeySwitch.getChecked());
+        console.log(`Updated single hotkey toggle: ${singleHotkeySwitch.getChecked()}`);
     }});
+
+    // Update value on load
+    if (window.clickr.core.singleHotkeyToggle)
+        (window.clickr.core.singleHotkeyToggle) ? singleHotkeySwitch.on() : singleHotkeySwitch.off();
 
     /*
         Mouse Button Select Handling
     */
-    console.log(`setting current mouse button to: '${window.clickr.core.clickingButton}'`);
     $(`#mouse-button #${window.clickr.core.clickingButton}`).addClass("active");
+    console.log(`Loaded saved clicking button: '${window.clickr.core.clickingButton}'`);
+
     function handleMouseButtonChange(_clicked) {
         const typeClicked = _clicked.attr("id");
         const others = ["left", "middle", "right"].filter(_ => _ !== typeClicked);
@@ -161,6 +171,7 @@ $(document).ready(function () {
 
             window.clickr.store.set("clickingMouseButton", typeClicked);
             window.clickr.core.clickingButton = typeClicked;
+            console.log(`Updated clicking mouse button: '${window.clickr.core.clickingButton}'`);
         }
     }
 
