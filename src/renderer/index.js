@@ -132,13 +132,10 @@ $(document).ready(function () {
     toggleEndInput.keydown(_event => handleInputKeydown(event, toggleEndInput));
     toggleEndInput.focusout(() => saveInputValue(toggleEndInput, "toggleTrigger.stop", "stop"));
 
-    // Ensure current input is visible
-    $(`#${window.clickr.core.triggerType}-input`).removeClass("hidden");
-
     /*
         Single hotkey toggle
     */
-    const singleHotkeySwitch = new switchLib($("#single-hotkey-toggle")[0], { size: "small", onChange: () => {
+    const singleHotkeySwitch = new Switch($("#single-hotkey-toggle")[0], { size: "small", onChange: () => {
         const checked = singleHotkeySwitch.getChecked();
         const stopInputLabel = $("label[for='stop-key']");
         
