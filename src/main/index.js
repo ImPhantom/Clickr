@@ -12,8 +12,10 @@ function createMainWindow() {
     const window = new BrowserWindow({
         width: 260,
         height: 340,
+        show: false,
         frame: false,
         resizable: false,
+        icon: path.join(__dirname, '../../static/icon.png'),
         webPreferences: {
             nodeIntegration: true
         }
@@ -50,6 +52,7 @@ function createMainWindow() {
 
     return window;
 }
+
 
 // quit application when all windows are closed
 app.on('window-all-closed', () => {

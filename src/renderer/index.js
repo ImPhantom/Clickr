@@ -12,13 +12,14 @@ import * as StoreSchema from '../static/store_schema.json';
 import * as packageJson from '../../package.json';
 import { Clicker } from '../common/clicker';
 
-
 window.clickr = {};
 window.clickr.store = new ElectronStore(StoreSchema);
 window.clickr.core = new Clicker(window.clickr.store);
 
+console.log(`Store Path: '${window.clickr.store.path}'`);
+
 $(document).ready(function () {
-    const _window = remote.BrowserWindow.getFocusedWindow();
+    const _window = remote.getCurrentWindow();
     $("#minimize-button").click(() => _window.minimize());
     $("#close-button").click(() => _window.close());
     $("#title-bar #version").html(`v${packageJson.version}`);
@@ -91,11 +92,13 @@ $(document).ready(function () {
         }
     }
 
-    function saveInputValue(element, saveTag) {
+    function saveInputValue(element, saveTag, coreTag) {
         const hotkey = element.val().split(" + ");
         const shortcut = hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1));
         window.clickr.store.set(`${saveTag}Hotkey`, hotkey);
+        window.clickr.core[`${coreTag}Hotkey`] = hotkey;
         window.clickr.store.set(`${saveTag}Shortcut`, shortcut.join("+"));
+        window.clickr.core[`${coreTag}Shortcut`] = shortcut.join("+");
         console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut.join("+")}) to storage!`);
     }
     

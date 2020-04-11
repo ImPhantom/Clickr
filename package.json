@@ -1,11 +1,16 @@
 {
   "name": "clickr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/ImPhantom/Clickr.git"
+  },
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
+    "dist": "yarn compile && yarn rebuild && electron-builder",
+    "dist_linux": "yarn compile && yarn rebuild && electron-builder --linux",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "rebuild": "electron-rebuild"
   },
@@ -27,18 +32,31 @@
     "commonSourceDirectory": "src/common",
     "staticSourceDirectory": "src/static",
     "title": true,
-    "whiteListedModules": [
-      "robotjs"
-    ],
     "main": {
       "sourceDirectory": "src/main"
     },
     "renderer": {
-      "dll": [
-        "robotjs"
-      ],
       "sourceDirectory": "src/renderer",
       "template": "src/renderer/index.html"
     }
+  },
+  "build": {
+      "appId": "gg.xeno.clickr",
+      "nsis": {
+          "artifactName": "${productName}_${version}_installer.${ext}"
+      },
+      "files": [
+        "build/*"
+      ],
+      "win": {
+        "target": "NSIS"
+      },
+      "linux": {
+        "target": [
+          "AppImage",
+          "deb",
+          "pacman"
+        ]
+      }
   }
 }
