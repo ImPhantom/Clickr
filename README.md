@@ -18,9 +18,6 @@ The use of the [yarn](https://yarnpkg.com/) package manager is **strongly** reco
 * Application will be added to start menu shortcuts
 
 *Application is installed in: `%appdata%/Local/Programs/clickr/`*
-```
-
-```
 
 #### Linux
 ```bash
