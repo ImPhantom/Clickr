@@ -33,6 +33,10 @@ function createMainWindow() {
         }));
     }
 
+    window.once('ready-to-show', () => {
+        window.show();
+    })
+
     window.on('closed', () => {
         mainWindow = null;
     })
