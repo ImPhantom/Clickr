@@ -6,8 +6,7 @@ This is an extremely heavyweight & overly simple autoclicker made in Electron (h
 This project was started purely as a way for me to mess around with Electron, and to make an autoclicker that doesn't look like shit.
 
 ## Getting Started
-This application isn't currently in a state where it can be installed easily, eventually I will fill in the installation instructions and post releases in the release tab.
-The use of the [yarn](https://yarnpkg.com/) package manager is **strongly** recommended, as opposed to using `npm`.
+If you want to install & use Clickr, then follow the instructions below to get everything running.
 
 ### Installing
 
@@ -30,6 +29,8 @@ The use of the [yarn](https://yarnpkg.com/) package manager is **strongly** reco
 ```
 
 ## Contributing
+**The use of the [yarn](https://yarnpkg.com/) package manager is strongly recommended, as opposed to using `npm`.**
+
 If you would like to contribute to this repo, just fork it and then make a pull request from your changed branch to the `master` branch.\
 **Eventually I plan to move to a more standard git flow, but for now everything will be developed on master.**
 
