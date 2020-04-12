@@ -50,9 +50,12 @@ $(document).ready(function () {
     const clickTimesInput = $("#click-speed > #click-times");
     clickTimesInput.val(window.clickr.core.clicksPerUnit);
     clickTimesInput.focusout(() => {
-        window.clickr.core.clicksPerUnit = clickTimesInput.val();
-        window.clickr.store.set("clickSpeed.times", window.clickr.core.clicksPerUnit);
-        console.log(`Updated click speed => '${window.clickr.core.clicksPerUnit}cpu'`);
+        const _saveVal = clickTimesInput.val();
+        if (_saveVal && _saveVal != "" && _saveVal > 0) {
+            window.clickr.core.clicksPerUnit = _saveVal;
+            window.clickr.store.set("clickSpeed.times", window.clickr.core.clicksPerUnit);
+            console.log(`Updated click speed => '${window.clickr.core.clicksPerUnit}cpu'`);
+        }
     });
 
     const clickingUnitSelect = $("#click-speed > #unit-select");
@@ -147,8 +150,9 @@ $(document).ready(function () {
         
         toggleEndInput.prop("disabled", checked);
         window.clickr.store.set("toggleTrigger.singleHotkeyToggle", checked);
+        window.clickr.store.singleHotkeyToggle = checked;
         stopInputLabel.css("color", (checked) ? "var(--dark-text)" : "var(--text)");
-        console.log(`Updated single hotkey toggle: ${singleHotkeySwitch.getChecked()}`);
+        console.log(`Updated single hotkey toggle: ${checked}`);
     }});
 
     // Update value on load
