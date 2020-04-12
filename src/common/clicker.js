@@ -14,6 +14,9 @@ export class Clicker {
         this.clicksPerUnit = dataStore.get("clickSpeed.times") || 8;
         this.clickingUnit = dataStore.get("clickSpeed.unit") || 1000;
 
+        this.stopAfterToggle = dataStore.get("stopAfter.enabled") || false;
+        this.stopAfterClicks = dataStore.get("stopAfter.afterClicks") || 0;
+
         this.holdShortcut = dataStore.get("holdTrigger.triggerShortcut") || null;
         this.holdHotkey = dataStore.get("holdTrigger.triggerHotkey") || null;
 
@@ -24,7 +27,7 @@ export class Clicker {
         this.stopHotkey = dataStore.get("toggleTrigger.stopHotkey") || null;
     }
 
-    startClicking(startCallback = null, onClickCallback = null) {
+    startClicking(startCallback = null, onClickCallback = null, stopCallback = null) {
         if (!this.armed || this.clicking)
             return;
 
@@ -35,8 +38,13 @@ export class Clicker {
         this.interval = setInterval(() => {
             robot.mouseClick(this.clickingButton);
             this.clicks++;
+
             if (onClickCallback)
                 onClickCallback(this.clicks);
+
+            if (this.stopAfterToggle && this.stopAfterClicks > 0 && this.clicks >= this.stopAfterClicks) {
+                this.stopClicking(stopCallback);
+            }
         }, Math.floor(this.clickingUnit / this.clicksPerUnit));
 
         this.clicking = true;

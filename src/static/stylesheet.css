@@ -15,7 +15,7 @@
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 370px;
+    --window-height: 380px;
     --window-width: 260px;
     --title-bar-height: 2rem;
 }
@@ -63,15 +63,17 @@ input[type="text"], input[type="number"], select {
     padding: .4em;
     width: 100%;
 
-    color: var(--dark-text);
+    color: var(--text);
     background-color: var(--dark-slate);
     transition: background-color .3s, color .3s;
 }
 
-input[type="text"]:disabled {
+input[type="text"]:disabled, input[type="number"]:disabled {
     color: var(--darker-text);
     background-color: var(--darkest-slate);
 }
+
+input[type="number"] { font-size: .98rem; }
 
 input:focus, select:focus {
     border: none;
@@ -284,10 +286,12 @@ input:focus, select:focus {
     background-color: rgba(0,0,0, 0.6);
 }
 
+/* Mouse Button Selection */
 #mouse-button > a {
     width: 33.3%;
 }
 
+/* Click Speed */
 #click-speed { margin-top: 0; }
 #click-speed > #click-times {
     width: 30%;
@@ -296,6 +300,7 @@ input:focus, select:focus {
 
 #click-speed > #unit-select { width: 68%; }
 
+/* Hotkey Input's */
 #toggle-input {
     display: flex;
     flex-direction: column;
@@ -309,6 +314,35 @@ input:focus, select:focus {
     margin-right: 0;
 }
 
+/* Stop After */
+#stop-after { margin-bottom: .3em; }
+#stop-after > #toggle, #stop-after > #clicks { display: flex; }
+#stop-after > #toggle {
+    width: 60%;
+    flex-direction: row;
+    align-items: center;
+}
+
+#stop-after > #clicks > #stop-after-clicks { padding: .38em 0 .28em .3em; }
+#stop-after > #clicks {
+    position: relative;
+    width: 60%;
+}
+
+#stop-after > #clicks::after {
+    position: absolute;
+    top: 3px;
+    right: .5em;
+    transition: all .2s ease-in-out;
+}
+
+#stop-after > #clicks:hover::after,
+#stop-after > #clicks:focus-within::after { right: 1.5em; }
+
+#stop-after > #clicks::after { content: "clicks"; }
+#stop-after > #clicks.active::after { color: var(--dark-text); }
+
+/* Arm Button */
 #arm-button {
     margin-top: .3em;
     z-index: 48;
@@ -328,6 +362,7 @@ input:focus, select:focus {
     background-color: var(--darkest-slate) !important;
 }
 
+/* Clicker status/information */
 #info {
     display: flex;
     flex-direction: column;

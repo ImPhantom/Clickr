@@ -160,6 +160,38 @@ $(document).ready(function () {
         (window.clickr.core.singleHotkeyToggle) ? singleHotkeySwitch.on() : singleHotkeySwitch.off();
 
     /*
+        Stop After
+    */
+    const stopAfterInput = $("#stop-after-clicks");
+    const stopAfterClicksSuffix = $("#stop-after > #clicks");
+    const stopAfterSwitch = new Switch($("#stop-after-toggle")[0], { size: "small", onChange: () => {
+        const checked = stopAfterSwitch.getChecked();
+        stopAfterInput.prop("disabled", !checked);
+        window.clickr.store.set("stopAfter.enabled", checked);
+        window.clickr.store.stopAfterToggle = checked;
+
+        (checked) ? stopAfterClicksSuffix.removeClass("active") : stopAfterClicksSuffix.addClass("active");
+
+        console.log(`Updated stop after toggle: ${checked}`);
+    }});
+
+    if (window.clickr.core.stopAfterToggle) {
+        (window.clickr.core.stopAfterToggle) ? stopAfterSwitch.on() : stopAfterSwitch.off();
+        (window.clickr.core.stopAfterToggle) ? stopAfterClicksSuffix.removeClass("active") : stopAfterClicksSuffix.addClass("active");
+    }
+        
+
+    stopAfterInput.val(parseInt(window.clickr.core.stopAfterClicks));
+    stopAfterInput.focusout(() => {
+        const _saveVal = stopAfterInput.val();
+        if (_saveVal && _saveVal != "" && _saveVal > 0) {
+            window.clickr.core.stopAfterClicks = _saveVal;
+            window.clickr.store.set("stopAfter.afterClicks", window.clickr.core.stopAfterClicks);
+            console.log(`Updated stop after clicks amount => '${window.clickr.core.stopAfterClicks} clicks'`);
+        }
+    });
+
+    /*
         Mouse Button Select Handling
     */
     $(`#mouse-button #${window.clickr.core.clickingButton}`).addClass("active");
@@ -203,7 +235,7 @@ $(document).ready(function () {
                 // Register single toggle hotkey
                 remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
                     if (!window.clickr.core.clicking) {
-                        window.clickr.core.startClicking(startCallback, clickCallback);
+                        window.clickr.core.startClicking(startCallback, clickCallback, stopCallback);
                     } else {
                         window.clickr.core.stopClicking(stopCallback);
                     }
@@ -214,7 +246,7 @@ $(document).ready(function () {
             } else if (window.clickr.core.startShortcut && window.clickr.core.stopShortcut) {
                 // Register start hotkey
                 remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
-                    window.clickr.core.startClicking(() => startCallback(), _clicksSoFar => clickCallback(_clicksSoFar));
+                    window.clickr.core.startClicking(startCallback, clickCallback, stopCallback);
                 });
                 console.log(`Registered start hotkey: '${window.clickr.core.startShortcut}'`);
 
@@ -241,6 +273,10 @@ $(document).ready(function () {
     armButton.click(() => {
         if (window.clickr.core.armed) {
             disarm();
+        
+            const currentClicks = clicksText.val().replace(" clicks.", "");
+            clicksText.val(`Last Run: <span class='muted'>${currentClicks} clicks</span>`);
+            statusText.html("");
             bothTexts.removeClass("active");
         } else {
             arm(() => { // Clicking started

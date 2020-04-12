@@ -14,6 +14,13 @@
             "unit": { "type": "string" }
         }
     },
+    "stopAfter": {
+        "type": "object",
+        "properties": {
+            "enabled": { "type": "boolean" },
+            "afterClicks": { "type": "string" }
+        }
+    },
     "toggleTrigger": {
         "type": "object",
         "properties": {
