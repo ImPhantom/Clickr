@@ -186,7 +186,7 @@ $(document).ready(function () {
         const checked = stopAfterSwitch.getChecked();
         stopAfterInput.prop("disabled", !checked);
         window.clickr.store.set("stopAfter.enabled", checked);
-        window.clickr.store.stopAfterToggle = checked;
+        window.clickr.core.stopAfterToggle = checked;
 
         (checked) ? stopAfterClicksSuffix.removeClass("active") : stopAfterClicksSuffix.addClass("active");
 
