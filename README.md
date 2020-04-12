@@ -60,17 +60,14 @@ If you are trying to debug this project via Visual Studio Code, please replace/a
 
 **Install the [Electron dependencies](https://www.electronjs.org/docs/development/build-instructions-linux) & [Git](https://git-scm.com/download/linux):**
 ```
-sudo apt-get install git build-essential clang libdbus-1-dev libgtk-3-dev \ 
-					 libnotify-dev libgnome-keyring-dev \ 
-					 libasound2-dev libcap-dev libcups2-dev libxtst-dev \ 
-					 libxss1 libnss3-dev gcc-multilib g++-multilib curl \ 
-					 gperf bison python-dbusmock openjdk-8-jre
+sudo apt-get install git build-essential clang libdbus-1-dev libgtk-3-dev libnotify-dev libgnome-keyring-dev libasound2-dev libcap-dev libcups2-dev libxtst-dev libxss1 libnss3-dev gcc-multilib g++-multilib curl gperf bison python-dbusmock openjdk-8-jre
 ```
 
 **Install [Yarn](https://classic.yarnpkg.com/en/docs/install) package manager:**
 ```sh
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update && sudo apt install yarn
 ```
 
 **Install [Node.js](https://nodejs.org/en/download/package-manager/) v12:**
