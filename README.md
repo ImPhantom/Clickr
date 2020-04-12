@@ -54,3 +54,32 @@ If you are trying to debug this project via Visual Studio Code, please replace/a
     }]
 }
 ```
+
+### Developing/Building on Ubuntu
+**This section has only been tested using Ubuntu 18.04 Desktop**, other distributions will take a little tweaking for each thing listed below, I've included links to where your able to find install instructions for each dependency.
+
+**Install the [Electron dependencies](https://www.electronjs.org/docs/development/build-instructions-linux) & [Git](https://git-scm.com/download/linux):**
+```
+sudo apt-get install git build-essential clang libdbus-1-dev libgtk-3-dev \ 
+					 libnotify-dev libgnome-keyring-dev \ 
+					 libasound2-dev libcap-dev libcups2-dev libxtst-dev \ 
+					 libxss1 libnss3-dev gcc-multilib g++-multilib curl \ 
+					 gperf bison python-dbusmock openjdk-8-jre
+```
+
+**Install [Yarn](https://classic.yarnpkg.com/en/docs/install) package manager:**
+```sh
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+```
+
+**Install [Node.js](https://nodejs.org/en/download/package-manager/) v12:**
+```
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+
+**Clone & Install:**
+```sh
+sudo git clone https://github.com/ImPhantom/Clickr.git && cd Clickr && sudo yarn
