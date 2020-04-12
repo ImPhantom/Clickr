@@ -56,6 +56,14 @@ if (semverGreaterThen(packageJson.version, "0.1.3")) {
     }
 }
 
+// 0.1.4 -> 0.1.5
+if (semverGreaterThen(packageJson.version, "0.1.4")) {
+    console.log("Running '0.1.4 -> 0.1.5' migrations...");
+    if (window.clickr.store.get("triggerType")) {
+        window.clickr.store.delete("triggerType");
+    }
+}
+
 $(document).ready(function () {
     const _window = remote.getCurrentWindow();
     $("#minimize-button").click(() => _window.minimize());
@@ -245,34 +253,28 @@ $(document).ready(function () {
         armButton.html("Awaiting hotkey...");
 
         window.clickr.core.armed = true;
-        if (window.clickr.core.triggerType === "toggle") {
-            if (!window.clickr.core.startShortcut || !window.clickr.core.stopShortcut) return;
+        if (!window.clickr.core.startShortcut || !window.clickr.core.stopShortcut) return;
 
-            if (singleHotkeySwitch.getChecked() && window.clickr.core.startShortcut) {
-                // Register single toggle hotkey
-                remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
-                    if (!window.clickr.core.clicking) {
-                        window.clickr.core.startClicking(startCallback, clickCallback, stopCallback);
-                    } else {
-                        window.clickr.core.stopClicking(stopCallback);
-                    }
-                    
-                });
-                console.log(`Registered single hotkey toggle: '${window.clickr.core.startShortcut}'`);
-
-            } else if (window.clickr.core.startShortcut && window.clickr.core.stopShortcut) {
-                // Register start hotkey
-                remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
+        if (singleHotkeySwitch.getChecked() && window.clickr.core.startShortcut) {
+            // Register single toggle hotkey
+            remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
+                if (!window.clickr.core.clicking) {
                     window.clickr.core.startClicking(startCallback, clickCallback, stopCallback);
-                });
-                console.log(`Registered start hotkey: '${window.clickr.core.startShortcut}'`);
+                } else {
+                    window.clickr.core.stopClicking(stopCallback);
+                }   
+            });
+            console.log(`Registered single hotkey toggle: '${window.clickr.core.startShortcut}'`);
+        } else if (window.clickr.core.startShortcut && window.clickr.core.stopShortcut) {
+            // Register start hotkey
+            remote.globalShortcut.register(window.clickr.core.startShortcut, () => {
+                window.clickr.core.startClicking(startCallback, clickCallback, stopCallback);
+            });
+            console.log(`Registered start hotkey: '${window.clickr.core.startShortcut}'`);
 
-                // Register stop hotkey
-                remote.globalShortcut.register(window.clickr.core.stopShortcut, () => window.clickr.core.stopClicking(stopCallback));
-                console.log(`Registered stop hotkey: '${window.clickr.core.stopShortcut}'`);
-            }
-        } else {
-            console.warn("TriggerType is invalid!");
+            // Register stop hotkey
+            remote.globalShortcut.register(window.clickr.core.stopShortcut, () => window.clickr.core.stopClicking(stopCallback));
+            console.log(`Registered stop hotkey: '${window.clickr.core.stopShortcut}'`);
         }
     }
 

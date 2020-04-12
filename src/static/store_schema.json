@@ -1,8 +1,4 @@
 {
-    "triggerType": {
-        "type": "string",
-        "enum": ["toggle", "hold"]
-    },
     "clickingMouseButton": {
         "type": "string",
         "enum": ["left", "middle", "right"]

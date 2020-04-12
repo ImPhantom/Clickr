@@ -9,7 +9,6 @@ export class Clicker {
         this.clicking = false;
         this.interval = null;
 
-        this.triggerType = dataStore.get("triggerType") || "hold";
         this.clickingButton = dataStore.get("clickingMouseButton") || "left";
         this.clicksPerUnit = dataStore.get("clickSpeed.times") || 8;
         this.clickingUnit = dataStore.get("clickSpeed.unit") || 1000;
