@@ -12,7 +12,7 @@ import 'selectize/dist/js/selectize.min.js';
 
 import { remote } from 'electron';
 import keycode from 'keycode';
-import semverGt from 'semver/functions/gt';
+import semverGreaterThen from 'semver/functions/gt';
 
 import * as ElectronStore from 'electron-store';
 import * as StoreSchema from '../static/store_schema.json';
@@ -26,17 +26,35 @@ window.clickr.store = new ElectronStore({
 });
 
 console.log(`Configuration Path: '${window.clickr.store.path}'`);
+window.clickr.core = new Clicker(window.clickr.store);
 
-// Manually handle store migrations cause the builtin doesnt seem to work.
-// Maybe move this to a separate 'migrations' file/class.
+/*
+    Migrations
+    // TODO: Move this to its own file/class
+*/
 
-// Force triggerType to toggle if its set to hold (pre 0.1.2)
-if (semverGt(packageJson.version, "0.1.2")) {
+// 0.1.2 -> 0.1.3
+if (semverGreaterThen(packageJson.version, "0.1.2")) {
+    // Force triggerType to toggle if its set to hold (pre 0.1.2)
+    console.log("Running '0.1.2 -> 0.1.3' migrations...");
     if (window.clickr.store.get("holdTrigger")) { window.clickr.store.delete("holdTrigger"); }
     if (window.clickr.store.get("triggerType") == "hold") { window.clickr.store.set("triggerType", "toggle"); }
 }
 
-window.clickr.core = new Clicker(window.clickr.store);
+// 0.1.3 -> 0.1.4
+if (semverGreaterThen(packageJson.version, "0.1.3")) {
+    // Ensure the click speed isnt 0 or a negative value.
+    console.log("Running '0.1.3 -> 0.1.4' migrations...");
+    const clickSpeed = window.clickr.store.get("clickSpeed.times");
+    if (clickSpeed) {
+        console.log("Migrating negative click speed...");
+        const _cpu = parseInt(clickSpeed);
+        if (_cpu && _cpu <= 0) {
+            window.clickr.core.clicksPerUnit = 1;
+            window.clickr.store.set("clickSpeed.times", 1);
+        }
+    }
+}
 
 $(document).ready(function () {
     const _window = remote.getCurrentWindow();
@@ -179,7 +197,6 @@ $(document).ready(function () {
         (window.clickr.core.stopAfterToggle) ? stopAfterSwitch.on() : stopAfterSwitch.off();
         (window.clickr.core.stopAfterToggle) ? stopAfterClicksSuffix.removeClass("active") : stopAfterClicksSuffix.addClass("active");
     }
-        
 
     stopAfterInput.val(parseInt(window.clickr.core.stopAfterClicks));
     stopAfterInput.focusout(() => {
