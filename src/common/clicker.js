@@ -1,8 +1,6 @@
-'use strict'
+const robot = require("robotjs");
 
-import * as robot from 'robotjs';
-
-export class Clicker {
+class Clicker {
     constructor(dataStore) {
         this.armed = false;
         this.clicks = 0;
