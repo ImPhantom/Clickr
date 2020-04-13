@@ -30,7 +30,6 @@ window.clickr.core = new Clicker(window.clickr.store);
 
 /*
     Migrations
-    // TODO: Move this to its own file/class
 */
 
 // 0.1.2 -> 0.1.3
@@ -58,12 +57,13 @@ if (semverGreaterThen(_PackageJson.version, "0.1.3")) {
 
 // 0.1.4 -> 0.1.5
 if (semverGreaterThen(_PackageJson.version, "0.1.4")) {
-    console.log("Running '0.1.4 -> 0.1.5' migrations...");
+    console.log(`Running '0.1.4 -> ${_PackageJson.version}' migrations...`);
     if (window.clickr.store.get("triggerType")) {
         window.clickr.store.delete("triggerType");
     }
 }
 
+/* A really sloppy way to control which section of DOM is rendered... */
 const _query = url.parse(window.location.href, true).query;
 function _render(pref = false) {
     if (pref || (_query.route && _query.route == "preferences")) {
