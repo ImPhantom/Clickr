@@ -19,6 +19,7 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "datauri": "^2.0.0",
     "electron-store": "^5.1.1",
     "jquery": "^3.4.1",
     "keycode": "^2.2.0",
@@ -50,7 +51,7 @@
   "build": {
     "appId": "gg.xeno.clickr",
     "files": [
-        "build/*"
+      "build/*"
     ],
     "nsis": {
       "artifactName": "${productName}_${version}_installer.${ext}"

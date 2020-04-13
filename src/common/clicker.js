@@ -22,6 +22,11 @@ class Clicker {
         this.startHotkey = dataStore.get("toggleTrigger.startHotkey") || null;
         this.stopShortcut = dataStore.get("toggleTrigger.stopShortcut") || null;
         this.stopHotkey = dataStore.get("toggleTrigger.stopHotkey") || null;
+
+        this.mouseEventDelay = dataStore.get("mouseEventDelay") || "5";
+        this.clickerStartAlert = dataStore.get("clickerStartAlert") || false;
+
+        this.store = dataStore;
     }
 
     startClicking(startCallback = null, onClickCallback = null, stopCallback = null) {
@@ -32,6 +37,7 @@ class Clicker {
         if (startCallback)
             startCallback();
 
+        robot.setMouseDelay(this.getMouseEventDelay());
         this.interval = setInterval(() => {
             robot.mouseClick(this.clickingButton);
             this.clicks++;
@@ -76,4 +82,17 @@ class Clicker {
             }
         }
     }
+
+    // Get Functions for variables modified by a separate thread
+    getMouseEventDelay() {
+        this.mouseEventDelay = this.store.get("mouseEventDelay") || "5";
+        return parseInt(this.mouseEventDelay);
+    }
+
+    isStartAlertEnabled() {
+        this.clickerStartAlert = this.store.get("clickerStartAlert") || false;
+        return this.clickerStartAlert;
+    }
 }
+
+module.exports = { Clicker: Clicker };

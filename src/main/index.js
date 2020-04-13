@@ -77,3 +77,52 @@ app.on('ready', () => {
 app.on('will-quit', () => {
     globalShortcut.unregisterAll();
 });
+
+// IPC Handlers
+let preferencesWindow;
+function openPreferencesModal() {
+    preferencesWindow = new BrowserWindow({
+        parent: mainWindow,
+        width: 360,
+        height: 135,
+        show: false,
+        frame: false,
+        modal: true,
+        resizable: false,
+        fullscreenable: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
+    });
+
+    if (isDevelopment) {
+        preferencesWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}?route=preferences`);
+    } else {
+        preferencesWindow.loadURL(format({
+            pathname: path.join(__dirname, 'index.html'),
+            protocol: 'file',
+            slashes: true
+        }));
+    }
+
+    preferencesWindow.webContents.once('dom-ready', () => {
+        preferencesWindow.webContents.send("async-renderer-channel", "render_preferences");
+    });
+
+    preferencesWindow.once("ready-to-show", () => {
+        preferencesWindow.show();
+    });
+}
+
+// Handle IPC Messages
+ipcMain.on("async-channel", (event, args) => {
+    if (args == "open_preferences_modal") {
+        openPreferencesModal();
+    } else if (args == "close_preferences_modal") {
+        if (preferencesWindow) {
+            preferencesWindow.close();
+        }
+    }
+
+    event.reply("async-channel", "success");
+});

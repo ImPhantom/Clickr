@@ -64,11 +64,37 @@ if (semverGreaterThen(_PackageJson.version, "0.1.4")) {
     }
 }
 
+const _query = url.parse(window.location.href, true).query;
+function _render(pref = false) {
+    if (pref || (_query.route && _query.route == "preferences")) {
+        $("#main-app").addClass("hidden");
+        $("#preferences").removeClass("hidden");
+    } else {
+        $("#preferences").addClass("hidden");
+        $("#main-app").removeClass("hidden");
+    }
+}
+
+// Start listening for IPC calls
+ipcRenderer.on("async-renderer-channel", (event, arg) => {
+    console.log(`[Renderer] (async-channel) ${arg}`);
+    if (arg == "render_preferences") { _render(true); }
+});
+
+_render();
+
 $(document).ready(function () {
     const _window = remote.getCurrentWindow();
     $("#minimize-button").click(() => _window.minimize());
     $("#close-button").click(() => _window.close());
-    $("#title-bar #version").html(`v${packageJson.version}`);
+    $("#title-bar #version").html(`v${_PackageJson.version}`);
+
+    /* Load the notification sound datauri */
+    const clickerStartAudio = $("#clicker-start-sound");
+    const dataUri = new DataURI();
+    dataUri.encode(path.join(__static, "bongo.mp3"), (err, content) => {
+        clickerStartAudio.append(`<source src="${content}">`);
+    });
 
     /*
         Click Speed
@@ -301,6 +327,11 @@ $(document).ready(function () {
             arm(() => { // Clicking started
                 statusText.html("Clicking...");
                 bothTexts.addClass("active");
+
+                if (window.clickr.core.isStartAlertEnabled()) {
+                    clickerStartAudio[0].load();
+                    clickerStartAudio[0].play();
+                }
             },
             _clicksSoFar => { // On each click
                 clicksText.html(`${_clicksSoFar} clicks.`);
@@ -312,4 +343,32 @@ $(document).ready(function () {
             });
         }
     });
+
+    /*
+        Preferences
+    */
+    $("#preferences-button").click(() => ipcRenderer.send("async-channel", "open_preferences_modal"));
+    $("#preferences-close-button").click(() => ipcRenderer.send("async-channel", "close_preferences_modal"));
+
+    /* Mouse Event Delay */
+    const eventDelayInput = $("#delay-wrapper > #event-delay");
+    eventDelayInput.val(window.clickr.core.mouseEventDelay);
+    eventDelayInput.focusout(() => {
+        const _saveVal = eventDelayInput.val();
+        if (_saveVal && _saveVal != "" && _saveVal > 0) {
+            window.clickr.core.mouseEventDelay = _saveVal;
+            window.clickr.store.set("mouseEventDelay", window.clickr.core.mouseEventDelay);
+            console.log(`Updated mouse event delay: '${window.clickr.core.mouseEventDelay}ms'`);
+        }
+    });
+
+    /* Clicker Start Notification Toggle */
+    const alertSoundSwitch = new Switch($("#alert-sound-toggle")[0], { size: "small", onChange: () => {
+        const checked = alertSoundSwitch.getChecked();
+        window.clickr.store.clickerStartAlert = checked;
+        window.clickr.store.set("clickerStartAlert", checked);
+        console.log(`Alert sound: '${checked}'`);
+    }});
+
+    (window.clickr.core.clickerStartAlert) ? alertSoundSwitch.on() : alertSoundSwitch.off();
 });

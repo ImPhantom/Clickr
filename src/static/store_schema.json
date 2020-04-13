@@ -17,6 +17,8 @@
             "afterClicks": { "type": "string" }
         }
     },
+    "mouseEventDelay": { "type": "string" },
+    "clickerStartAlert": { "type": "boolean" },
     "toggleTrigger": {
         "type": "object",
         "properties": {
