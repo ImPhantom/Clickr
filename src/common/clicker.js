@@ -67,19 +67,12 @@ class Clicker {
         }
     }
 
-    updateHotkey(tag, hotkey, shortcut) {
-        switch(tag) {
-            case "hold":
-                this.holdHotkey = hotkey;
-                this.holdShortcut = shortcut;
-                break;
-            case "start":
-                this.startHotkey = hotkey;
-                this.startShortcut = shortcut;
-            case "stop": {
-                this.stopHotkey = hotkey;
-                this.stopShortcut = shortcut;
-            }
+    // A function that doesn't need to exist :P
+    updateHotkey(tag, shortcut) {
+        if (tag === "start") {
+            this.startShortcut = shortcut;
+        } else if (tag === "stop" ) {
+            this.stopShortcut = shortcut;
         }
     }
 

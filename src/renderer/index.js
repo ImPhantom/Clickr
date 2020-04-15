@@ -13,7 +13,6 @@ const { remote, ipcRenderer } = require("electron");
 
 const $ = require("jquery");
 const Switch = require("weatherstar-switch");
-const keycode = require("keycode");
 const semverGreaterThen = require("semver/functions/gt");
 const ElectronStore = require("electron-store");
 const DataURI = require("datauri");
@@ -123,75 +122,86 @@ $(document).ready(function () {
     /*
         Hotkey Input Handling
     */
-    let localHotkeyCache = [];
-    function keychar(keyEvent) {
-        const _key = keycode(keyEvent.keyCode);
-        if (!_key) {
-            if (keyEvent.shiftKey) {
-                return "shift";
-            } else if (keyEvent.ctrlKey) {
-                return "ctrl";
-            } else if (keyEvent.altKey) {
-                return "alt";
-            } else if (keyEvent.metaKey) {
-                return "meta";
+    let currentlyFocusedShortcut = []; // The local shortcut array
+
+    // This function converts KeyboardEvent keycodes to Electron 'Accelerator' keycodes.
+    function convertKey(keyboardEvent) {
+        // modifier keys
+        const modifierReplacements = { "Command": "CmdOrCtrl", "Control": "CmdOrCtrl" };
+        if (modifierReplacements[keyboardEvent.key]) {
+            return modifierReplacements[keyboardEvent.key];
+        }
+
+        // numpad keys
+        const numpadReplacements = { "NumpadDivide": "numdiv", "NumpadMultiply": "nummult", "NumpadAdd": "numadd", "NumpadSub": "numsub" };
+        if (numpadReplacements[keyboardEvent.code]) {
+            return numpadReplacements[keyboardEvent.code];
+        } else if (/^Numpad\d$/.test(keyboardEvent.code)) {
+            return keyboardEvent.code.replace("Numpad", "num");
+        }
+
+        // miscellaneous replacements
+        const miscReplacements = { "CapsLock": "Capslock", "NumLock": "Numlock", "ScrollLock": "Scrolllock", "AltLeft": "Alt", "AltRight": "Alt", "ShiftLeft": "Shift", "ShiftRight": "Shift" }
+        if (miscReplacements[keyboardEvent.code]) {
+            return miscReplacements[keyboardEvent.code];
+        }
+
+        if (/^Key\w$/.test(keyboardEvent.code)) {
+            return keyboardEvent.code.replace("Key", "");
+        }
+
+        return keyboardEvent.code;
+    }
+
+    // This function is called on every KeyDown event from the shortcut inputs.
+    function listenToInputKeydown(keyboardEvent, inputElement) {
+        console.log(keyboardEvent);
+        if (keyboardEvent.keyCode !== 8 && currentlyFocusedShortcut.length < 3) { // If key pressed wasn't 'Backspace' and there arent more than 3 keys in the shortcut
+            const _key = convertKey(keyboardEvent);
+            if (!currentlyFocusedShortcut.includes(_key)) { // Only add key if it isn't in the shortcut already.
+                currentlyFocusedShortcut.push(convertKey(keyboardEvent));
             }
-        } else {
-            return _key;
+        } else if (keyboardEvent.keyCode === 8) { // If key pressed was 'Backspace' (keyCode: 8)
+            currentlyFocusedShortcut.pop();
+        }
+
+        inputElement.val(currentlyFocusedShortcut.join("+"));
+    }
+
+    // This function is called whenever a new input is focused, resetting/updating the local shortcut array.
+    function updateFocusedShortcut(inputValue) {
+        currentlyFocusedShortcut = [];
+        if (inputValue != "") {
+            currentlyFocusedShortcut = inputValue.split("+");
         }
     }
 
-    function hotkeyToShortcut(hotkey) {
-        return (hotkey.map(_key => (_key == "ctrl") ? "CmdOrCtrl" : _key.charAt(0).toUpperCase() + _key.slice(1))).join("+");
-    }
-
-    function handleInputKeydown(event, element) {
-        if (event.keyCode !== 8 && localHotkeyCache.length < 3) {
-            const _keychar = keychar(event);
-            localHotkeyCache.push(_keychar);
-        } else if (event.keyCode === 8) {
-            localHotkeyCache.pop();
-        }
-
-        element.attr({
-            "value": localHotkeyCache.join(" + "),
-        });
-    }
-
-    function readInputValue(element) {
-        localHotkeyCache = [];
-        if (element.val() !== "") {
-            localHotkeyCache = element.val().split(" + ");
+    // This function is called when the application loads to populate the shortcut inputs.
+    function updateShortcutInput(inputElement, shortcut) {
+        if (shortcut) {
+            inputElement.val(shortcut);
+            console.log(`Loaded saved shortcut: ${shortcut}`);
         }
     }
 
-    function updateInputValue(element, hotkey) {
-        if (hotkey) {
-            element.attr("value", hotkey.join(" + "));
-            console.log(`Loaded saved shortcut: '${hotkeyToShortcut(hotkey)}'`);
-        }
-    }
-
-    function saveInputValue(element, saveTag, coreTag) {
-        const hotkey = element.val().split(" + ");
-        const shortcut = hotkeyToShortcut(hotkey);
-        window.clickr.store.set(`${saveTag}Hotkey`, hotkey);
+    // This function is called when the shortcut input is unfocused, saving the current value to application storage.
+    function saveShortcut(inputElement, saveTag) {
+        const shortcut = inputElement.val();
         window.clickr.store.set(`${saveTag}Shortcut`, shortcut);
-        window.clickr.core.updateHotkey(coreTag, hotkey, shortcut);
-        console.log(`Saved '${saveTag}Hotkey' (${hotkey}) & '${saveTag}Shortcut' (${shortcut}) to storage!`);
+        window.clickr.core.updateHotkey(saveTag.split(".")[1], shortcut);
+        console.log(`Saved '${saveTag}Shortcut' (${shortcut}) to storage!`);
     }
-    
+
     const toggleStartInput = $("#start-key"), toggleEndInput = $("#stop-key");
+    updateShortcutInput(toggleStartInput, window.clickr.core.startShortcut);
+    toggleStartInput.focus(() => updateFocusedShortcut(toggleStartInput.val()));
+    toggleStartInput.keydown(_keyboardEvent => listenToInputKeydown(_keyboardEvent, toggleStartInput));
+    toggleStartInput.focusout(() => saveShortcut(toggleStartInput, "toggleTrigger.start"));
 
-    updateInputValue(toggleStartInput, window.clickr.core.startHotkey); // updates stored value on application load
-    toggleStartInput.focus(() => readInputValue(toggleStartInput)); // read new input when focused
-    toggleStartInput.keydown(_event => handleInputKeydown(event, toggleStartInput)); // update hotkey on input keydown
-    toggleStartInput.focusout(() => saveInputValue(toggleStartInput, "toggleTrigger.start", "start")); // on input unfocus store value to app config & update
-
-    updateInputValue(toggleEndInput, window.clickr.core.stopHotkey);
-    toggleEndInput.focus(() => readInputValue(toggleEndInput));
-    toggleEndInput.keydown(_event => handleInputKeydown(event, toggleEndInput));
-    toggleEndInput.focusout(() => saveInputValue(toggleEndInput, "toggleTrigger.stop", "stop"));
+    updateShortcutInput(toggleEndInput, window.clickr.core.stopShortcut);
+    toggleEndInput.focus(() => updateFocusedShortcut(toggleEndInput.val()));
+    toggleEndInput.keydown(_keyboardEvent => listenToInputKeydown(_keyboardEvent, toggleEndInput));
+    toggleEndInput.focusout(() => saveShortcut(toggleEndInput, "toggleTrigger.stop"));
 
     /*
         Single hotkey toggle
