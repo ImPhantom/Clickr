@@ -8,7 +8,6 @@ const _PackageJson = require("../../package.json");
 const _StoreSchema = require("../static/store_schema.json");
 
 const path = require("path");
-const url = require("url");
 const { remote, ipcRenderer } = require("electron");
 
 const $ = require("jquery");
@@ -70,9 +69,8 @@ if (semverGreaterThen(_PackageJson.version, "0.1.5")) {
 }
 
 /* A really sloppy way to control which section of DOM is rendered... */
-const _query = url.parse(window.location.href, true).query;
 function _render(pref = false) {
-    if (pref || (_query.route && _query.route == "preferences")) {
+    if (pref) {
         $("#main-app").addClass("hidden");
         $("#preferences").removeClass("hidden");
     } else {

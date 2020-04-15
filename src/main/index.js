@@ -96,7 +96,7 @@ function openPreferencesModal() {
     });
 
     if (isDevelopment) {
-        preferencesWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}?route=preferences`);
+        preferencesWindow.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
     } else {
         preferencesWindow.loadURL(format({
             pathname: path.join(__dirname, 'index.html'),
