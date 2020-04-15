@@ -9,7 +9,7 @@ let mainWindow;
 function createMainWindow() {
     const window = new BrowserWindow({
         width: 260,
-        height: 380,
+        height: 400,
         show: false,
         frame: false,
         resizable: false,
@@ -84,7 +84,7 @@ function openPreferencesModal() {
     preferencesWindow = new BrowserWindow({
         parent: mainWindow,
         width: 360,
-        height: 135,
+        height: 185,
         show: false,
         frame: false,
         modal: true,

@@ -17,6 +17,19 @@
             "afterClicks": { "type": "string" }
         }
     },
+    "positionLock": {
+        "type": "object",
+        "properties": {
+            "enabled": { "type": "boolean" },
+            "lockedAt": {
+                "type": "object",
+                "properties": {
+                    "x": { "type": "number" },
+                    "y": { "type": "number" }
+                }
+            }
+        }
+    },
     "mouseEventDelay": { "type": "string" },
     "clickerStartAlert": { "type": "boolean" },
     "toggleTrigger": {

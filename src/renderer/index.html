@@ -70,6 +70,7 @@
                 <div id="info">
                     <div id="status">Not clicking yet.</div>
                     <div id="clicks"></div>
+                    <div id="locked-position"></div>
                 </div>
             </div>
             <audio id="clicker-start-sound">
@@ -94,6 +95,15 @@
                 </div>
                 <div class="row justify-content-center">
                     <span class="notice-text">The delay between raw mouse events. <span class="muted">(default: 10ms)</span></span>
+                </div>
+                <div class="row mt-0">
+                    <div id="position-lock">
+                        <input type="checkbox" id="position-lock-toggle">
+                        <label>Cursor Position Lock</label>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <span class="notice-text">Locks the cursor position to where the clicker is started.</span>
                 </div>
                 <div class="row mt-0">
                     <div id="alert-sound">

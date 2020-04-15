@@ -14,6 +14,10 @@ class Clicker {
         this.stopAfterToggle = dataStore.get("stopAfter.enabled") || false;
         this.stopAfterClicks = dataStore.get("stopAfter.afterClicks") || 0;
 
+        this.positionLockEnabled = dataStore.get("positionLock.enabled") || false;
+        this.currentLockPosX = null;
+        this.currentLockPosY = null;
+
         this.singleHotkeyToggle = dataStore.get("toggleTrigger.singleHotkeyToggle") || false;
         this.startShortcut = dataStore.get("toggleTrigger.startShortcut") || null;
         this.stopShortcut = dataStore.get("toggleTrigger.stopShortcut") || null;
@@ -28,12 +32,27 @@ class Clicker {
         if (!this.armed || this.clicking)
             return;
 
-        this.clicks = 0; // reset clicks every time a loop is started.
+        this.clicks = 0;
+
+        // If enabled, set cursor lock position.
+        if (this.isPositionLockEnabled()) {
+            const currentMousePos = robot.getMousePos();
+            this.currentLockPosX = currentMousePos.x;
+            this.currentLockPosY = currentMousePos.y;
+            console.log(`Position Locked @ '${this.currentLockPosX}, ${this.currentLockPosY}'`);
+        }
+
         if (startCallback)
             startCallback();
 
         robot.setMouseDelay(this.getMouseEventDelay());
         this.interval = setInterval(() => {
+
+            // Move mouse if 'PositionLock' is enabled
+            if (this.isPositionLockEnabled() && this.currentLockPosX != null && this.currentLockPosY != null) {
+                robot.moveMouse(this.currentLockPosX, this.currentLockPosY);
+            }
+
             robot.mouseClick(this.clickingButton);
             this.clicks++;
 
@@ -75,6 +94,19 @@ class Clicker {
     getMouseEventDelay() {
         this.mouseEventDelay = this.store.get("mouseEventDelay") || "5";
         return parseInt(this.mouseEventDelay);
+    }
+
+    isPositionLockEnabled() {
+        this.positionLockEnabled = this.store.get("positionLock.enabled") || false;
+        return this.positionLockEnabled;
+    }
+
+    getLockedPosition() {
+        if (this.currentLockPosX !== null && this.currentLockPosY !== null) {
+            return `${this.currentLockPosX}, ${this.currentLockPosY}`;
+        } else {
+            return null;
+        }
     }
 
     isStartAlertEnabled() {

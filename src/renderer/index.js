@@ -288,7 +288,7 @@ $(document).ready(function () {
         Arm Button/Functionality
     */
     const armButton = $("#arm-button a"), armedCover = $("#armed-cover");
-    const statusText = $("#info > #status"), clicksText = $("#info > #clicks"), bothTexts = $("#info > #status, #info > #clicks");
+    const statusText = $("#info > #status"), clicksText = $("#info > #clicks"), lockedPosition = $("#info > #locked-position"), bothTexts = $("#info > #status, #info > #clicks");
     
     function arm(startCallback, clickCallback, stopCallback) {
         armedCover.removeClass("hidden");
@@ -342,11 +342,17 @@ $(document).ready(function () {
                     clicksText.html("");
                     statusText.html("Not clicking yet.");
                 }
+
+                lockedPosition.html("");
             });
         } else {
             arm(() => { // Clicking started
                 statusText.html("Clicking...");
                 bothTexts.addClass("active");
+
+                if (window.clickr.core.isPositionLockEnabled()) {
+                    lockedPosition.html(`Locked @ '${window.clickr.core.getLockedPosition()}'`);
+                }
 
                 if (window.clickr.core.isStartAlertEnabled()) {
                     clickerStartAudio[0].load();
@@ -358,6 +364,7 @@ $(document).ready(function () {
             },
             _finalClickTotal => { // Clicking ended
                 statusText.html("");
+                lockedPosition.html("");
                 clicksText.html(`Last Run: <span class='muted'>${_finalClickTotal} clicks</span>`);
                 bothTexts.removeClass("active");
             });
@@ -381,6 +388,16 @@ $(document).ready(function () {
             console.log(`Updated mouse event delay: '${window.clickr.core.mouseEventDelay}ms'`);
         }
     });
+
+    /* Cursor Position Lock Toggle */
+    const positionLockSwitch = new Switch($("#position-lock-toggle")[0], { size: "small", onChange: () => {
+        const checked = positionLockSwitch.getChecked();
+        window.clickr.store.positionLockEnabled = checked;
+        window.clickr.store.set("positionLock.enabled", checked);
+        console.log(`Position Lock Enabled: '${checked}'`);
+    }});
+
+    (window.clickr.core.positionLockEnabled) ? positionLockSwitch.on() : positionLockSwitch.off();
 
     /* Clicker Start Notification Toggle */
     const alertSoundSwitch = new Switch($("#alert-sound-toggle")[0], { size: "small", onChange: () => {

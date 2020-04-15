@@ -15,8 +15,8 @@
     --darker-slate: #18191D;
     --darkest-slate: #101115;
 
-    --window-height: 380px;
     --window-width: 260px;
+    --window-height: 400px;
     --title-bar-height: 2rem;
 }
 
@@ -398,6 +398,7 @@ input:focus, select:focus {
 
 #info #status.active { color: rgb(21, 153, 87); }
 #info #clicks { color: var(--text); }
+#info #locked-position { font-size: 85%; }
 
 /* Preferences Window */
 #event-delay-row { align-items: baseline; }
@@ -405,13 +406,13 @@ input:focus, select:focus {
 #event-delay-row > #delay-wrapper::after { content: "ms" }
 #event-delay-row > #delay-wrapper { width: 50%; }
 
-#alert-sound {
+#alert-sound, #position-lock {
     display: flex;
-    align-items: end;
     margin-top: .6em;
 }
 
-#alert-sound > label {
+#alert-sound > label,
+#position-lock > label {
     margin-right: 0;
     margin-left: .2em;
 }
