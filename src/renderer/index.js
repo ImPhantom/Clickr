@@ -98,6 +98,7 @@ $(document).ready(function () {
     const dataUri = new DataURI();
     dataUri.encode(path.join(__static, "bongo.mp3"), (err, content) => {
         clickerStartAudio.append(`<source src="${content}">`);
+        clickerStartAudio[0].volume = 0.5;
     });
 
     /*
