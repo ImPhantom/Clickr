@@ -56,10 +56,17 @@ if (semverGreaterThen(_PackageJson.version, "0.1.3")) {
 
 // 0.1.4 -> 0.1.5
 if (semverGreaterThen(_PackageJson.version, "0.1.4")) {
-    console.log(`Running '0.1.4 -> ${_PackageJson.version}' migrations...`);
+    console.log(`Running '0.1.4 -> 0.1.5' migrations...`);
     if (window.clickr.store.get("triggerType")) {
         window.clickr.store.delete("triggerType");
     }
+}
+
+// 0.1.5 -> 0.1.6
+if (semverGreaterThen(_PackageJson.version, "0.1.5")) {
+    console.log(`Running '0.1.5 -> 0.1.6' migrations...`);
+    if (window.clickr.store.get("toggleTrigger.startHotkey")) { window.clickr.store.delete("toggleTrigger.startHotkey"); }
+    if (window.clickr.store.get("toggleTrigger.stopHotkey")) { window.clickr.store.delete("toggleTrigger.stopHotkey"); }
 }
 
 /* A really sloppy way to control which section of DOM is rendered... */

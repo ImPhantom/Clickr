@@ -25,16 +25,8 @@
             "singleHotkeyToggle": {
                 "type": "boolean"
             },
-            "startHotkey": {
-                "type": "array",
-                "items": { "type": "string" }
-            },
             "startShortcut": {
                 "type": "string"
-            },
-            "stopHotkey": {
-                "type": "array",
-                "items": { "type": "string" }
             },
             "stopShortcut": {
                 "type": "string"

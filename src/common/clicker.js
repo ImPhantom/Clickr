@@ -14,14 +14,9 @@ class Clicker {
         this.stopAfterToggle = dataStore.get("stopAfter.enabled") || false;
         this.stopAfterClicks = dataStore.get("stopAfter.afterClicks") || 0;
 
-        this.holdShortcut = dataStore.get("holdTrigger.triggerShortcut") || null;
-        this.holdHotkey = dataStore.get("holdTrigger.triggerHotkey") || null;
-
         this.singleHotkeyToggle = dataStore.get("toggleTrigger.singleHotkeyToggle") || false;
         this.startShortcut = dataStore.get("toggleTrigger.startShortcut") || null;
-        this.startHotkey = dataStore.get("toggleTrigger.startHotkey") || null;
         this.stopShortcut = dataStore.get("toggleTrigger.stopShortcut") || null;
-        this.stopHotkey = dataStore.get("toggleTrigger.stopHotkey") || null;
 
         this.mouseEventDelay = dataStore.get("mouseEventDelay") || "5";
         this.clickerStartAlert = dataStore.get("clickerStartAlert") || false;
