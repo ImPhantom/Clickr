@@ -320,12 +320,12 @@ $(document).ready(function () {
         }
     }
 
-    function disarm() {
+    function disarm(stopCallback = null) {
         armedCover.addClass("hidden");
         armButton.html("Arm");
 
         window.clickr.core.armed = false;
-        window.clickr.core.stopClicking();
+        window.clickr.core.stopClicking(stopCallback);
 
         remote.globalShortcut.unregisterAll();
         console.log("Unregistered all hotkeys!");
@@ -333,12 +333,16 @@ $(document).ready(function () {
     
     armButton.click(() => {
         if (window.clickr.core.armed) {
-            disarm();
-        
-            const currentClicks = clicksText.val().replace(" clicks.", "");
-            clicksText.val(`Last Run: <span class='muted'>${currentClicks} clicks</span>`);
-            statusText.html("");
-            bothTexts.removeClass("active");
+            disarm(_finalClicks => {
+                if(_finalClicks > 0) {
+                    clicksText.html(`Last Run: <span class='muted'>${_finalClicks} clicks</span>`);
+                    statusText.html("");
+                    bothTexts.removeClass("active");
+                } else {
+                    clicksText.html("");
+                    statusText.html("Not clicking yet.");
+                }
+            });
         } else {
             arm(() => { // Clicking started
                 statusText.html("Clicking...");
