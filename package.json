@@ -22,7 +22,6 @@
     "datauri": "^2.0.0",
     "electron-store": "^5.1.1",
     "jquery": "^3.4.1",
-    "keycode": "^2.2.0",
     "robotjs": "^0.6.0",
     "selectize": "^0.12.6",
     "semver": "^7.2.2",
