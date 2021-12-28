@@ -1,8 +1,12 @@
 const rules = require('./webpack.rules');
 
 rules.push({
-  test: /\.css$/,
-  use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+  test: /\.s[ac]ss$/i,
+  use: [
+    { loader: 'style-loader' }, // creates style nodes
+    { loader: 'css-loader' }, // translates css into commonjs
+    { loader: 'sass-loader' }, // compiles sass/scss
+  ],
 });
 
 module.exports = {

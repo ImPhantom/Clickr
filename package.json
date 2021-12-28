@@ -52,8 +52,8 @@
               "config": "./webpack.renderer.config.js",
               "entryPoints": [
                 {
-                  "html": "./src/index.html",
-                  "js": "./src/renderer.js",
+                  "html": "./src/renderer/index.html",
+                  "js": "./src/renderer/renderer.js",
                   "name": "main_window"
                 }
               ]
@@ -73,7 +73,10 @@
     "@vercel/webpack-asset-relocator-loader": "1.6.0",
     "css-loader": "^6.0.0",
     "electron": "16.0.5",
+    "eslint": "^8.5.0",
     "node-loader": "^2.0.0",
+    "sass": "^1.45.1",
+    "sass-loader": "^12.4.0",
     "style-loader": "^3.0.0"
   },
   "dependencies": {
