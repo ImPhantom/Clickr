@@ -1,3 +1,4 @@
 import './index.scss';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+document.getElementById('close-button').onclick = () => window.api.send('close-window');
+document.getElementById('minimize-button').onclick = () => window.api.send('minimize-window');

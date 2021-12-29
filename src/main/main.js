@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -8,8 +8,15 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
-		width: 800,
-		height: 600,
+		width: 300,
+		height: 420,
+		frame: false,
+		resizable: false,
+		fullscreenable: false,
+		webPreferences: {
+			// eslint-disable-next-line no-undef
+			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+		}
 	});
 
 	// and load the index.html of the app.
@@ -44,3 +51,15 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+const getFocusedWindow = () => BrowserWindow.getFocusedWindow();
+
+ipcMain.handle('close-window', async () => {
+	console.log('\'close-window\' called, attempting to close window...');
+	getFocusedWindow().close();
+});
+
+ipcMain.handle('minimize-window', async () => {
+	console.log('\'minimize-window\' called, attempting to minimize window...');
+	getFocusedWindow().minimize();
+});
