@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 $toolbar-height: 2rem;
 
 $gray-50: #F8FAFC;
@@ -21,9 +25,6 @@ body {
 
 	margin: 0;
 	padding: 0;
-
-	color: $gray-50;
-	background-color: $gray-600;
 }
 
 .toolbar {
@@ -37,8 +38,6 @@ body {
 	flex-direction: row;
 	justify-content: space-between;
 	
-	background: $gray-800;
-
 	-webkit-app-region: drag;
 
 	.title {
@@ -67,7 +66,6 @@ body {
 
 		a:hover {
 			cursor: pointer;
-			background-color: $gray-900;
 		}
 	}
 }

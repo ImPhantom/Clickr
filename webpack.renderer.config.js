@@ -5,6 +5,7 @@ rules.push({
 	use: [
 		{ loader: 'style-loader' }, // creates style nodes
 		{ loader: 'css-loader' }, // translates css into commonjs
+		{ loader: 'postcss-loader' }, // does the postcss things
 		{ loader: 'sass-loader' }, // compiles sass/scss
 	],
 });
