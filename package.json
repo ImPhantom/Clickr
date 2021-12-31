@@ -47,7 +47,7 @@
 				[
 					"@electron-forge/plugin-webpack",
 					{
-						"devContentSecurityPolicy": "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-eval' 'unsafe-inline';",
+						"devContentSecurityPolicy": "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-eval' 'unsafe-inline';img-src * 'self' data: https:",
 						"mainConfig": "./webpack.main.config.js",
 						"renderer": {
 							"config": "./webpack.renderer.config.js",
@@ -74,6 +74,7 @@
 		"@electron-forge/maker-squirrel": "^6.0.0-beta.59",
 		"@electron-forge/maker-zip": "^6.0.0-beta.59",
 		"@electron-forge/plugin-webpack": "6.0.0-beta.59",
+		"@tailwindcss/forms": "^0.4.0",
 		"@vercel/webpack-asset-relocator-loader": "1.6.0",
 		"autoprefixer": "^10.4.0",
 		"css-loader": "^6.0.0",

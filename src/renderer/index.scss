@@ -16,6 +16,11 @@ body {
 	padding: 0;
 }
 
+select {
+	background-position: right 0.25rem center;
+	padding-right: 1.5rem;
+}
+
 .toolbar {
 	position: fixed;
 	top: 0;
