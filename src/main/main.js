@@ -63,3 +63,7 @@ ipcMain.handle('minimize-window', async () => {
 	console.log('\'minimize-window\' called, attempting to minimize window...');
 	getFocusedWindow().minimize();
 });
+
+ipcMain.handle('update-shortcut', async (event, ...args) => {
+	console.log(`${event} => `, ...args);
+});
