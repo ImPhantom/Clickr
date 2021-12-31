@@ -5,17 +5,18 @@
 	<meta charset="UTF-8">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet"> 
 	<title>Clickr</title>
 </head>
 
-<body class="text-gray-800 bg-gray-200 dark:text-gray-100 dark:bg-gray-750">
-	<div class="bg-gray-400 toolbar dark:bg-gray-850">
-		<div class="title">
+<body class="text-gray-900 bg-gray-200 dark:text-gray-100 dark:bg-gray-750">
+	<div class="toolbar bg-gray-750 dark:bg-gray-850">
+		<div class="title text-gray-100">
 			<span>Clickr</span>
-			<span class="text-sm text-gray-600 dark:text-gray-500">1.0</span>
+			<span class="text-sm text-gray-500">1.0</span>
 		</div>
-		<div class="toolbar-buttons">
+		<div class="toolbar-buttons text-white">
+			<a class="hover:bg-gray-500 dark:hover:bg-gray-900" id="scheme-toggle">&#xE706;</a>
 			<a class="hover:bg-gray-500 dark:hover:bg-gray-900" id="minimize-button">&#xE921;</a>
 			<a class="hover:bg-gray-500 dark:hover:bg-gray-900" id="close-button">&#xE8BB;</a>
 		</div>
@@ -56,6 +57,47 @@
 				class="block py-1 w-full rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500"
 				readonly
 			>
+		</div>
+		<div class="flex w-full px-2 py-1 items-center">
+			<label for="position-lock" class="flex items-center cursor-pointer">
+				<!-- toggle -->
+				<div class="relative">
+					<!-- input -->
+					<input id="position-lock" type="checkbox" class="sr-only" />
+					<!-- line -->
+					<div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+					<!-- dot -->
+					<div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+				</div>
+				<!-- label -->
+				<div class="flex flex-col ml-3 text-gray-700 dark:text-gray-200 text-sm font-medium">
+					Cursor Position Lock
+					<span class="text-xs text-gray-600 dark:text-gray-400">Locks the cursor position wherever it is when the clicker starts</span>
+				</div>
+			</label>
+		</div>
+		<div class="flex w-full px-2 py-1 items-center">
+			<label for="alert-sound" class="flex items-center cursor-pointer">
+				<!-- toggle -->
+				<div class="relative">
+					<!-- input -->
+					<input id="alert-sound" type="checkbox" class="sr-only" />
+					<!-- line -->
+					<div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
+					<!-- dot -->
+					<div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+				</div>
+				<!-- label -->
+				<div class="flex flex-col ml-3 text-gray-700 dark:text-gray-200 text-sm font-medium">
+					Clicker Start Alert
+					<span class="text-xs text-gray-600 dark:text-gray-400">Plays a beautiful notification when the clicker is started</span>
+				</div>
+			</label>
+		</div>
+		<div class="flex flex-col flex-grow">
+			<a class="flex h-full cursor-pointer items-center justify-center bg-gray-350 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-650 transition-colors text-xl font-light">
+				Arm
+			</a>
 		</div>
 	</div>
 </body>
