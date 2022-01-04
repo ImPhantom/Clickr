@@ -2,8 +2,13 @@
  * 	Turned this into a class to clean up the main renderer script
  */
 class ShortcutInput {
-	constructor(inputElementId, saveCallback) {
+	constructor(inputElementId, initialValue, saveCallback) {
 		this.input = document.getElementById(inputElementId);
+
+		// Set inital value if any
+		if (initialValue != null && initialValue != '') {
+			this.input.value = initialValue;
+		}
 
 		this.keys = [];
 
