@@ -15,8 +15,27 @@ schemeToggle.onclick = () => {
 	}
 };
 
-const ShortcutInput = require('./shortcut_input.js');
+/* Setup Shortcut Inputs */
+(async () => {
+	const ShortcutInput = require('./shortcut_input.js');
+	const savedShortcut = await window.api.invoke('get-stored-value', 'shortcut');
+	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {
+		window.api.send('update-shortcut', newShortcut);
+	});
+})();
 
-new ShortcutInput('start-shortcut', saveValue => {
-	window.api.send('update-shortcut', { shortcut: 'start', value: saveValue });
+/* Arm button */
+const armedCover = document.getElementById('cover');
+
+document.getElementById('arm-toggle').onclick = () => window.api.send('arm-toggle');
+window.api.on('arm-result', result => {
+	if (typeof result !== 'boolean') return;
+
+	if (result) {
+		// Armed 
+		armedCover.classList.remove('hidden');
+	} else {
+		// Disarmed
+		armedCover.classList.add('hidden');
+	}
 });

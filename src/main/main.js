@@ -1,4 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const Store = require('electron-store');
+
+const Clicker = require('./clicker.js');
+
+const store = new Store({ name: 'app_config', schema: require('../schema.json') });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -54,16 +59,40 @@ app.on('activate', () => {
 
 const getFocusedWindow = () => BrowserWindow.getFocusedWindow();
 
-ipcMain.handle('close-window', async () => {
-	console.log('\'close-window\' called, attempting to close window...');
-	getFocusedWindow().close();
+ipcMain.on('close-window', () => getFocusedWindow().close());
+ipcMain.on('minimize-window', () => getFocusedWindow().minimize());
+
+const clicker = new Clicker(store);
+
+/* Store handling channels */
+ipcMain.handle('get-stored-value', (_, key) => {
+	return store.get(key);
 });
 
-ipcMain.handle('minimize-window', async () => {
-	console.log('\'minimize-window\' called, attempting to minimize window...');
-	getFocusedWindow().minimize();
+ipcMain.on('update-shortcut', (_, value) => {
+	store.set('shortcut', value);
+	console.log(`[ipc] Shortcut set to '${value}'`);
 });
 
-ipcMain.handle('update-shortcut', async (event, ...args) => {
-	console.log(`${event} => `, ...args);
+ipcMain.on('update-click-speed', (_, value) => {
+	store.set('click.speed', value);
+	console.log(`[ipc] Click speed set to '${value}'`);
+});
+
+ipcMain.on('update-click-unit', (_, value) => {
+	store.set('click.speed', value);
+	console.log(`[ipc] Click speed set to '${value}'`);
+});
+
+/* Clicker functions */
+ipcMain.on('arm-toggle', async event => {
+	let armed = false;
+	if (!clicker.armed && !clicker.clicking) {
+		await clicker.arm();
+		armed = true;
+	} else {
+		await clicker.disarm();
+	}
+
+	event.reply('arm-result', armed);
 });
