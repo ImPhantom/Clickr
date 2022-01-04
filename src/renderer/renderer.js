@@ -3,6 +3,12 @@ import './index.scss';
 document.getElementById('close-button').onclick = () => window.api.send('close-window');
 document.getElementById('minimize-button').onclick = () => window.api.send('minimize-window');
 
+/* 
+The following line is a strange fix to a bug thats caused when the application is packaged
+For some reason the type attribute is stripped only from the shortcut input, If I took enough time I could probably hunt it down, but its not worth it at the moment.
+*/
+document.getElementById('start-shortcut').setAttribute('type', 'text');
+
 const schemeToggle = document.getElementById('scheme-toggle');
 schemeToggle.onclick = () => {
 	const _element = document.documentElement;

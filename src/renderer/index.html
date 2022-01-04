@@ -31,7 +31,7 @@
 				<label for="click-speed" class="block mb-1 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">Speed:</label>
 				<div class="relative w-full rounded-md shadow-sm">
 					<input type="number" name="click-speed" id="click-speed" min="1" max="250"
-						class="block w-full border-gray-300 rounded-md pr-28 py-1 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500">
+						class="block w-full border-gray-300 rounded-md pr-28 pl-2 py-1 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500">
 					<div class="absolute inset-y-0 right-0 flex items-center">
 						<label for="click-unit" class="sr-only">Clicks per unit</label>
 						<select id="click-unit" name="click-unit" class="h-full py-0 pl-2 pr-6 text-gray-500 bg-transparent border-transparent rounded-md dark:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -53,13 +53,7 @@
 		</div>
 		<div class="flex flex-col w-full">
 			<label for="start-shortcut" class="block mb-1 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">Shortcut:</label>
-			<input 
-				type="text"
-				id="start-shortcut"
-				name="start-shortcut" 
-				class="block py-1 w-full rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500"
-				readonly
-			>
+			<input id="start-shortcut" type="text" class="block py-1 px-2 w-full rounded-md border-gray-300 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500" readonly>
 		</div>
 		<div class="flex w-full px-2 py-1 items-center">
 			<label for="position-lock" class="flex items-center cursor-pointer">
