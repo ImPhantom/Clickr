@@ -16,15 +16,15 @@ class Clicker {
 	async arm(startCallback = null, clickCallback = null, endCallback = null) {
 		if (this.armed || this.clicking) return;
 		this.armed = true;
-		
+
 		const shortcut = this.store.get('shortcut');
 		if (!shortcut) return;
 
 		globalShortcut.register(shortcut, async () => {
 			if (this.clicking) {
-				await this.stop(startCallback, clickCallback);
+				await this.stop(endCallback);
 			} else {
-				await this.start(endCallback);
+				await this.start(startCallback, clickCallback);
 			}
 		});
 
@@ -56,11 +56,10 @@ class Clicker {
 			console.log(`Locked position @ '${lockedPosition.x}, ${lockedPosition.y}'`);
 		}
 
-		if (startCallback) startCallback();
-
-		// TODO: Make this configurable?
 		const clickSpeed = this.store.get('click.speed') ?? 10;
 		const clickUnit = this.store.get('click.unit') ?? 1000;
+
+		if (startCallback) startCallback(clickSpeed, clickUnit);
 
 		this.interval = setInterval(async () => {
 			if (positionLock && lockedPosition != null) {

@@ -39,3 +39,15 @@ window.api.on('arm-result', result => {
 		armedCover.classList.add('hidden');
 	}
 });
+
+window.api.on('clickr-started', () => {
+	console.log('Clickr started clicking!');
+});
+
+window.api.on('clickr-clicked', () => {
+	console.log('Clickr clicked!');
+});
+
+window.api.on('clickr-stopped', () => {
+	console.log('Clickr stopped clicking!');
+});

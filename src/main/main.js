@@ -88,7 +88,11 @@ ipcMain.on('update-click-unit', (_, value) => {
 ipcMain.on('arm-toggle', async event => {
 	let armed = false;
 	if (!clicker.armed && !clicker.clicking) {
-		await clicker.arm();
+		await clicker.arm(
+			(speed, unit) => event.reply('clickr-started', speed, unit),
+			clicks => event.reply('clickr-clicked', clicks),
+			totalClicks => event.reply('clickr-stopped', totalClicks)
+		);
 		armed = true;
 	} else {
 		await clicker.disarm();

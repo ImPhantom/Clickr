@@ -4,6 +4,7 @@ const validChannels = {
 	invoke: ['get-stored-value'],
 	send: ['close-window', 'minimize-window', 'update-shortcut', 'arm-toggle'],
 	handle: ['arm-result']
+	on: ['arm-result', 'clickr-started', 'clickr-clicked', 'clickr-stopped']
 };
 
 contextBridge.exposeInMainWorld('api', {
@@ -18,7 +19,7 @@ contextBridge.exposeInMainWorld('api', {
 		}
 	},
 	on: (channel, callable) => {
-		if (validChannels.handle.includes(channel)) {
+		if (validChannels.on.includes(channel)) {
 			ipcRenderer.on(channel, (_, ...args) => callable(...args));
 		}
 	}
