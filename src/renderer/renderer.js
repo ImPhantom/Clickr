@@ -15,8 +15,23 @@ schemeToggle.onclick = () => {
 	}
 };
 
-/* Setup Shortcut Inputs */
 (async () => {
+	/* Click Speed Input (1-infinity) */
+	const clickSpeed = document.getElementById('click-speed');
+	clickSpeed.value = await window.api.invoke('get-stored-value', 'click.speed') ?? 10;
+	clickSpeed.onblur = () => window.api.send('update-click-speed', clickSpeed.value);
+
+	/* Click Speed Input (second/minute) */
+	const clickUnit = document.getElementById('click-unit');
+	clickUnit.value = await window.api.invoke('get-stored-value', 'click.unit') ?? 1000;
+	clickUnit.onchange = () => window.api.send('update-click-unit', clickUnit.value);
+
+	/* Click Speed Input (left/middle/right) */
+	const clickButton = document.getElementById('click-button');
+	clickButton.value = await window.api.invoke('get-stored-value', 'click.button') ?? 'left';
+	clickButton.onchange = () => window.api.send('update-click-button', clickButton.value);
+
+	/* Shortcut input */
 	const ShortcutInput = require('./shortcut_input.js');
 	const savedShortcut = await window.api.invoke('get-stored-value', 'shortcut');
 	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {

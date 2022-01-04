@@ -28,15 +28,15 @@
 	<div class="p-2 space-y-2 window-content">
 		<div class="flex flex-row space-x-2">
 			<div class="w-[65%]">
-				<label for="cpu-value" class="block mb-1 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">Speed:</label>
+				<label for="click-speed" class="block mb-1 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">Speed:</label>
 				<div class="relative w-full rounded-md shadow-sm">
-					<input type="number" name="cpu-value" id="cpu-value" value="5" min="1" max="200"
+					<input type="number" name="click-speed" id="click-speed" min="1" max="250"
 						class="block w-full border-gray-300 rounded-md pr-28 py-1 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500">
 					<div class="absolute inset-y-0 right-0 flex items-center">
-						<label for="cpu-unit" class="sr-only">Clicks per unit</label>
-						<select id="cpu-unit" name="cpu-unit" class="h-full py-0 pl-2 pr-6 text-gray-500 bg-transparent border-transparent rounded-md dark:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-							<option class="text-gray-900">clicks/sec</option>
-							<option class="text-gray-900">clicks/min</option>
+						<label for="click-unit" class="sr-only">Clicks per unit</label>
+						<select id="click-unit" name="click-unit" class="h-full py-0 pl-2 pr-6 text-gray-500 bg-transparent border-transparent rounded-md dark:text-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+							<option class="text-gray-900" value="1000">clicks/sec</option>
+							<option class="text-gray-900" value="60000">clicks/min</option>
 						</select>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 			
 			<div class="w-[35%]">
 				<label for="click-button" class="block mb-1 text-xs font-semibold tracking-wide text-gray-700 dark:text-gray-300">Button:</label>
-				<select class="block w-full rounded-md py-1 border-gray-300 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500">
+				<select id="click-button" class="block w-full rounded-md py-1 border-gray-300 dark:border-gray-500 dark:bg-gray-650 focus:ring-indigo-500 focus:border-indigo-500">
 					<option value="left">Left</option>
 					<option value="middle">Middle</option>
 					<option value="right">Right</option>

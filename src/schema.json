@@ -4,7 +4,7 @@
 		"type": "object",
 		"properties": {
 			"speed": { "type": "string" },
-			"unit": { "type": "string" },
+			"unit": { "type": "string", "enum": ["1000", "60000"] },
 			"button": { "type": "string", "enum": ["left", "middle", "right"] }
 		}
 	},

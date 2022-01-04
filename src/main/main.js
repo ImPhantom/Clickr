@@ -69,20 +69,10 @@ ipcMain.handle('get-stored-value', (_, key) => {
 	return store.get(key);
 });
 
-ipcMain.on('update-shortcut', (_, value) => {
-	store.set('shortcut', value);
-	console.log(`[ipc] Shortcut set to '${value}'`);
-});
-
-ipcMain.on('update-click-speed', (_, value) => {
-	store.set('click.speed', value);
-	console.log(`[ipc] Click speed set to '${value}'`);
-});
-
-ipcMain.on('update-click-unit', (_, value) => {
-	store.set('click.speed', value);
-	console.log(`[ipc] Click speed set to '${value}'`);
-});
+ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
+ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
+ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
+ipcMain.on('update-click-button', (_, value) => store.set('click.button', value));
 
 /* Clicker functions */
 ipcMain.on('arm-toggle', async event => {
