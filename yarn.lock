@@ -726,48 +726,48 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@nut-tree/libnut-darwin@2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-darwin/-/libnut-darwin-2.1.5.tgz#e1fe919391853af0a157e091dd730d956f79cfa7"
-  integrity sha512-k2tkRn//Uy3OfvC6N+w1nWswQ1dufJb1XPeBOSx/oiUIN2nkaXFgtlaOs7iKVT8hFrjdHQb99ZkSvkJ2IWtX7g==
+"@nut-tree/libnut-darwin@^2.1.6-next.20220101131013":
+  version "2.1.6-next.20220101131013"
+  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-darwin/-/libnut-darwin-2.1.6-next.20220101131013.tgz#3bfaf689dd1ea2296605658df673ea44b5c8aeda"
+  integrity sha512-1+2NfECsoBJtXutAYWsgoYRuEtJvkmId4woorrgdVCIiC1TXukhQ+WqPL23eTq+aYMnngfPjFQ8GFX0bcLF4Ow==
   dependencies:
     bindings "1.5.0"
     cmake-js "6.1.0"
     node-addon-api "3.0.0"
 
-"@nut-tree/libnut-linux@2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-linux/-/libnut-linux-2.1.5.tgz#7fcc7f596c0188aade5e7c79d99922279845d5a3"
-  integrity sha512-QQaKWGKpkWbRJoh8kUuC5Poyuwu7KrbBpxA1uhSFgusHJ5/MQVS9rjnqz2dmrScyv834J082CbtoOPndrg4xKA==
+"@nut-tree/libnut-linux@^2.1.6-next.20220101130734":
+  version "2.1.6-next.20220101130734"
+  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-linux/-/libnut-linux-2.1.6-next.20220101130734.tgz#61eef0c0c28f02487021795b9c0a25c0e5674535"
+  integrity sha512-Ux/i4TEJg6p67q9uN2Y8FD3CZ6Hv5NAuY5GYX1T+uEIkAvFWdk4pn0cfXhfZyuRWhfVMlK/ZdMjOlT6z3/XulA==
   dependencies:
     bindings "1.5.0"
     cmake-js "6.1.0"
     node-addon-api "3.0.0"
 
-"@nut-tree/libnut-win32@2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-win32/-/libnut-win32-2.1.5.tgz#ef7c3c37fab5620dfc3c02abdd01784af89a81f4"
-  integrity sha512-dYiJyGK0hVExFCNyuON6kaqawhv2Fz4YoXHbyjbXmDxqD/gqPjLDIrFQ0H4HKKD1zTQFMbWrknGPtQCNGy9NzA==
+"@nut-tree/libnut-win32@^2.1.6-next.20220101010752":
+  version "2.1.6-next.20220101010752"
+  resolved "https://registry.yarnpkg.com/@nut-tree/libnut-win32/-/libnut-win32-2.1.6-next.20220101010752.tgz#d21b95378d326903248e5515234dfb6b49aa5b49"
+  integrity sha512-lk8Actf/BDo83kv7MEU7UtRaRgCDkucuTzHAMVhbq7xiggCYJZdxTXVBgfeoRNdI+UJZ7pz0tzpydX5iMH67Rg==
   dependencies:
     bindings "1.5.0"
     cmake-js "6.1.0"
     node-addon-api "3.0.0"
 
-"@nut-tree/libnut@2.1.5":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@nut-tree/libnut/-/libnut-2.1.5.tgz#8d2a415bb4ede93b6cb94b186f3dc9c34530c23d"
-  integrity sha512-hHb2ZJiatJcfBGrKBD31ZvOIpk7/eIzPJzpt/X+WPQvH52+N0O42GxMs8rBQAnhhlyumS+9/wecjbS6awJ2d1w==
+"@nut-tree/libnut@^2.1.6-next.20220104153052":
+  version "2.1.6-next.20220104153052"
+  resolved "https://registry.yarnpkg.com/@nut-tree/libnut/-/libnut-2.1.6-next.20220104153052.tgz#cfd6801b540ba4bed1ab6b510b4bdb149918531d"
+  integrity sha512-a2McUvFJeEcXqAhTqJJK4Czfozl1BS7FIwI7D1enGNkC6yAjmpiOCFw1s6KU9DTX8ijlftKnhWyYAMFgoau0Iw==
   dependencies:
-    "@nut-tree/libnut-darwin" "2.1.5"
-    "@nut-tree/libnut-linux" "2.1.5"
-    "@nut-tree/libnut-win32" "2.1.5"
+    "@nut-tree/libnut-darwin" "^2.1.6-next.20220101131013"
+    "@nut-tree/libnut-linux" "^2.1.6-next.20220101130734"
+    "@nut-tree/libnut-win32" "^2.1.6-next.20220101010752"
 
-"@nut-tree/nut-js@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@nut-tree/nut-js/-/nut-js-2.0.0.tgz#310232cc53fc7b247e5efc3e3384c448f6ad47c7"
-  integrity sha512-eFZQGoyNfjDJ7thOAXAEHZJ7nD2yPS/+erUcP4/MMWHqOlAI8Yuz2GyLGHTwjYx4hkFUfjHoY5Dhn1v6t/TVng==
+"@nut-tree/nut-js@^2.0.1-next.20220104155257":
+  version "2.0.1-next.20220104155257"
+  resolved "https://registry.yarnpkg.com/@nut-tree/nut-js/-/nut-js-2.0.1-next.20220104155257.tgz#1f89d0d7f4cc81b12504bf15806bede0527f60c2"
+  integrity sha512-ejyXZWA0uw5Gs04C+Ns6LkIz69yX3Ki3krDcys8eSh0E4KbNsRJoi0+KMepI6YfpDWMUbKWDvtHgD8kOQl3Rjg==
   dependencies:
-    "@nut-tree/libnut" "2.1.5"
+    "@nut-tree/libnut" "^2.1.6-next.20220104153052"
     clipboardy "2.3.0"
     jimp "0.16.1"
     node-abort-controller "2.0.0"
@@ -3638,7 +3638,7 @@ got@^9.6.0:
     to-readable-stream "^1.0.0"
     url-parse-lax "^3.0.0"
 
-graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, graceful-fs@^4.2.6:
+graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.3, graceful-fs@^4.2.4, graceful-fs@^4.2.6:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
   integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
@@ -4925,7 +4925,14 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
-node-abi@^2.19.2, node-abi@^3.0.0, node-abi@^3.5.0:
+node-abi@^2.19.2:
+  version "2.30.1"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.30.1.tgz#c437d4b1fe0e285aaf290d45b45d4d7afedac4cf"
+  integrity sha512-/2D0wOQPgaUWzVSVgRMx+trKJRC2UG4SUc4oCJoXx9Uxjtp0Vy3/kt7zcbxHF8+Z/pK3UloLWzBISg72brfy1w==
+  dependencies:
+    semver "^5.4.1"
+
+node-abi@^3.0.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-3.5.0.tgz#26e8b7b251c3260a5ac5ba5aef3b4345a0229248"
   integrity sha512-LtHvNIBgOy5mO8mPEUtkCW/YCRWYEKshIvqhe1GHHyXEHEB5mgICyYnAcl4qan3uFeRROErKGzatFHPf6kDxWw==
@@ -4976,7 +4983,23 @@ node-gyp-build@^4.2.1:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.3.0.tgz#9f256b03e5826150be39c764bf51e993946d71a3"
   integrity sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==
 
-node-gyp@^7.1.0, node-gyp@^8.4.0, node-gyp@^8.4.1:
+node-gyp@^7.1.0:
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-7.1.2.tgz#21a810aebb187120251c3bcec979af1587b188ae"
+  integrity sha512-CbpcIo7C3eMu3dL1c3d0xw449fHIGALIJsRP4DDPHpyiW8vcriNY7ubh9TE4zEKfSxscY7PjeFnshE7h75ynjQ==
+  dependencies:
+    env-paths "^2.2.0"
+    glob "^7.1.4"
+    graceful-fs "^4.2.3"
+    nopt "^5.0.0"
+    npmlog "^4.1.2"
+    request "^2.88.2"
+    rimraf "^3.0.2"
+    semver "^7.3.2"
+    tar "^6.0.2"
+    which "^2.0.2"
+
+node-gyp@^8.4.0:
   version "8.4.1"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-8.4.1.tgz#3d49308fc31f768180957d6b5746845fbd429937"
   integrity sha512-olTJRgUtAb/hOXG0E93wZDs5YiJlgbXxTwQAFHyNlRsXQnYzUaF2aGgujZbw+hR8aF4ZG/rST57bWMWD16jr9w==
@@ -5117,7 +5140,7 @@ npmlog@^1.2.0:
     are-we-there-yet "~1.0.0"
     gauge "~1.2.0"
 
-npmlog@^4.0.2:
+npmlog@^4.0.2, npmlog@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
   integrity sha512-2uUqazuKlTaSI/dC8AzicUck7+IrEaOnN/e0jd3Xtt1KcGpwx30v50mL7oPyr/h9bL3E4aZccVwpwP+5W9Vjkg==
@@ -6026,7 +6049,7 @@ repeating@^2.0.0:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.45.0, request@^2.54.0:
+request@^2.45.0, request@^2.54.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -6272,7 +6295,7 @@ semver-compare@^1.0.0:
   resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
   integrity sha1-De4hahyUGrN+nvsXiPavxf9VN/w=
 
-"semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.3.0, semver@^5.5.0:
+"semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
