@@ -73,6 +73,7 @@ ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
 ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
 ipcMain.on('update-click-button', (_, value) => store.set('click.button', value));
+ipcMain.on('toggle-position-lock', (_, value) => store.set('positionLock', value));
 
 /* Clicker functions */
 ipcMain.on('arm-toggle', async event => {

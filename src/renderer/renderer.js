@@ -37,12 +37,17 @@ schemeToggle.onclick = () => {
 	clickButton.value = await window.api.invoke('get-stored-value', 'click.button') ?? 'left';
 	clickButton.onchange = () => window.api.send('update-click-button', clickButton.value);
 
-	/* Shortcut input */
+	/* Shortcut Input */
 	const ShortcutInput = require('./shortcut_input.js');
 	const savedShortcut = await window.api.invoke('get-stored-value', 'shortcut');
 	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {
 		window.api.send('update-shortcut', newShortcut);
 	});
+
+	/* Position Lock Switch */
+	const positionLock = document.getElementById('position-lock');
+	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
+	positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
 })();
 
 /* Arm button */
