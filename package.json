@@ -22,7 +22,8 @@
 	"config": {
 		"forge": {
 			"packagerConfig": {
-				"executableName": "Clickr",
+				"name": "clickr",
+				"executableName": "clickr",
 				"icon": ".webpack/main/icons/icon"
 			},
 			"makers": [
