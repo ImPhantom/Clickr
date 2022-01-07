@@ -21,7 +21,9 @@
 	"license": "MIT",
 	"config": {
 		"forge": {
-			"packagerConfig": {},
+			"packagerConfig": {
+				"icon": ".webpack/main/icons/icon"
+			},
 			"makers": [
 				{
 					"name": "@electron-forge/maker-squirrel",
@@ -78,6 +80,7 @@
 		"@tailwindcss/forms": "^0.4.0",
 		"@vercel/webpack-asset-relocator-loader": "1.6.0",
 		"autoprefixer": "^10.4.0",
+		"copy-webpack-plugin": "^10.2.0",
 		"css-loader": "^6.0.0",
 		"electron": "16.0.5",
 		"eslint": "^8.5.0",

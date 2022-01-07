@@ -23,6 +23,7 @@ const createWindow = () => {
 		frame: false,
 		resizable: false,
 		fullscreenable: false,
+		icon: 'icons/icon.png',
 		webPreferences: {
 			// eslint-disable-next-line no-undef
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,

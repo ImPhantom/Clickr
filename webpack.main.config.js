@@ -1,10 +1,11 @@
 const rules = require('./webpack.rules');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 rules.push({
 	test: /\.mp3$/i,
 	loader: 'file-loader',
 	options: {
-		name: '[name].[ext]'
+		name: '[name].[ext]',
 	},
 });
 
@@ -21,4 +22,9 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx', '.css', '.scss', '.sass', '.json'],
 	},
+	plugins: [
+		new CopyWebpackPlugin({
+			patterns: [{ from: './src/static/images', to: 'icons'}]
+		})
+	]
 };
