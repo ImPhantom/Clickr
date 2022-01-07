@@ -13,6 +13,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
+		show: false,
 		width: 300,
 		height: 380,
 		frame: false,
@@ -24,12 +25,14 @@ const createWindow = () => {
 		}
 	});
 
+	// TODO: maybe add splash?
+
 	// and load the index.html of the app.
 	// eslint-disable-next-line no-undef
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	// Don't show the main window until the webcontents is fully loaded, avoids uglyness
+	mainWindow.once('ready-to-show', () => mainWindow.show());
 };
 
 // This method will be called when Electron has finished
