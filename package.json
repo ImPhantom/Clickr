@@ -48,7 +48,7 @@
 				[
 					"@electron-forge/plugin-webpack",
 					{
-						"devContentSecurityPolicy": "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-eval' 'unsafe-inline';img-src * 'self' data: https:",
+						"devContentSecurityPolicy": "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-eval' 'unsafe-inline';img-src * 'self' data:;media-src 'self' data:;",
 						"mainConfig": "./webpack.main.config.js",
 						"renderer": {
 							"config": "./webpack.renderer.config.js",
@@ -81,6 +81,7 @@
 		"css-loader": "^6.0.0",
 		"electron": "16.0.5",
 		"eslint": "^8.5.0",
+		"file-loader": "^6.2.0",
 		"node-loader": "^2.0.0",
 		"postcss": "^8.4.5",
 		"postcss-loader": "^6.2.1",

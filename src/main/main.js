@@ -3,6 +3,9 @@ const Store = require('electron-store');
 
 const Clicker = require('./clicker.js');
 
+// file-loader imports
+const startAlertAudio = require('../static/audio/alert.mp3').default;
+
 const store = new Store({ name: 'app_config', schema: require('../schema.json') });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
