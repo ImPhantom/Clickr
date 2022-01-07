@@ -1,6 +1,7 @@
+const path = require('path');
+const { readFile } = require('fs').promises;
 const { app, BrowserWindow, ipcMain } = require('electron');
 const Store = require('electron-store');
-
 const Clicker = require('./clicker.js');
 
 // file-loader imports
@@ -75,18 +76,24 @@ ipcMain.handle('get-stored-value', (_, key) => {
 	return store.get(key);
 });
 
+ipcMain.handle('get-alert', async () => {
+	const rawAlert = await readFile(path.join(__dirname, startAlertAudio));
+	return (rawAlert) ? `data:audio/mpeg;base64,${rawAlert.toString('base64')}` : false;
+});
+
 ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
 ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
 ipcMain.on('update-click-button', (_, value) => store.set('click.button', value));
 ipcMain.on('toggle-position-lock', (_, value) => store.set('positionLock', value));
+ipcMain.on('toggle-start-alert', (_, value) => store.set('startAlert', value));
 
 /* Clicker functions */
 ipcMain.on('arm-toggle', async event => {
 	let armed = false;
 	if (!clicker.armed && !clicker.clicking) {
 		await clicker.arm(
-			(speed, unit) => event.reply('clickr-started', speed, unit),
+			(speed, unit, alert) => event.reply('clickr-started', speed, unit, alert),
 			clicks => event.reply('clickr-clicked', clicks),
 			totalClicks => event.reply('clickr-stopped', totalClicks)
 		);

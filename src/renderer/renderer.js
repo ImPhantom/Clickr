@@ -3,12 +3,6 @@ import './index.scss';
 document.getElementById('close-button').onclick = () => window.api.send('close-window');
 document.getElementById('minimize-button').onclick = () => window.api.send('minimize-window');
 
-/* 
-The following line is a strange fix to a bug thats caused when the application is packaged
-For some reason the type attribute is stripped only from the shortcut input, If I took enough time I could probably hunt it down, but its not worth it at the moment.
-*/
-document.getElementById('start-shortcut').setAttribute('type', 'text');
-
 const schemeToggle = document.getElementById('scheme-toggle');
 schemeToggle.onclick = () => {
 	const _element = document.documentElement;
@@ -20,6 +14,15 @@ schemeToggle.onclick = () => {
 		schemeToggle.innerHTML = '&#xE706;';
 	}
 };
+
+/* 
+The following line is a strange fix to a bug thats caused when the application is packaged
+For some reason the type attribute is stripped only from the shortcut input, If I took enough time I could probably hunt it down, but its not worth it at the moment.
+*/
+document.getElementById('start-shortcut').setAttribute('type', 'text');
+
+// Theses are referenced throughout
+const startAlertAudio = document.getElementById('start-alert-audio');
 
 (async () => {
 	/* Click Speed Input (1-infinity) */
@@ -48,6 +51,22 @@ schemeToggle.onclick = () => {
 	const positionLock = document.getElementById('position-lock');
 	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
 	positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
+
+	/* Start Alert Switch */
+	const startAlert = document.getElementById('start-alert');
+	startAlert.checked = await window.api.invoke('get-stored-value', 'startAlert') ?? false;
+	startAlert.onchange = () => window.api.send('toggle-start-alert', startAlert.checked);
+
+	/* Append Alert Audio */
+	const alertDataUri = await window.api.invoke('get-alert');
+	if (alertDataUri) {
+		const source = document.createElement('source');
+		source.setAttribute('src', alertDataUri);
+		startAlertAudio.appendChild(source);
+		startAlertAudio.volume = 0.5;
+	} else {
+		console.error('Something went wrong while loading the alert audio!');
+	}
 })();
 
 /* Arm button */
@@ -58,16 +77,21 @@ window.api.on('arm-result', result => {
 	if (typeof result !== 'boolean') return;
 
 	if (result) {
-		// Armed 
-		armedCover.classList.remove('hidden');
+		armedCover.classList.remove('hidden'); // Armed 
 	} else {
-		// Disarmed
-		armedCover.classList.add('hidden');
+		armedCover.classList.add('hidden');	// Disarmed
 	}
 });
 
-window.api.on('clickr-started', () => {
-	console.log('Clickr started clicking!');
+
+window.api.on('clickr-started', (speed, unit, alert) => {
+	console.log(`[clickr] Started clicking: ${speed} clicks per ${{1000:'second',60000:'minute'}[unit]} (${Date.now()})`);
+
+	// Play start alert if enabled
+	if (alert) {
+		startAlertAudio.load();
+		startAlertAudio.play();
+	}
 });
 
 window.api.on('clickr-clicked', () => {

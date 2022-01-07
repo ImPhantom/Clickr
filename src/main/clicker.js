@@ -15,7 +15,6 @@ class Clicker {
 
 	async arm(startCallback = null, clickCallback = null, endCallback = null) {
 		if (this.armed || this.clicking) return;
-		this.armed = true;
 
 		const shortcut = this.store.get('shortcut');
 		if (!shortcut) return;
@@ -28,6 +27,7 @@ class Clicker {
 			}
 		});
 
+		this.armed = true;
 		console.log(`[clicker] Successfully armed: ${shortcut}`);
 	}
 
@@ -49,6 +49,8 @@ class Clicker {
 
 		this.clicks = 0; // reset click count
 
+		// FIXME: For some reason when the position is locked, it waits for the mouse to move to start clicking
+
 		const positionLock = this.store.get('positionLock') ?? false;
 		let lockedPosition = null;
 		if (positionLock) {
@@ -59,7 +61,7 @@ class Clicker {
 		const clickSpeed = this.store.get('click.speed') ?? 10;
 		const clickUnit = this.store.get('click.unit') ?? 1000;
 
-		if (startCallback) startCallback(clickSpeed, clickUnit);
+		if (startCallback) startCallback(clickSpeed, clickUnit, this.store.get('startAlert') ?? false);
 
 		this.interval = setInterval(async () => {
 			if (positionLock && lockedPosition != null) {
