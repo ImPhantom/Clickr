@@ -13,29 +13,31 @@ This whole project started out with me just trying to learn new things, and for 
 ## **Getting Started**
 If you want to install & use Clickr, then follow the instructions below to get everything running.
 
-### Windows
-```
-Will be updated when a release is created.
-```
+### **Windows**
+Installing on windows is as easy as it could ever be
+- Download the latest `clickr_1.x.x_win64.exe` from the [releases page](https://github.com/ImPhantom/Clickr/releases/latest/)
+- Run the installer, it should automatically install then open the application.
 
-### Linux
-```
-Gotta test it all on an ubuntu vm again, will update then.
-```
+*(It will automatically create desktop & start menu shortcuts)*
 
-### OSX
-```
-No builds have been created for OSX because I have no way to test them.
-If you're able to, please try packaging the application on an OSX host and reporting the results in an issue
-```
+### **Linux**
+Currently there are only `.deb` builds, which to my knowledge can only be used on debian based linux distributions. *(I'm not great with linux, so I could totally be wrong)*
 
-### **If you run into any problems, dont hesitate to [submit an issue](https://github.com/ImPhantom/Clickr/issues/new)**
+**Ubuntu/Debian:** (requires a graphical interface, obviously)
+- Download the latest `clickr_1.x.x_amd64.deb` from the [releases page](https://github.com/ImPhantom/Clickr/releases/latest/)
+- Then you just need to run ```sudo dpkg -i clickr_1.x.x_amd64.deb```
+
+### **macOS**
+I'm currently unable to create .dmg builds for macOS, I could package the application as a zip. But that definitely is not the most user friendly way to install an application on macOS.
+
+If I end up getting my hands on a mac I'll release some builds, but for now if anyone wants to test building it on macOS, check out the "Contributing" section below.
+
+### **If you run into any problems, please don't hesitate to [submit an issue](https://github.com/ImPhantom/Clickr/issues/new)**
 
 ## **Contributing**
 
 If you would like to contribute to this repo, make a pull request from your branch to the `master` branch.\
-*(Eventually I'll move to a more standard git flow, but for now everythings still kind of chaotic.)*
-
+*(Eventually I'll move to a more standard git flow, but for now everything is still kind of chaotic.)*
 
 ### **Environment/Build Prerequisites:**
 - [Node.js](https://nodejs.org/en/) (latest, v16+)
