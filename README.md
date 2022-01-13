@@ -1,9 +1,9 @@
 # Clickr
-This is a quite heavyweight (100mb+ installed, due to electron), but undeniably good looking auto clicker.
+This is a quite heavyweight (200MB+ installed, thanks electron), but undeniably good looking auto clicker.
 
 ***Why?***
 
-This whole project started out with me just trying to learn new things, and for some reason I chose an autoclicker. The first revision (0.x.x) was pretty terrible, but this most recent revision which I'm considering its first major release is much cleaner in looks and in logic. It also allowed me to get more familiar with webpack, and the build cycle in general.
+This whole project started out with me just trying to learn new things, and for some reason I chose an auto-clicker. The first revision (0.x.x) was pretty terrible, but this most recent revision which I'm considering its first major release is much cleaner in looks and in logic. It also allowed me to get more familiar with webpack, and the build cycle in general.
 
 ### **Using:**
 - [Electron Forge](https://www.electronforge.io/) (For building, packaging & webpack integration)
@@ -13,19 +13,20 @@ This whole project started out with me just trying to learn new things, and for 
 ## **Getting Started**
 If you want to install & use Clickr, then follow the instructions below to get everything running.
 
-### Installing on Windows
+### Windows
 ```
 Will be updated when a release is created.
 ```
 
-#### Linux
+### Linux
 ```
 Gotta test it all on an ubuntu vm again, will update then.
 ```
 
-#### OSX
+### OSX
 ```
-Not sure how I'm gonna test this, need to get my hands on somethin with macos...
+No builds have been created for OSX because I have no way to test them.
+If you're able to, please try packaging the application on an OSX host and reporting the results in an issue
 ```
 
 ### **If you run into any problems, dont hesitate to [submit an issue](https://github.com/ImPhantom/Clickr/issues/new)**
@@ -43,6 +44,7 @@ If you would like to contribute to this repo, make a pull request from your bran
 	- Different for each platform, make sure your looking at the correct guide!
 
 Once you've forked/cloned the repository, and installed the prerequisites listed above you should be able to navigate to the directory and run any of the following commands to run/build the application.
+- `yarn install` **(Run this first, it will install all of the devDependencies)**
 - `yarn start` (Starts the application in development mode)
 - `yarn package` (Packages the application for your host platform/arch)
 - `yarn make` (Makes installer(s) for your host platform/arch)

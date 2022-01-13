@@ -4,13 +4,20 @@ module.exports = {
 	packagerConfig: {
 		name: 'clickr',
 		executableName: 'clickr',
-		icon: path.join(__dirname, '.webpack/main/icons/icon')
+		icon: path.join(__dirname, '.webpack/main/icons/icon'),
+		win32metadata: {
+			CompanyName: 'Clickr',
+			ProductName: 'Clickr',
+			FileDescription: 'A heavyweight but beautiful auto-clicker'
+		}
 	},
 	makers: [
 		{
 			name: '@electron-forge/maker-squirrel',
 			config: {
-				name: 'clickr'
+				name: 'clickr',
+				setupIcon: path.join(__dirname, '.webpack/main/icons/icon.ico'),
+				iconUrl: path.join(__dirname, '.webpack/main/icons/icon.ico')
 			}
 		},
 		{
