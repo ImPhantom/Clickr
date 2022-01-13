@@ -1,4 +1,5 @@
 const path = require('path');
+const { version, name } = require('./package.json');
 
 module.exports = {
 	packagerConfig: {
@@ -16,6 +17,7 @@ module.exports = {
 			name: '@electron-forge/maker-squirrel',
 			config: {
 				name: 'clickr',
+				setupExe: `${name}_${version}_win64.exe`,
 				setupIcon: path.join(__dirname, '.webpack/main/icons/icon.ico'),
 				iconUrl: path.join(__dirname, '.webpack/main/icons/icon.ico')
 			}
