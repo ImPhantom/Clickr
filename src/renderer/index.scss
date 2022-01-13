@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$toolbar-height: 2rem;
+
+@font-face {
+	font-family: SegoeMDL2;
+	src: url("../static/fonts/segoe-mdl2-assets.ttf");
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+
+	margin: 0;
+	padding: 0;
+}
+
+select {
+	background-position: right 0.25rem center;
+	padding-right: 1.5rem;
+}
+
+input:checked ~ .dot {
+	@apply bg-gray-750 dark:bg-indigo-500;
+	transform: translateX(100%);
+}
+
+.toolbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: $toolbar-height;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	
+	-webkit-app-region: drag;
+
+	.title {
+		font-size: 1rem;
+		font-weight: 300;
+		padding: 0.25rem 0 0 0.5rem;
+	}
+
+	.toolbar-buttons {
+		display: grid;
+		grid-template-columns: repeat(3, 2rem);
+
+		-webkit-app-region: no-drag;
+	
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: SegoeMDL2;
+			font-size: 14px;
+			text-decoration: none;
+			transition: background-color 300ms;
+			user-select: none;
+		}
+
+		#close-button, #minimize-button {
+			font-size: 10px;
+		}
+
+		a:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.window-content {
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - $toolbar-height);
+	margin-top: $toolbar-height;
+}
