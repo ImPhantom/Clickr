@@ -15,17 +15,16 @@ module.exports = {
 		},
 		{
 			name: '@electron-forge/maker-zip',
-			platforms: [
-				'darwin'
-			]
+			platforms: ['darwin']
 		},
 		{
 			name: '@electron-forge/maker-deb',
-			config: {}
-		},
-		{
-			name: '@electron-forge/maker-rpm',
-			config: {}
+			platforms: ['linux'],
+			config: {
+				categories: ['Utility'],
+				description: 'A heavyweight but beautiful auto-clicker',
+				icon: path.join(__dirname, '.webpack/main/icons/icon.png'),
+			}
 		}
 	],
 	plugins: [
