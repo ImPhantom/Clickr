@@ -11,7 +11,19 @@
 
 <body class="text-gray-900 bg-gray-200 dark:text-gray-100 dark:bg-gray-750">
 	<!-- TODO: Make this armed cover look nicer, neutral gray doesnt look good, slate gray doesnt look good, blurring just doesnt work... -->
-	<div class="z-40 w-full h-full fixed top-0 left-0 bg-gray-900 opacity-50  hidden" id="cover"></div>
+	<div class="z-40 w-full h-full fixed top-0 left-0 bg-gray-900 opacity-70 hidden" id="cover"></div>
+
+	<div id="clickr-current-state" class="z-50 w-full h-5/6 fixed top-0 left-0 flex-col items-center justify-center hidden">
+		<div class="flex flex-col p-2 rounded-md bg-gray-250 dark:bg-gray-650 border border-gray-500 items-center">
+			<div class="font-semibold">State: <span id="clickr-state" class="font-normal text-gray-600 dark:text-gray-300"></span></div>
+			<div id="clickr-clicks" class="text-sm text-gray-600 dark:text-gray-400"></div>
+		</div>
+
+		<div id="clickr-last-run" class="flex-col items-center p-2 mt-2 rounded-md bg-gray-250 dark:bg-gray-650 border border-gray-500 hidden">
+			<div class="text-xs font-semibold">Last Run: <span id="lr-time-ago" class="font-normal text-gray-600 dark:text-gray-300"></span></div>
+			<div id="lr-clicks" class="text-sm text-gray-600 dark:text-gray-400"></div>
+		</div>
+	</div>
 
 	<div class="toolbar bg-gray-750 dark:bg-gray-850">
 		<div class="title text-gray-100">

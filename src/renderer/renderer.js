@@ -72,20 +72,43 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 /* Arm button */
 const armedCover = document.getElementById('cover');
 
+// Info displayed on arm cover
+const stateInfoElement = document.getElementById('clickr-current-state');
+const stateText = document.getElementById('clickr-state');
+const currentClicksText = document.getElementById('clickr-clicks');
+
+const lastRunInfoElement = document.getElementById('clickr-last-run');
+const lastRunAtText = document.getElementById('lr-time-ago');
+const lastRunClicksText = document.getElementById('lr-clicks');
+
 document.getElementById('arm-toggle').onclick = () => window.api.send('arm-toggle');
 window.api.on('arm-result', result => {
 	if (typeof result !== 'boolean') return;
 
+	// Ensure last run stats aren't still displayed
+	lastRunInfoElement.classList.replace('flex', 'hidden');
+
 	if (result) {
-		armedCover.classList.remove('hidden'); // Armed 
+		stateText.innerHTML = 'Idle';
+		armedCover.classList.replace('hidden', 'flex'); // Armed
+		stateInfoElement.classList.replace('hidden', 'flex');
 	} else {
-		armedCover.classList.add('hidden');	// Disarmed
+		armedCover.classList.replace('flex', 'hidden'); // Disarmed
+		stateInfoElement.classList.replace('flex', 'hidden');
 	}
 });
 
+// TODO: Find a better solution to this
+let clickrStopped = false;
 
 window.api.on('clickr-started', (speed, unit, alert) => {
 	console.log(`[clickr] Started clicking: ${speed} clicks per ${{1000:'second',60000:'minute'}[unit]} (${Date.now()})`);
+	clickrStopped = false;
+
+	stateText.innerHTML = 'Clicking';
+	currentClicksText.innerHTML = '0';
+
+	lastRunInfoElement.classList.replace('flex', 'hidden');
 
 	// Play start alert if enabled
 	if (alert) {
@@ -94,10 +117,19 @@ window.api.on('clickr-started', (speed, unit, alert) => {
 	}
 });
 
-window.api.on('clickr-clicked', () => {
-	console.log('Clickr clicked!');
+window.api.on('clickr-clicked', clicks => {
+	if (clickrStopped) return;
+	currentClicksText.innerHTML = `${clicks} clicks`;
 });
 
-window.api.on('clickr-stopped', () => {
-	console.log('Clickr stopped clicking!');
+window.api.on('clickr-stopped', clickTotal => {
+	clickrStopped = true;
+	stateText.innerHTML = 'Idle';
+	currentClicksText.innerHTML = '';
+	
+	lastRunInfoElement.classList.replace('hidden', 'flex');
+	lastRunAtText.innerHTML = `(${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })})`;
+	lastRunClicksText.innerHTML = `${clickTotal} clicks`;
+
+	console.log(`[clickr] Stopped clicking. (${Date.now()})`);
 });
