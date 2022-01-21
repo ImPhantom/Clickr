@@ -1,4 +1,5 @@
 {
+	"lightMode": { "type": "boolean" },
 	"shortcut": { "type": "string" },
 	"click": {
 		"type": "object",

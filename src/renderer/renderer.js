@@ -1,18 +1,29 @@
 import './index.scss';
 
+/* Add respective functionality to the toolbar buttons */
 document.getElementById('close-button').onclick = () => window.api.send('close-window');
 document.getElementById('minimize-button').onclick = () => window.api.send('minimize-window');
 
-const schemeToggle = document.getElementById('scheme-toggle');
-schemeToggle.onclick = () => {
-	const _element = document.documentElement;
-	if (_element.classList.contains('dark')) {
-		_element.classList.remove('dark');
-		schemeToggle.innerHTML = '&#xE708;';
+/* Color Scheme Toggle */
+const schemeToggleButton = document.getElementById('scheme-toggle');
+const updateScheme = (light) => {
+	if (light) {
+		document.documentElement.classList.remove('dark');
+		schemeToggleButton.innerHTML = '&#xE708';
 	} else {
-		_element.classList.add('dark');
-		schemeToggle.innerHTML = '&#xE706;';
+		document.documentElement.classList.add('dark');
+		schemeToggleButton.innerHTML = '&#xE706;';
 	}
+};
+
+// I know the following is quite redundant, but theoretically its the best way to handle it
+window.api.invoke('get-stored-value', 'lightMode').then(lightMode => updateScheme(lightMode ?? false));
+schemeToggleButton.onclick = () => {
+	window.api.invoke('get-stored-value', 'lightMode').then(lightMode => {
+		lightMode = lightMode ?? false;
+		window.api.send('set-light-mode', !lightMode);
+		updateScheme(!lightMode);
+	});
 };
 
 /* 

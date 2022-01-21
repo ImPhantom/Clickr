@@ -82,6 +82,7 @@ ipcMain.handle('get-alert', async () => {
 	return (rawAlert) ? `data:audio/mpeg;base64,${rawAlert.toString('base64')}` : false;
 });
 
+ipcMain.on('set-light-mode', (_, value) => store.set('lightMode', value));
 ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
 ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
