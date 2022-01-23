@@ -10,7 +10,7 @@ class Clicker {
 		this.clicks = 0;
 		this.interval = null;
 
-		mouse.config.autoDelayMs = 10;
+		mouse.config.autoDelayMs = 100;
 	}
 
 	async arm(startCallback = null, clickCallback = null, endCallback = null) {
