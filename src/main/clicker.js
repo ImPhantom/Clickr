@@ -21,7 +21,7 @@ class Clicker {
 
 		globalShortcut.register(shortcut, async () => {
 			if (this.clicking) {
-				await this.stop(endCallback);
+				this.stop(endCallback);
 			} else {
 				await this.start(startCallback, clickCallback);
 			}
@@ -31,17 +31,17 @@ class Clicker {
 		console.log(`[clicker] Successfully armed: ${shortcut}`);
 	}
 
-	async disarm() {
+	disarm() {
 		if (!this.armed && !this.clicking) return;
 		this.armed = false;
 
 		if (this.clicking) {
-			await this.stop();
+			this.stop();
 		}
 
 		// Unregister shortcuts
 		globalShortcut.unregisterAll();
-		console.log('[clicker] Disarmed, unregistering shortcuts...');
+		console.log('[clicker] Disarmed, unregistered shortcuts...');
 	}
 
 	async start(startCallback = null, clickCallback = null) {

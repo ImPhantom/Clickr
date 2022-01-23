@@ -101,7 +101,7 @@ ipcMain.on('arm-toggle', async event => {
 		);
 		armed = true;
 	} else {
-		await clicker.disarm();
+		clicker.disarm();
 	}
 
 	event.reply('arm-result', armed);
