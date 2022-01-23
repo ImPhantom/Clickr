@@ -1,7 +1,7 @@
 {
 	"name": "clickr",
 	"productName": "Clickr",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "The slightly heavyweight, but undeniably beautiful auto-clicker. Built with Electron & Nut.js",
 	"main": ".webpack/main",
 	"scripts": {
