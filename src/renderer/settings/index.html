@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+		rel="stylesheet">
 	<title>Clickr</title>
 </head>
 
@@ -30,23 +31,41 @@
 				</div>
 				<div class="flex flex-col ml-3 text-gray-700 dark:text-gray-200 text-sm font-medium">
 					Cursor Position Lock
-					<span class="text-xs text-gray-600 dark:text-gray-400">Locks the cursor position wherever it is when the clicker starts</span>
+					<span class="text-xs text-gray-600 dark:text-gray-400">Locks the cursor position wherever it is when
+						the clicker starts</span>
 				</div>
 			</label>
 		</div>
-		<div class="flex w-full px-2 py-1 items-center">
-			<label for="start-alert" class="flex items-center cursor-pointer">
-				<div class="relative">
-					<input id="start-alert" type="checkbox" class="sr-only" />
-					<div class="w-10 h-4 bg-gray-400 rounded-full shadow-inner"></div>
-					<div class="dot absolute w-6 h-6 bg-white rounded-full shadow -left-1 -top-1 transition"></div>
+
+		<fieldset class="px-1">
+			<div class="flex flex-row px-2 justify-end">
+				<legend class="w-4/6 text-sm font-medium">Notifications</legend>
+				<div class="flex w-2/6 text-xs font-medium dark:font-light">
+					<div class="w-1/2 flex items-end justify-center">Start</div>
+					<div class="w-1/2 flex items-end justify-center">Stop</div>
 				</div>
-				<div class="flex flex-col ml-3 text-gray-700 dark:text-gray-200 text-sm font-medium">
-					Clicker Start Alert
-					<span class="text-xs text-gray-600 dark:text-gray-400">Plays a beautiful notification when the clicker is started</span>
+			</div>
+			<div class="flex flex-col mt-1 py-1 rounded-sm bg-gray-300 dark:bg-gray-800">
+				<div class="flex flex-row pb-1 px-2">
+					<div class="w-4/6 text-sm dark:font-light text-gray-900 dark:text-gray-300">Desktop</div>
+					<div class="flex w-1/6 justify-center items-center">
+						<input id="notify-desktop-start" name="notify-desktop-start" type="checkbox" class="focus:ring-indigo-400 focus:ring-offset-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-400 dark:border-gray-500 rounded">
+					</div>
+					<div class="flex w-1/6 justify-center items-center">
+						<input id="notify-desktop-stop" name="notify-desktop-stop" type="checkbox" class="focus:ring-indigo-400 focus:ring-offset-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-400 dark:border-gray-500 rounded">
+					</div>
 				</div>
-			</label>
-		</div>
+				<div class="flex flex-row pt-1 px-2 border-t border-gray-400 dark:border-gray-850">
+					<div class="w-4/6 text-sm dark:font-light text-gray-900 dark:text-gray-300">Audible Tone</div>
+					<div class="flex w-1/6 justify-center items-center">
+						<input id="notify-sound-start" name="notify-sound-start" type="checkbox" class="focus:ring-indigo-400 focus:ring-offset-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-400 dark:border-gray-500 rounded">
+					</div>
+					<div class="flex w-1/6 justify-center items-center">
+						<input id="notify-sound-stop" name="notify-sound-stop" type="checkbox" class="focus:ring-indigo-400 focus:ring-offset-0 h-4 w-4 text-indigo-600 dark:text-gray-600 dark:bg-gray-600 border-gray-400 dark:border-gray-500 rounded">
+					</div>
+				</div>
+			</div>
+		</fieldset>
 	</div>
 </body>
 

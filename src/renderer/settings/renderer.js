@@ -24,3 +24,15 @@ schemeToggleButton.onclick = () => {
 		updateScheme(!lightMode);
 	});
 };*/
+
+(async () => {
+	/* Position Lock Switch */
+	const positionLock = document.getElementById('position-lock');
+	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
+	positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
+	
+	/* Start Alert Switch */
+	// const startAlert = document.getElementById('start-alert');
+	// startAlert.checked = await window.api.invoke('get-stored-value', 'startAlert') ?? false;
+	// startAlert.onchange = () => window.api.send('toggle-start-alert', startAlert.checked);
+})();

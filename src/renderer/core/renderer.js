@@ -37,15 +37,15 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 		window.api.send('update-shortcut', newShortcut);
 	});
 
-	/* Position Lock Switch */
-	const positionLock = document.getElementById('position-lock');
-	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
-	positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
+	// /* Position Lock Switch */
+	// const positionLock = document.getElementById('position-lock');
+	// positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
+	// positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
 
-	/* Start Alert Switch */
-	const startAlert = document.getElementById('start-alert');
-	startAlert.checked = await window.api.invoke('get-stored-value', 'startAlert') ?? false;
-	startAlert.onchange = () => window.api.send('toggle-start-alert', startAlert.checked);
+	// /* Start Alert Switch */
+	// const startAlert = document.getElementById('start-alert');
+	// startAlert.checked = await window.api.invoke('get-stored-value', 'startAlert') ?? false;
+	// startAlert.onchange = () => window.api.send('toggle-start-alert', startAlert.checked);
 
 	/* Append Alert Audio */
 	const alertDataUri = await window.api.invoke('get-alert');
