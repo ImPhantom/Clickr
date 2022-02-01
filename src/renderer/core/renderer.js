@@ -15,6 +15,10 @@ document.getElementById('start-shortcut').setAttribute('type', 'text');
 const startAlertAudio = document.getElementById('start-alert-audio');
 
 (async () => {
+	/* Apply scheme initially, and on update */
+	const { setupScheme } = require('../scheme.js');
+	await setupScheme();
+
 	/* Click Speed Input (1-infinity) */
 	const clickSpeed = document.getElementById('click-speed');
 	clickSpeed.value = await window.api.invoke('get-stored-value', 'click.speed') ?? 10;
@@ -36,16 +40,6 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {
 		window.api.send('update-shortcut', newShortcut);
 	});
-
-	// /* Position Lock Switch */
-	// const positionLock = document.getElementById('position-lock');
-	// positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
-	// positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
-
-	// /* Start Alert Switch */
-	// const startAlert = document.getElementById('start-alert');
-	// startAlert.checked = await window.api.invoke('get-stored-value', 'startAlert') ?? false;
-	// startAlert.onchange = () => window.api.send('toggle-start-alert', startAlert.checked);
 
 	/* Append Alert Audio */
 	const alertDataUri = await window.api.invoke('get-alert');

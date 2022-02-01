@@ -63,7 +63,7 @@ ipcMain.on('open-settings-window', () => {
 		modal: true,
 		show: false,
 		width: 320,
-		height: 200,
+		height: 255,
 		frame: false,
 		resizable: false,
 		fullscreenable: false,
@@ -88,7 +88,11 @@ ipcMain.handle('get-alert', async () => {
 });
 
 /* Listeners for setting/updating persistent values */
-ipcMain.on('set-light-mode', (_, value) => store.set('lightMode', value));
+ipcMain.on('set-light-mode', (_, value) => {
+	store.set('lightMode', value);
+	BrowserWindow.getAllWindows().forEach(window => window.webContents.send('scheme-updated', value));
+});
+
 ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
 ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
