@@ -50,6 +50,10 @@ input:checked ~ .dot {
 		grid-template-columns: repeat(3, 2rem);
 
 		-webkit-app-region: no-drag;
+
+		&.one {
+			grid-template-columns: repeat(1, 2rem);
+		}
 	
 		a {
 			display: flex;

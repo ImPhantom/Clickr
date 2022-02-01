@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const path = require('path');
 const { readFile } = require('fs').promises;
 const { app, BrowserWindow, ipcMain } = require('electron');
@@ -15,7 +16,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = () => {
-	// Create the browser window.
 	const mainWindow = new BrowserWindow({
 		show: false,
 		width: 300,
@@ -25,29 +25,17 @@ const createWindow = () => {
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
 		webPreferences: {
-			// eslint-disable-next-line no-undef
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 		}
 	});
 
-	// TODO: maybe add splash?
-
-	// and load the index.html of the app.
-	// eslint-disable-next-line no-undef
+	// TODO: maybe add splash screen?
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-	// Don't show the main window until the webcontents is fully loaded, avoids uglyness
 	mainWindow.once('ready-to-show', () => mainWindow.show());
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit();
@@ -55,24 +43,41 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-	// On OS X it's common to re-create a window in the app when the
-	// dock icon is clicked and there are no other windows open.
 	if (BrowserWindow.getAllWindows().length === 0) {
 		createWindow();
 	}
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+/*
+	IPC Listeners/Clickr Stuff
+*/
 
+/* Window listeners */
 const getFocusedWindow = () => BrowserWindow.getFocusedWindow();
-
 ipcMain.on('close-window', () => getFocusedWindow().close());
 ipcMain.on('minimize-window', () => getFocusedWindow().minimize());
 
-const clicker = new Clicker(store);
+ipcMain.on('open-settings-window', () => {
+	const settingsWindow = new BrowserWindow({
+		parent: getFocusedWindow(),
+		modal: true,
+		show: false,
+		width: 400,
+		height: 300,
+		frame: false,
+		resizable: false,
+		fullscreenable: false,
+		icon: path.join(__dirname, 'icons/icon.png'),
+		webPreferences: {
+			preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
+		}
+	});
 
-/* Store handling channels */
+	settingsWindow.loadURL(SETTINGS_WINDOW_WEBPACK_ENTRY);
+	settingsWindow.once('ready-to-show', () => settingsWindow.show());
+});
+
+/* Listeners for getting values from persistent config */
 ipcMain.handle('get-stored-value', (_, key) => {
 	return store.get(key);
 });
@@ -82,6 +87,7 @@ ipcMain.handle('get-alert', async () => {
 	return (rawAlert) ? `data:audio/mpeg;base64,${rawAlert.toString('base64')}` : false;
 });
 
+/* Listeners for setting/updating persistent values */
 ipcMain.on('set-light-mode', (_, value) => store.set('lightMode', value));
 ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
@@ -90,7 +96,8 @@ ipcMain.on('update-click-button', (_, value) => store.set('click.button', value)
 ipcMain.on('toggle-position-lock', (_, value) => store.set('positionLock', value));
 ipcMain.on('toggle-start-alert', (_, value) => store.set('startAlert', value));
 
-/* Clicker functions */
+/* Clickr Listeners */
+const clicker = new Clicker(store);
 ipcMain.on('arm-toggle', async event => {
 	let armed = false;
 	if (!clicker.armed && !clicker.clicking) {

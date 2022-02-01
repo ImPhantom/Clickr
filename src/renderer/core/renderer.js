@@ -1,30 +1,9 @@
-import './index.scss';
+import '../global.scss';
 
 /* Add respective functionality to the toolbar buttons */
 document.getElementById('close-button').onclick = () => window.api.send('close-window');
 document.getElementById('minimize-button').onclick = () => window.api.send('minimize-window');
-
-/* Color Scheme Toggle */
-const schemeToggleButton = document.getElementById('scheme-toggle');
-const updateScheme = (light) => {
-	if (light) {
-		document.documentElement.classList.remove('dark');
-		schemeToggleButton.innerHTML = '&#xE708';
-	} else {
-		document.documentElement.classList.add('dark');
-		schemeToggleButton.innerHTML = '&#xE706;';
-	}
-};
-
-// I know the following is quite redundant, but theoretically its the best way to handle it
-window.api.invoke('get-stored-value', 'lightMode').then(lightMode => updateScheme(lightMode ?? false));
-schemeToggleButton.onclick = () => {
-	window.api.invoke('get-stored-value', 'lightMode').then(lightMode => {
-		lightMode = lightMode ?? false;
-		window.api.send('set-light-mode', !lightMode);
-		updateScheme(!lightMode);
-	});
-};
+document.getElementById('open-settings').onclick = () => window.api.send('open-settings-window');
 
 /* 
 The following line is a strange fix to a bug thats caused when the application is packaged
@@ -52,7 +31,7 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	clickButton.onchange = () => window.api.send('update-click-button', clickButton.value);
 
 	/* Shortcut Input */
-	const ShortcutInput = require('./shortcut_input.js');
+	const ShortcutInput = require('../shortcut_input.js');
 	const savedShortcut = await window.api.invoke('get-stored-value', 'shortcut');
 	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {
 		window.api.send('update-shortcut', newShortcut);
