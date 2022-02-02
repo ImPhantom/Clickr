@@ -103,6 +103,11 @@ ipcMain.on('toggle-start-alert', (_, value) => store.set('startAlert', value));
 /* Clickr Listeners */
 const clicker = new Clicker(store);
 ipcMain.on('arm-toggle', async event => {
+	if (store.get('shortcut', '') == '') {
+		event.reply('arm-result', 'no-shortcut');
+		return;
+	}
+
 	let armed = false;
 	if (!clicker.armed && !clicker.clicking) {
 		await clicker.arm(

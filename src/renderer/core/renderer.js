@@ -67,6 +67,15 @@ const lastRunClicksText = document.getElementById('lr-clicks');
 
 document.getElementById('arm-toggle').onclick = () => window.api.send('arm-toggle');
 window.api.on('arm-result', result => {
+	if (typeof result == 'string') {
+		// 'arm-result' returned an error.
+		if (result == 'no-shortcut') {
+			// TODO: Outline shortcut box in red
+		}
+
+		return;
+	}
+
 	if (typeof result !== 'boolean') return;
 
 	// Ensure last run stats aren't still displayed
