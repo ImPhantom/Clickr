@@ -71,7 +71,7 @@ ipcMain.on('open-settings-window', () => {
 		modal: true,
 		show: false,
 		width: 320,
-		height: 255,
+		height: 235,
 		frame: false,
 		resizable: false,
 		fullscreenable: false,
