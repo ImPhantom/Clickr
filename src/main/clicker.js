@@ -61,7 +61,7 @@ class Clicker {
 		const clickSpeed = this.store.get('click.speed') ?? 10;
 		const clickUnit = this.store.get('click.unit') ?? 1000;
 
-		if (startCallback) startCallback(clickSpeed, clickUnit, this.store.get('startAlert') ?? false);
+		if (startCallback) startCallback(clickSpeed, clickUnit, this.store.get('notification.audible.start', false));
 
 		this.interval = setInterval(async () => {
 			if (positionLock && lockedPosition != null) {
@@ -98,7 +98,7 @@ class Clicker {
 		this.clicking = false;
 
 		if (wasClicking) {
-			if (callback) callback(this.clicks);
+			if (callback) callback(this.clicks, this.store.get('notification.audible.stop', false));
 		}
 	}
 }

@@ -94,7 +94,7 @@ window.api.on('arm-result', result => {
 // TODO: Find a better solution to this
 let clickrStopped = false;
 
-window.api.on('clickr-started', (speed, unit, alert) => {
+window.api.on('clickr-started', (speed, unit, shouldAlert) => {
 	console.log(`[clickr] Started clicking: ${speed} clicks per ${{1000:'second',60000:'minute'}[unit]} (${Date.now()})`);
 	clickrStopped = false;
 
@@ -104,7 +104,7 @@ window.api.on('clickr-started', (speed, unit, alert) => {
 	lastRunInfoElement.classList.replace('flex', 'hidden');
 
 	// Play start alert if enabled
-	if (alert) {
+	if (shouldAlert) {
 		startAlertAudio.load();
 		startAlertAudio.play();
 	}
@@ -115,11 +115,17 @@ window.api.on('clickr-clicked', clicks => {
 	currentClicksText.innerHTML = `${clicks} clicks`;
 });
 
-window.api.on('clickr-stopped', clickTotal => {
+window.api.on('clickr-stopped', (clickTotal, shouldAlert) => {
 	clickrStopped = true;
 	stateText.innerHTML = 'Idle';
 	currentClicksText.innerHTML = '';
 	
+	// Play start alert if enabled
+	if (shouldAlert) {
+		startAlertAudio.load();
+		startAlertAudio.play();
+	}
+
 	lastRunInfoElement.classList.replace('hidden', 'flex');
 	lastRunAtText.innerHTML = `(${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })})`;
 	lastRunClicksText.innerHTML = `${clickTotal} clicks`;

@@ -11,5 +11,23 @@
 	},
 	
 	"positionLock": { "type": "boolean" },
-	"startAlert": { "type": "boolean" }
+	"notification": {
+		"type": "object",
+		"properties": {
+			"desktop": {
+				"type": "object",
+				"properties": {
+					"start": { "type": "boolean" },
+					"stop": { "type": "boolean" }
+				}
+			},
+			"audible": {
+				"type": "object",
+				"properties": {
+					"start": { "type": "boolean" },
+					"stop": { "type": "boolean" }
+				}
+			}
+		}
+	}
 }

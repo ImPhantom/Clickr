@@ -123,9 +123,9 @@ ipcMain.on('arm-toggle', async event => {
 	let armed = false;
 	if (!clicker.armed && !clicker.clicking) {
 		await clicker.arm(
-			(speed, unit, alert) => event.reply('clickr-started', speed, unit, alert),
+			(speed, unit, shouldAlert) => event.reply('clickr-started', speed, unit, shouldAlert),
 			clicks => event.reply('clickr-clicked', clicks),
-			totalClicks => event.reply('clickr-stopped', totalClicks)
+			(totalClicks, shouldAlert) => event.reply('clickr-stopped', totalClicks, shouldAlert)
 		);
 		armed = true;
 	} else {
