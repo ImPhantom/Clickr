@@ -19,6 +19,10 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	const { setupScheme } = require('../scheme.js');
 	await setupScheme();
 
+	/* Set version in toolbar */
+	const version = await window.api.invoke('get-clickr-version');
+	document.getElementById('clickr-version').innerHTML = `${version[0]}.${version[1]}`;
+
 	/* Click Speed Input (1-infinity) */
 	const clickSpeed = document.getElementById('click-speed');
 	clickSpeed.value = await window.api.invoke('get-stored-value', 'click.speed') ?? 10;

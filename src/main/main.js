@@ -95,6 +95,10 @@ ipcMain.handle('get-alert', async () => {
 	return (rawAlert) ? `data:audio/mpeg;base64,${rawAlert.toString('base64')}` : false;
 });
 
+ipcMain.handle('get-clickr-version', () => {
+	return require('../../package.json').version.split('.');
+});
+
 /* Listeners for setting/updating persistent values */
 ipcMain.on('set-stored-bool', (_, key, value) => {
 	if (typeof value !== 'boolean') return;

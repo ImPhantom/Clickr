@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 const validChannels = {
-	invoke: ['get-stored-value', 'get-alert'],
+	invoke: ['get-stored-value', 'get-alert', 'get-clickr-version'],
 	send: ['set-stored-bool', 'close-window', 'minimize-window', 'open-settings-window', 'set-light-mode', 'arm-toggle', 'update-shortcut', 'update-click-speed', 'update-click-unit', 'update-click-button', 'toggle-position-lock', 'toggle-start-alert'],
 	on: ['scheme-updated', 'arm-result', 'clickr-started', 'clickr-clicked', 'clickr-stopped']
 };
