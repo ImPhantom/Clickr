@@ -8,7 +8,15 @@ const Clicker = require('./clicker.js');
 // file-loader imports
 const startAlertAudio = require('../static/audio/alert.mp3').default;
 
-const store = new Store({ name: 'app_config', schema: require('../schema.json') });
+const store = new Store({
+	name: 'app_config',
+	schema: require('../schema.json'),
+	migrations: {
+		'1.1.0': store => {
+			store.delete('startAlert');
+		}
+	}
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
