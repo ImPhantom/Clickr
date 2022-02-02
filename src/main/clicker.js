@@ -1,5 +1,5 @@
 const { mouse, straightTo } = require('@nut-tree/nut-js');
-const { globalShortcut } = require('electron');
+const { globalShortcut, Notification } = require('electron');
 
 class Clicker {
 	constructor(store) {
@@ -60,6 +60,11 @@ class Clicker {
 
 		const clickSpeed = this.store.get('click.speed') ?? 10;
 		const clickUnit = this.store.get('click.unit') ?? 1000;
+		const clickButton = this.store.get('click.button') ?? 'left';
+
+		if (this.store.get('notification.desktop.start', false)) {
+			new Notification({ title: 'Clickr', body: `Started ${clickButton} clicking at a rate of ${clickSpeed} clicks per ${{1000:'second',60000:'minute'}[clickUnit]}` }).show();
+		}
 
 		if (startCallback) startCallback(clickSpeed, clickUnit, this.store.get('notification.audible.start', false));
 
@@ -68,7 +73,7 @@ class Clicker {
 				await mouse.move(straightTo(lockedPosition));
 			}
 
-			switch (this.store.get('click.button')) {
+			switch (clickButton) {
 				default:
 				case 'left':
 					await mouse.leftClick();
@@ -96,6 +101,10 @@ class Clicker {
 		const wasClicking = this.clicking;
 		clearInterval(this.interval);
 		this.clicking = false;
+
+		if (this.store.get('notification.desktop.stop', false)) {
+			new Notification({ title: 'Clickr', body: `Stopped clicking after ${this.clicks} clicks!` }).show();
+		}
 
 		if (wasClicking) {
 			if (callback) callback(this.clicks, this.store.get('notification.audible.stop', false));
