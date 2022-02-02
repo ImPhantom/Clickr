@@ -11,12 +11,12 @@ document.getElementById('close-button').onclick = () => window.api.send('close-w
 	/* Light Mode Toggle */
 	const lightModeSwitch = document.getElementById('light-mode');
 	lightModeSwitch.checked = await window.api.invoke('get-stored-value', 'lightMode') ?? false;
-	lightModeSwitch.onchange = () => window.api.send('set-light-mode', lightModeSwitch.checked);
+	lightModeSwitch.onchange = () => window.api.send('set-stored-bool', 'lightMode', lightModeSwitch.checked);
 
 	/* Position Lock Switch */
 	const positionLock = document.getElementById('position-lock');
 	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
-	positionLock.onchange = () => window.api.send('toggle-position-lock', positionLock.checked);
+	positionLock.onchange = () => window.api.send('set-stored-bool', 'positionLock', positionLock.checked);
 
 	/* Notification Toggles */
 	const desktopStart = document.getElementById('notify-desktop-start');
@@ -30,7 +30,7 @@ document.getElementById('close-button').onclick = () => window.api.send('close-w
 	const audibleStart = document.getElementById('notify-audible-start');
 	audibleStart.checked = await window.api.invoke('get-stored-value', 'notification.audible.start') ?? false;
 	audibleStart.onchange = () => window.api.send('set-stored-bool', 'notification.audible.start', audibleStart.checked);
-	
+
 	const audibleStop = document.getElementById('notify-audible-stop');
 	audibleStop.checked = await window.api.invoke('get-stored-value', 'notification.audible.stop') ?? false;
 	audibleStop.onchange = () => window.api.send('set-stored-bool', 'notification.audible.stop', audibleStop.checked);

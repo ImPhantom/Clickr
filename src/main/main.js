@@ -103,18 +103,17 @@ ipcMain.handle('get-clickr-version', () => {
 ipcMain.on('set-stored-bool', (_, key, value) => {
 	if (typeof value !== 'boolean') return;
 	store.set(key, value);
-});
 
-ipcMain.on('set-light-mode', (_, value) => {
-	store.set('lightMode', value);
-	BrowserWindow.getAllWindows().forEach(window => window.webContents.send('scheme-updated', value));
+	// If the scheme was changed, make sure each window updates
+	if (key === 'lightMode') {
+		BrowserWindow.getAllWindows().forEach(window => window.webContents.send('scheme-updated', value));
+	}
 });
 
 ipcMain.on('update-shortcut', (_, value) => store.set('shortcut', value));
 ipcMain.on('update-click-speed', (_, value) => store.set('click.speed', value));
 ipcMain.on('update-click-unit', (_, value) => store.set('click.unit', value));
 ipcMain.on('update-click-button', (_, value) => store.set('click.button', value));
-ipcMain.on('toggle-position-lock', (_, value) => store.set('positionLock', value));
 
 /* Clickr Listeners */
 const clicker = new Clicker(store);
