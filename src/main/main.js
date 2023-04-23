@@ -125,7 +125,7 @@ ipcMain.on('arm-toggle', async event => {
 		return;
 	}
 
-	if (store.get('click.speed', 0) == 0) {
+	if (store.get('click.speed', 10) == 0) {
 		event.reply('arm-result', 'invalid-cps');
 		return;
 	}
