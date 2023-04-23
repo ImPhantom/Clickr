@@ -16,7 +16,7 @@ module.exports = {
 		{
 			name: '@electron-forge/maker-squirrel',
 			config: {
-				name: 'clickr',
+				name: 'Clickr',
 				setupExe: `${name}_${version}_win64.exe`,
 				setupIcon: path.join(__dirname, '.webpack/main/icons/icon.ico'),
 				iconUrl: path.join(__dirname, '.webpack/main/icons/icon.ico')
@@ -37,9 +37,9 @@ module.exports = {
 		}
 	],
 	plugins: [
-		[
-			'@electron-forge/plugin-webpack',
-			{
+		{
+			name: '@electron-forge/plugin-webpack',
+			config: {
 				devContentSecurityPolicy: 'default-src \'self\' https://fonts.googleapis.com https://fonts.gstatic.com \'unsafe-eval\' \'unsafe-inline\';img-src * \'self\' data:;media-src \'self\' data:;',
 				mainConfig: './webpack.main.config.js',
 				renderer: {
@@ -64,6 +64,6 @@ module.exports = {
 					]
 				}
 			}
-		]
+		}
 	]
 };

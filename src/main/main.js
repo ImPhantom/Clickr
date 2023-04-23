@@ -33,6 +33,7 @@ const createWindow = () => {
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
 		webPreferences: {
+			contextIsolation: true,
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
 		}
 	});
@@ -77,6 +78,7 @@ ipcMain.on('open-settings-window', () => {
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
 		webPreferences: {
+			contextIsolation: true,
 			preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
 		}
 	});
