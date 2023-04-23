@@ -14,6 +14,19 @@ document.getElementById('start-shortcut').setAttribute('type', 'text');
 // Theses are referenced throughout
 const startAlertAudio = document.getElementById('start-alert-audio');
 
+/* Inputs */
+const shortcutInput = document.getElementById('start-shortcut');
+const cpsInput = document.getElementById('click-speed');
+
+const hasErrorBorder = (input) => input.classList.contains('border-red-400');
+const setErrorBorder = (input, state) => {
+	const s = ['border-gray-300', 'dark:border-gray-500'];
+	const e = ['border-red-400', 'dark:border-red-500'];
+
+	input.classList.add(...(state ? e : s));
+	input.classList.remove(...(state ? s : e));
+};
+
 (async () => {
 	/* Apply scheme initially, and on update */
 	const { setupScheme } = require('../scheme.js');
@@ -26,7 +39,17 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	/* Click Speed Input (1-infinity) */
 	const clickSpeed = document.getElementById('click-speed');
 	clickSpeed.value = await window.api.invoke('get-stored-value', 'click.speed') ?? 10;
-	clickSpeed.onblur = () => window.api.send('update-click-speed', clickSpeed.value);
+	clickSpeed.onblur = () => {
+		window.api.send('update-click-speed', clickSpeed.value);
+
+		// validation
+		if (clickSpeed.value > 0) {
+			if (!hasErrorBorder(cpsInput)) return;
+			setErrorBorder(cpsInput, false);
+		} else {
+			setErrorBorder(cpsInput, true);
+		}
+	};
 
 	/* Click Speed Input (second/minute) */
 	const clickUnit = document.getElementById('click-unit');
@@ -43,6 +66,13 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	const savedShortcut = await window.api.invoke('get-stored-value', 'shortcut');
 	new ShortcutInput('start-shortcut', savedShortcut, newShortcut => {
 		window.api.send('update-shortcut', newShortcut);
+
+		if (newShortcut != '') {
+			if (!hasErrorBorder(shortcutInput)) return;
+			setErrorBorder(shortcutInput, false);
+		} else {
+			setErrorBorder(shortcutInput, true);
+		}
 	});
 
 	/* Append Alert Audio */
@@ -56,19 +86,6 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 		console.error('Something went wrong while loading the alert audio!');
 	}
 })();
-
-/* Inputs */
-const shortcutInput = document.getElementById('start-shortcut');
-const cpsInput = document.getElementById('click-speed');
-
-const hasErrorBorder = (input) => input.classList.contains('border-red-400');
-const toggleErrorBorder = (input, state) => {
-	const s = ['border-gray-300', 'dark:border-gray-500'];
-	const e = ['border-red-400', 'dark:border-red-500'];
-
-	input.classList.add(...(state ? e : s));
-	input.classList.remove(...(state ? s : e));
-};
 
 /* Arm button/cover */
 const armButton = document.getElementById('arm-toggle');
@@ -85,15 +102,14 @@ const lastRunClicksText = document.getElementById('lr-clicks');
 
 document.getElementById('arm-toggle').onclick = () => window.api.send('arm-toggle');
 window.api.on('arm-result', result => {
+	// The 'error borders' (input validation) are mostly handled in the inputs 'onblur' event, but I have
+	// this additional handling incase those events don't fire before the user is able to arm
 	if (typeof result == 'string') {
 		// 'arm-result' returned an error.
-		switch (result) {
-			case 'no-shortcut':
-				toggleErrorBorder(shortcutInput, true);
-				break;
-			case 'invalid-cps':
-				toggleErrorBorder(cpsInput, true);
-				break;
+		if (result == 'no-shortcut') {
+			setErrorBorder(shortcutInput, true);
+		} else if (result == 'invalid-cps') {
+			setErrorBorder(cpsInput, true);
 		}
 
 		return;
@@ -101,9 +117,9 @@ window.api.on('arm-result', result => {
 
 	if (typeof result !== 'boolean') return;
 
-	// Result was successful, get rid of any error borders
-	if (hasErrorBorder(shortcutInput)) toggleErrorBorder(shortcutInput, false);
-	if (hasErrorBorder(cpsInput)) toggleErrorBorder(cpsInput, false);
+	// Error borders should be cleared by the input's onblur, but this is here just incase it doesn't...
+	if (hasErrorBorder(shortcutInput)) setErrorBorder(shortcutInput, false);
+	if (hasErrorBorder(cpsInput)) setErrorBorder(cpsInput, false);
 
 	// Ensure last run stats aren't still displayed
 	lastRunInfoElement.classList.replace('flex', 'hidden');

@@ -49,7 +49,7 @@ class Clicker {
 
 		this.clicks = 0; // reset click count
 
-		// FIXME: For some reason when the position is locked, it waits for the mouse to move to start clicking
+		// FIXME: when position lock is enabled, the start is delayed slightly
 
 		const positionLock = this.store.get('positionLock') ?? false;
 		let lockedPosition = null;
