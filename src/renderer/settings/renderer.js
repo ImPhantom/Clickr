@@ -8,30 +8,25 @@ document.getElementById('close-button').onclick = () => window.api.send('close-w
 	const { setupScheme } = require('../scheme.js');
 	await setupScheme();
 
-	/* Light Mode Toggle */
-	const lightModeSwitch = document.getElementById('light-mode');
-	lightModeSwitch.checked = await window.api.invoke('get-stored-value', 'lightMode') ?? false;
-	lightModeSwitch.onchange = () => window.api.send('set-stored-bool', 'lightMode', lightModeSwitch.checked);
+	/* Setup any checkbox/toggle switches */
+	const setupToggle = async (elementId, storeValue, storedDefault = false) => {
+		const toggle = document.getElementById(elementId);
+		toggle.checked = await window.api.invoke('get-stored-value', storeValue) ?? storedDefault;
+		toggle.onchange = () => window.api.send('set-stored-bool', storeValue, toggle.checked);
+	};
 
-	/* Position Lock Switch */
-	const positionLock = document.getElementById('position-lock');
-	positionLock.checked = await window.api.invoke('get-stored-value', 'positionLock') ?? false;
-	positionLock.onchange = () => window.api.send('set-stored-bool', 'positionLock', positionLock.checked);
+	// Associate toggle element with its store value
+	const toggles = [
+		['light-mode', 'lightMode'],
+		['position-lock', 'positionLock'],
+		['notify-desktop-start', 'notification.desktop.start'],
+		['notify-desktop-stop', 'notification.desktop.stop'],
+		['notify-audible-start', 'notification.audible.start'],
+		['notify-audible-stop', 'notification.audible.stop'],
+	];
 
-	/* Notification Toggles */
-	const desktopStart = document.getElementById('notify-desktop-start');
-	desktopStart.checked = await window.api.invoke('get-stored-value', 'notification.desktop.start') ?? false;
-	desktopStart.onchange = () => window.api.send('set-stored-bool', 'notification.desktop.start', desktopStart.checked);
-
-	const desktopStop = document.getElementById('notify-desktop-stop');
-	desktopStop.checked = await window.api.invoke('get-stored-value', 'notification.desktop.stop') ?? false;
-	desktopStop.onchange = () => window.api.send('set-stored-bool', 'notification.desktop.stop', desktopStop.checked);
-
-	const audibleStart = document.getElementById('notify-audible-start');
-	audibleStart.checked = await window.api.invoke('get-stored-value', 'notification.audible.start') ?? false;
-	audibleStart.onchange = () => window.api.send('set-stored-bool', 'notification.audible.start', audibleStart.checked);
-
-	const audibleStop = document.getElementById('notify-audible-stop');
-	audibleStop.checked = await window.api.invoke('get-stored-value', 'notification.audible.stop') ?? false;
-	audibleStop.onchange = () => window.api.send('set-stored-bool', 'notification.audible.stop', audibleStop.checked);
+	// Loop and setup
+	for (let i = 0; i <= toggles.length; i++) {
+		await setupToggle(toggles[i][0], toggles[i][1]);
+	}
 })();
