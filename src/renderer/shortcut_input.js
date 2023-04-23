@@ -5,7 +5,7 @@ class ShortcutInput {
 	constructor(inputElementId, initialValue, saveCallback) {
 		this.input = document.getElementById(inputElementId);
 
-		// Set inital value if any
+		// Set initial value if any
 		if (initialValue != null && initialValue != '') {
 			this.input.value = initialValue;
 		}

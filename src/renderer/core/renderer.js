@@ -57,11 +57,24 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 	}
 })();
 
-/* Arm button */
+/* Inputs */
+const shortcutInput = document.getElementById('start-shortcut');
+const cpsInput = document.getElementById('click-speed');
+
+const hasErrorBorder = (input) => input.classList.contains('border-red-400');
+const toggleErrorBorder = (input, state) => {
+	const s = ['border-gray-300', 'dark:border-gray-500'];
+	const e = ['border-red-400', 'dark:border-red-500'];
+
+	input.classList.add(...(state ? e : s));
+	input.classList.remove(...(state ? s : e));
+};
+
+/* Arm button/cover */
 const armButton = document.getElementById('arm-toggle');
 const armedCover = document.getElementById('cover');
 
-// Info displayed on arm cover
+/* Elements displayed on arm cover */
 const stateInfoElement = document.getElementById('clickr-current-state');
 const stateText = document.getElementById('clickr-state');
 const currentClicksText = document.getElementById('clickr-clicks');
@@ -74,14 +87,23 @@ document.getElementById('arm-toggle').onclick = () => window.api.send('arm-toggl
 window.api.on('arm-result', result => {
 	if (typeof result == 'string') {
 		// 'arm-result' returned an error.
-		if (result == 'no-shortcut') {
-			// TODO: Outline shortcut box in red
+		switch (result) {
+			case 'no-shortcut':
+				toggleErrorBorder(shortcutInput, true);
+				break;
+			case 'invalid-cps':
+				toggleErrorBorder(cpsInput, true);
+				break;
 		}
 
 		return;
 	}
 
 	if (typeof result !== 'boolean') return;
+
+	// Result was successful, get rid of any error borders
+	if (hasErrorBorder(shortcutInput)) toggleErrorBorder(shortcutInput, false);
+	if (hasErrorBorder(cpsInput)) toggleErrorBorder(cpsInput, false);
 
 	// Ensure last run stats aren't still displayed
 	lastRunInfoElement.classList.replace('flex', 'hidden');
