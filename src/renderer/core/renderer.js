@@ -58,6 +58,7 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 })();
 
 /* Arm button */
+const armButton = document.getElementById('arm-toggle');
 const armedCover = document.getElementById('cover');
 
 // Info displayed on arm cover
@@ -89,9 +90,13 @@ window.api.on('arm-result', result => {
 		stateText.innerHTML = 'Idle';
 		armedCover.classList.replace('hidden', 'flex'); // Armed
 		stateInfoElement.classList.replace('hidden', 'flex');
+
+		armButton.textContent = 'Disarm';
 	} else {
 		armedCover.classList.replace('flex', 'hidden'); // Disarmed
 		stateInfoElement.classList.replace('flex', 'hidden');
+
+		armButton.textContent = 'Arm';
 	}
 });
 
