@@ -16,7 +16,7 @@ module.exports = {
 		{
 			name: '@electron-forge/maker-squirrel',
 			config: {
-				name: 'clickr',
+				name: 'Clickr',
 				setupExe: `${name}_${version}_win64.exe`,
 				setupIcon: path.join(__dirname, '.webpack/main/icons/icon.ico'),
 				iconUrl: path.join(__dirname, '.webpack/main/icons/icon.ico')

@@ -9,12 +9,11 @@
 		"package": "electron-forge package",
 		"make": "electron-forge make",
 		"publish": "electron-forge publish",
-		"rebuild": "electron-rebuild",
 		"lint": "echo \"No linting configured\""
 	},
 	"keywords": [],
 	"author": {
-		"name": "Phantom",
+		"name": "ImPhantom",
 		"email": "dan@xeno.team",
 		"url": "https://xeno.gg/"
 	},
