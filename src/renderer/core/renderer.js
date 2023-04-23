@@ -21,7 +21,7 @@ const startAlertAudio = document.getElementById('start-alert-audio');
 
 	/* Set version in toolbar */
 	const version = await window.api.invoke('get-clickr-version');
-	document.getElementById('clickr-version').innerHTML = `${version[0]}.${version[1]}`;
+	document.getElementById('clickr-version').textContent = `${version[0]}.${version[1]}`;
 
 	/* Click Speed Input (1-infinity) */
 	const clickSpeed = document.getElementById('click-speed');
@@ -87,7 +87,7 @@ window.api.on('arm-result', result => {
 	lastRunInfoElement.classList.replace('flex', 'hidden');
 
 	if (result) {
-		stateText.innerHTML = 'Idle';
+		stateText.textContent = 'Idle';
 		armedCover.classList.replace('hidden', 'flex'); // Armed
 		stateInfoElement.classList.replace('hidden', 'flex');
 
@@ -107,8 +107,8 @@ window.api.on('clickr-started', (speed, unit, shouldAlert) => {
 	console.log(`[clickr] Started clicking: ${speed} clicks per ${{1000:'second',60000:'minute'}[unit]} (${Date.now()})`);
 	clickrStopped = false;
 
-	stateText.innerHTML = 'Clicking';
-	currentClicksText.innerHTML = '0';
+	stateText.textContent = 'Clicking';
+	currentClicksText.textContent = '0';
 
 	lastRunInfoElement.classList.replace('flex', 'hidden');
 
@@ -121,13 +121,13 @@ window.api.on('clickr-started', (speed, unit, shouldAlert) => {
 
 window.api.on('clickr-clicked', clicks => {
 	if (clickrStopped) return;
-	currentClicksText.innerHTML = `${clicks} clicks`;
+	currentClicksText.textContent = `${clicks} clicks`;
 });
 
 window.api.on('clickr-stopped', (clickTotal, shouldAlert) => {
 	clickrStopped = true;
-	stateText.innerHTML = 'Idle';
-	currentClicksText.innerHTML = '';
+	stateText.textContent = 'Idle';
+	currentClicksText.textContent = '';
 	
 	// Play start alert if enabled
 	if (shouldAlert) {
@@ -136,8 +136,8 @@ window.api.on('clickr-stopped', (clickTotal, shouldAlert) => {
 	}
 
 	lastRunInfoElement.classList.replace('hidden', 'flex');
-	lastRunAtText.innerHTML = `(${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })})`;
-	lastRunClicksText.innerHTML = `${clickTotal} clicks`;
+	lastRunAtText.textContent = `(${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })})`;
+	lastRunClicksText.textContent = `${clickTotal} clicks`;
 
 	console.log(`[clickr] Stopped clicking. (${Date.now()})`);
 });
