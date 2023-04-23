@@ -55,7 +55,7 @@ class Clicker {
 		let lockedPosition = null;
 		if (positionLock) {
 			lockedPosition = await mouse.getPosition();
-			console.log(`Locked position @ '${lockedPosition.x}, ${lockedPosition.y}'`);
+			console.log(`[clicker] Locked position @ '${lockedPosition.x}, ${lockedPosition.y}'`);
 		}
 
 		const clickSpeed = this.store.get('click.speed') ?? 10;
@@ -94,7 +94,7 @@ class Clicker {
 		}, Math.floor(clickUnit / clickSpeed));
 
 		this.clicking = true;
-		console.log(`Started clicker (${clickSpeed} clicks per ${{1000:'second',60000:'minute'}[clickUnit]})`);
+		console.log(`[clicker] Started clicking! (${clickSpeed} clicks per ${{1000:'second',60000:'minute'}[clickUnit]})`);
 	}
 
 	stop(callback = null) {
@@ -109,6 +109,8 @@ class Clicker {
 		if (wasClicking) {
 			if (callback) callback(this.clicks, this.store.get('notification.audible.stop', false));
 		}
+
+		console.log(`[clicker] Stopped clicking! (${this.clicks} clicks)`);
 	}
 }
 
