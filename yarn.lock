@@ -2694,7 +2694,7 @@ __metadata:
     autoprefixer: ^10.4.0
     copy-webpack-plugin: ^10.2.0
     css-loader: ^6.0.0
-    electron: ^18.2.3
+    electron: ^18.3.7
     electron-squirrel-startup: ^1.0.0
     electron-store: ^8.0.1
     eslint: ^8.5.0
@@ -3775,16 +3775,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^18.2.3":
-  version: 18.2.3
-  resolution: "electron@npm:18.2.3"
+"electron@npm:^18.3.7":
+  version: 18.3.15
+  resolution: "electron@npm:18.3.15"
   dependencies:
     "@electron/get": ^1.13.0
     "@types/node": ^16.11.26
     extract-zip: ^1.0.3
   bin:
     electron: cli.js
-  checksum: d60fcebd13d133ec6d40392700ea18e9afd3a1d212ddb18dd3ccdf3aae3c2fc7b573a36ef6c4b8be9eb471e26996edb8da79984e5056ef619b1a4713041072f7
+  checksum: d5ff1a31cb2da292e3f1141036640cabe66563425ebe5ce9784c1945aab1f2b1a6d1b474c23c753cd46af5937702ace343d4b6f9119934bc86e3c41d4dd9fa4a
   languageName: node
   linkType: hard
 
