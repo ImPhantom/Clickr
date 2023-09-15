@@ -24,6 +24,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = () => {
+	const windowOnTip = store.get('windowOnTop', false);
 	const mainWindow = new BrowserWindow({
 		show: false,
 		width: 350,
@@ -32,6 +33,7 @@ const createWindow = () => {
 		resizable: false,
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
+		alwaysOnTop: windowOnTip,
 		webPreferences: {
 			contextIsolation: true,
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -109,6 +111,10 @@ ipcMain.on('set-stored-bool', (_, key, value) => {
 	// If the scheme was changed, make sure each window updates
 	if (key === 'lightMode') {
 		BrowserWindow.getAllWindows().forEach(window => window.webContents.send('scheme-updated', value));
+	}
+
+	if (key === 'windowOnTop') {
+		BrowserWindow.getAllWindows().forEach(window => window.setAlwaysOnTop(value));
 	}
 });
 

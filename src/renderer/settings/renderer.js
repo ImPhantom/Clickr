@@ -19,6 +19,7 @@ document.getElementById('close-button').onclick = () => window.api.send('close-w
 	const toggles = [
 		['light-mode', 'lightMode'],
 		['position-lock', 'positionLock'],
+		['window-on-top', 'windowOnTop'],
 		['notify-desktop-start', 'notification.desktop.start'],
 		['notify-desktop-stop', 'notification.desktop.stop'],
 		['notify-audible-start', 'notification.audible.start'],
