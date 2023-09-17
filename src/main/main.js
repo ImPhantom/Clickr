@@ -24,7 +24,6 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = () => {
-	const windowOnTip = store.get('windowOnTop', false);
 	const mainWindow = new BrowserWindow({
 		show: false,
 		width: 350,
@@ -33,7 +32,7 @@ const createWindow = () => {
 		resizable: false,
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
-		alwaysOnTop: windowOnTip,
+		alwaysOnTop: store.get('windowOnTop', false),
 		webPreferences: {
 			contextIsolation: true,
 			preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -73,12 +72,13 @@ ipcMain.on('open-settings-window', () => {
 		parent: getFocusedWindow(),
 		modal: true,
 		show: false,
-		width: 320,
-		height: 235,
+		width: 305,
+		height: 275,
 		frame: false,
 		resizable: false,
 		fullscreenable: false,
 		icon: path.join(__dirname, 'icons/icon.png'),
+		alwaysOnTop: store.get('windowOnTop', false),
 		webPreferences: {
 			contextIsolation: true,
 			preload: SETTINGS_WINDOW_PRELOAD_WEBPACK_ENTRY,
